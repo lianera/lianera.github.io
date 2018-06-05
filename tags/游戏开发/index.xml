@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>游戏开发 on Lianera</title>
+    <link>https://lianera.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</link>
+    <description>Recent content in 游戏开发 on Lianera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 26 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Magic Plain v2</title>
+      <link>https://lianera.github.io/2017/magicplainv2/</link>
+      <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/magicplainv2/</guid>
+      <description>简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</description>
+    </item>
+    
+    <item>
+      <title>Sudoku</title>
+      <link>https://lianera.github.io/2015/sudoku/</link>
+      <pubDate>Sat, 10 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2015/sudoku/</guid>
+      <description>简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复</description>
+    </item>
+    
+    <item>
+      <title>Game2048</title>
+      <link>https://lianera.github.io/2014/game2048/</link>
+      <pubDate>Thu, 18 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2014/game2048/</guid>
+      <description>简介 这是一个用Java写的实现2048游戏的程序，加入了人工智能，能够自动运行。 技术 项目引入MVC架构的思想，将逻辑与界面分离。这个程序的难</description>
+    </item>
+    
+    <item>
+      <title>Magic Plain</title>
+      <link>https://lianera.github.io/2013/magicplain/</link>
+      <pubDate>Tue, 31 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2013/magicplain/</guid>
+      <description>简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了</description>
+    </item>
+    
+    <item>
+      <title>贪吃蛇（二）</title>
+      <link>https://lianera.github.io/2013/snake2/</link>
+      <pubDate>Sun, 07 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2013/snake2/</guid>
+      <description>简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但</description>
+    </item>
+    
+    <item>
+      <title>装甲之战</title>
+      <link>https://lianera.github.io/2012/panzerwar/</link>
+      <pubDate>Sat, 01 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2012/panzerwar/</guid>
+      <description>简介 坦克游戏，通过控制坦克消灭敌人获取胜利。 技术 这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Wi</description>
+    </item>
+    
+    <item>
+      <title>俄罗斯方块（二）</title>
+      <link>https://lianera.github.io/2012/blockgame/</link>
+      <pubDate>Tue, 20 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2012/blockgame/</guid>
+      <description>简介 俄罗斯方块游戏。 技术 纯控制台程序，画面全部由字符组成，具有存档功能。 在刚刚学C语言的时候写的。那个时候分模块的概念不是很强，所有函数写在</description>
+    </item>
+    
+    <item>
+      <title>俄罗斯方块（一）</title>
+      <link>https://lianera.github.io/2008/tetris/</link>
+      <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2008/tetris/</guid>
+      <description>简介 经典的俄罗斯方块。 技术 中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用</description>
+    </item>
+    
+    <item>
+      <title>贪吃蛇（一）</title>
+      <link>https://lianera.github.io/2008/snake1/</link>
+      <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2008/snake1/</guid>
+      <description>简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用</description>
+    </item>
+    
+    <item>
+      <title>按键助手</title>
+      <link>https://lianera.github.io/2008/keyhelper/</link>
+      <pubDate>Sun, 12 Oct 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2008/keyhelper/</guid>
+      <description>简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自</description>
+    </item>
+    
+  </channel>
+</rss>

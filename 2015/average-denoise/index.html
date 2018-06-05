@@ -1,0 +1,889 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+
+  
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.41 with theme Tranquilpeak 0.4.3-BETA">
+    <title>多图片平均法降噪</title>
+    <meta name="author" content="Lianera">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://lianera.github.io/favicon.png">
+    
+
+    
+    <meta name="description" content="理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示">
+    <meta property="og:description" content="理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="多图片平均法降噪">
+    <meta property="og:url" content="/2015/average-denoise/">
+    <meta property="og:site_name" content="Lianera">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Lianera">
+    <meta name="twitter:description" content="理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="https://lianera.github.io/images/avatar.jpg">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://lianera.github.io/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+      
+        <link rel="stylesheet"  href="https://lianera.github.io/css/mystyle.css">
+      
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://lianera.github.io/">Lianera</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://lianera.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://lianera.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Lianera</h4>
+        
+          <h5 class="sidebar-profile-bio">Do Something <strong>Cool</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lianera" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://liuqinh2s.github.io/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">liuqinh2s&#39; blog</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      多图片平均法降噪
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2015-12-09T00:00:00Z">
+        
+  
+  
+  
+  
+    2015年 十二月 9日
+  
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<h2 id="理论">理论</h2>
+
+<p>在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示为无噪声图像和加性噪声的组成，也即：</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="f1.svg" alt="g(x,y)=f(x,y)+ \eta(x,y)" /></th>
+<th>(1)</th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>其中：<img src="f2.svg" alt="g(x,y)" />为采集图像，<img src="f3.svg" alt="f(x,y)" />为无噪声图像，<img src="f4.svg" alt="\eta(x,y)" />为噪声。</p>
+
+<p>去噪的过程就是从已知的<img src="f2.svg" alt="g(x,y)" />来近似得到<img src="f3.svg" alt="f(x,y)" />的过程。</p>
+
+<p>对于同一个场景拍摄的多张图像来说，<img src="f5.svg" alt="f_{i}(x,y)" />是相同的，而<img src="f6.svg" alt="\eta_{i}(x,y)" />是随机的且相互之间不相关，相同场景的k幅图像图像的均值可以表示如下</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="f7.svg" alt="\bar{g}(x,y)=\frac{1}{K}\sum_{i=1}^K[f_{i}(x,y)+\eta_{i}(x,y)]=f(x,y)+\frac{1}{K}\sum_{i=1}^K\eta_{i}(x,y)" /></th>
+<th>(2)</th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>由于噪点随机且不相关，可得其平均图像的期望</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="f9.svg" alt="E\{\bar{g}(x,y)\}=f(x,y)" /></th>
+<th>(3)</th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>平均图像的方差</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="f10.svg" alt="\sigma_{\bar{g}(x,y)}^{2}=\frac{1}{K}\sigma_{\eta(x,y)}^{2}" /></th>
+<th>(4)</th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>即</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="f11.svg" alt="\sigma_{\bar{g}(x,y)}=\frac{1}{\sqrt{K}}\sigma_{\eta(x,y)}" /></th>
+<th>(5)</th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>从式(3)中我们可以发现，同场景的多幅图像的均值的期望是无噪点图像，但是会存在一些扰动，这些扰动的标准差(3)就决定了噪声的强度。我们对图像去噪的本质就是减少在空间域上的标准差。从式(5)中我们不难发现，通过增大K值，即增加平均图像的数量，即可减少噪声。</p>
+
+<p>但同时我们可以发现：<img src="f12.svg" alt="\sigma\varpropto\frac{1}{\sqrt{K}}" />，<img src="f13.svg" alt="\frac{\partial\sigma}{\partial K}=-\frac{1}{2\sqrt{K^3}}" />，随着K值的增大，<img src="f14.svg" alt="\sigma" />的变化越来越小，用平均法去噪时，单单通过提高图像数量的作用是很小的。</p>
+
+<h2 id="实验">实验</h2>
+
+<h3 id="目的">目的</h3>
+
+<ol>
+<li>验证同场景下多图像平均可以进行去噪。</li>
+<li>随着图像数量的增大，图像噪点变化越来越小。</li>
+</ol>
+
+<h3 id="数据集">数据集</h3>
+
+<p>同一场景的179幅照片，用短时间采集完成。</p>
+
+<p>以下是其中的一幅图片</p>
+
+<p><img src="denoise_origin.jpg" alt="origin" /></p>
+
+<p>其局部细节：</p>
+
+<p><img src="denoise_part.jpg" alt="part" /></p>
+
+<p>可以发现图像上的噪点是比较多的。</p>
+
+<h3 id="程序设计">程序设计</h3>
+
+<p>程序的处理过程为：</p>
+
+<ul>
+<li>读取图像</li>
+<li>求平均值</li>
+<li>显示图像</li>
+</ul>
+
+<p>程序源码：</p>
+
+<p>matlab</p>
+
+<pre><code class="language-matlab">% get image file names
+DIR = 'imgs';
+imgFiles = dir([DIR , '/*.jpg']);
+[N, C]= size(imgFiles);
+ 
+ 
+% get the image size
+img = im2double(imread([DIR , '/', imgFiles(1).name]));
+figure(1);
+imshow(img);
+ 
+img = img / N;
+% calculate the average
+for m = 2:N
+    img = img + im2double(imread([DIR , '/', imgFiles(m).name])) / N;
+end
+figure(2);
+imshow(img);
+</code></pre>
+
+<p>C++(OpenCV2.4)</p>
+
+<pre><code class="language-cpp">#include &lt;opencv2/core/core.hpp&gt;
+#include &lt;opencv2/imgproc/imgproc.hpp&gt;
+#include &lt;opencv2/highgui/highgui.hpp&gt;
+#include &lt;sstream&gt;
+#include &lt;exception&gt;
+#include &lt;iostream&gt;
+ 
+void denoise()
+{
+    const int N = 179;
+ 
+    cv::Mat avrg_img;
+    for (int i = 0; i &lt; N; i++){
+        std::ostringstream oss;
+        oss &lt;&lt; &quot;imgs/img (&quot; &lt;&lt; i+1 &lt;&lt; &quot;).jpg&quot;;
+        cv::Mat image = cv::imread(oss.str());
+        // convert to double
+        image.convertTo(image, CV_32F, 1.0 / 255.0);
+        if (i == 0){
+            cv::namedWindow(&quot;noisy image&quot;);
+            cv::imshow(&quot;noisy image&quot;, image);
+            avrg_img = image / N;
+        }
+        else
+            avrg_img += image / N;
+    }
+    cv::namedWindow(&quot;denoised image&quot;);
+    cv::imshow(&quot;denoised image&quot;, avrg_img);
+    avrg_img.convertTo(avrg_img, CV_8UC3, 255.0);
+    cv::imwrite(&quot;denoised.jpg&quot;, avrg_img);
+}
+ 
+int main()
+{
+    try{
+        denoise();
+    }
+    catch (std::exception &amp;e){
+        std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;
+    }
+    cv::waitKey();
+    return 0;
+}
+</code></pre>
+
+<h3 id="测试">测试</h3>
+
+<p>对179张图片进行测试，结果如下：</p>
+
+<p><img src="denoised.jpg" alt="denoised" /></p>
+
+<p>对照原图：</p>
+
+<p><img src="denoise_origin.jpg" alt="origin" /></p>
+
+<p>可以看出，噪点明显减少了，从而验证了多图像平均法去噪的可行性。</p>
+
+<p>改变平均的图片数量，K取{2,3 &hellip; 10}，可以得到一系列图像，如以下gif所示：</p>
+
+<p><img src="seq.gif" alt="seq" /></p>
+
+<p>可以看出，从原图到K=2，噪点减少显著，而从K=9到K=10，噪点变化较少，验证了之前的数学模型。</p>
+
+<h2 id="参考">参考</h2>
+
+<p>[1] 冈萨雷斯.数字图像处理[M]. 阮秋琦译. 北京：电子工业出版社. 2011.6</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a>
+
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/c&#43;&#43;/">C&#43;&#43;</a>
+
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/matlab/">Matlab</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2016/ocean-sectional/" data-tooltip="海水截面模拟">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2015/cv-mouse/" data-tooltip="基于计算机视觉的虚拟鼠标">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2015/average-denoise/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2015/average-denoise/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2015/average-denoise/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Lianera. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2016/ocean-sectional/" data-tooltip="海水截面模拟">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2015/cv-mouse/" data-tooltip="基于计算机视觉的虚拟鼠标">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2015/average-denoise/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2015/average-denoise/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2015/average-denoise/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2015%2Faverage-denoise%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2015%2Faverage-denoise%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2015%2Faverage-denoise%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Lianera</h4>
+    
+      <div id="about-card-bio">Do Something <strong>Cool</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Graduate Student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Wuhan China
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="搜索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/fast-gaussian/">
+                <h3 class="media-heading">快速高斯模糊综述</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/magicplainv2/">
+                <h3 class="media-heading">Magic Plain v2</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/synthetic-rgbd/">
+                <h3 class="media-heading">RGB-D数据集的合成</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/ltray-memo/">
+                <h3 class="media-heading">LtRay 开发备忘录</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/sh-lighting-apply/">
+                <h3 class="media-heading">球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/ltray-refactoring/">
+                <h3 class="media-heading">LtRay的艰难重构</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/complicated-compound-derivative/">
+                <h3 class="media-heading">复杂多元复合函数的导数和雅克比矩阵</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/gradient-descent/">
+                <h3 class="media-heading">梯度下降法及其实现</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2016/sh-lighting-exp/">
+                <h3 class="media-heading">球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2016/nfa-to-dfa/">
+                <h3 class="media-heading">NFA转DFA-json数字识别</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         25 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://lianera.github.io/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://lianera.github.io/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+    
+  </body>
+</html>
+

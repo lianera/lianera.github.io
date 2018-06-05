@@ -1,0 +1,13 @@
+.post .post-content img{
+    display:   inline;
+}
+
+.post table{
+	text-align: center;
+}
+
+
+.post table th{
+	border-bottom: 2px dashed #ccc;
+	/*background-color: #ccc;*/
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数学 on Lianera</title>
+    <link>https://lianera.github.io/tags/%E6%95%B0%E5%AD%A6/</link>
+    <description>Recent content in 数学 on Lianera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>快速高斯模糊综述</title>
+      <link>https://lianera.github.io/2017/fast-gaussian/</link>
+      <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/fast-gaussian/</guid>
+      <description>高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</description>
+    </item>
+    
+    <item>
+      <title>球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</title>
+      <link>https://lianera.github.io/2017/sh-lighting-apply/</link>
+      <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/sh-lighting-apply/</guid>
+      <description>上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</description>
+    </item>
+    
+    <item>
+      <title>复杂多元复合函数的导数和雅克比矩阵</title>
+      <link>https://lianera.github.io/2017/complicated-compound-derivative/</link>
+      <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/complicated-compound-derivative/</guid>
+      <description>我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的</description>
+    </item>
+    
+    <item>
+      <title>梯度下降法及其实现</title>
+      <link>https://lianera.github.io/2017/gradient-descent/</link>
+      <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/gradient-descent/</guid>
+      <description>摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度</description>
+    </item>
+    
+    <item>
+      <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</title>
+      <link>https://lianera.github.io/2016/sh-lighting-exp/</link>
+      <pubDate>Tue, 06 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2016/sh-lighting-exp/</guid>
+      <description>简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</description>
+    </item>
+    
+  </channel>
+</rss>

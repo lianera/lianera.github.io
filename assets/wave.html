@@ -1,0 +1,147 @@
+<canvas id="wave" width="1000" height="600"></canvas>
+<canvas id="topview"></canvas>
+
+<style type="text/css">
+#wave{
+	width: 1000px;
+	height: 600px;
+	/*border: 1px dotted gray;*/
+	display: block;
+}
+</style>
+
+<script type="text/javascript">
+	var waveSourcePoints;
+	var waveTargetPoints;
+	var rangeWidth = 1000;
+	var rangeHeight = 600;
+	var particle = new Image();
+	particle.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3RjY0RENGNEZBQzRFNTExQjdDM0E4Q0U3NEM1NDJGQiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5RTU5QTQzNkM0RkMxMUU1QkYwMTlGRjVFMTlCRkMwQSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5RTU5QTQzNUM0RkMxMUU1QkYwMTlGRjVFMTlCRkMwQSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjgwNjREQ0Y0RkFDNEU1MTFCN0MzQThDRTc0QzU0MkZCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjdGNjREQ0Y0RkFDNEU1MTFCN0MzQThDRTc0QzU0MkZCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+ithsHwAAARpJREFUeNqkkw1LwzAQhg0t0W74BWNTGCj+/58l6GRgt7HFzXb1vfEEjrEOxcAD7eW9S95cErquu/jPKHvigbmCb1ulFQ3fZwtEUcElRSx5KxLs+gpciRtxL+7E0BVYi1p8iqX4Oi4QSZ6IBzEWt8RtxYX44N/G3uKl81yxsiU/i6kYYcO2PxcD9Dti36WzUrHtMckv4pF4Ync2NliwHW1ygYKVhmx7RPKTuBYrdJY4Q3c4YG+hgMhkRfIETe5KdNqQC+Q+t85fciuv+N8yn7VdLpD7vMbb3HnOZ/BGfIHO9G0u0CCqadXAefZdeGW+Rt94C4lLEt1pz07cg3d0yVvIvV0efZ+7iYfrHE68xj+9hdDznH/9Gn8EGAA4RW6oyotsbAAAAABJRU5ErkJggg==";
+
+	/**
+	* @brief function of water transform model 
+	* @param t target
+	* @param s source
+	* @param time time
+	*/
+	function fnWave(t, s, time){
+		var lambda = 400;
+		z = s.a * Math.sin(2 * Math.PI * 
+			(s.freq * time - 
+			Math.sqrt((t.x - s.x) * (t.x - s.x) + (t.y - s.y) * (t.y - s.y)) / lambda)
+			 + s.phi);
+		return z;
+	}
+
+	/**
+	* @brief generate wave sources
+	* @param num number of sources
+	*/
+	function genWaveSource(num){
+
+		var sources = new Array(num);
+
+		for (var i = 0; i < num; i++) {
+		 	s = new Object();
+		 	s.a = 50 * Math.random();
+		 	s.phi = 2 * Math.PI * Math.random();
+		 	s.freq = 0.3 * Math.random();
+		 	s.x = rangeWidth * Math.random();
+		 	s.y = rangeHeight * Math.random();
+		 	sources[i] = s;
+		}; 		
+		return sources;
+	}
+
+	/**
+	* @brief sample points from xy plane
+	* @param num number of target points
+	*/
+	function sampleTarget(num){
+		var targets = new Array(num);
+		for( var i = 0; i < num; i++){
+				t = new Object();
+				t.x = rangeWidth * Math.random();
+				t.y = rangeHeight * Math.random();
+				t.z = 0;
+				targets[i] = t;
+		}		
+		return targets;
+	}
+
+	/**
+	* @brief multi sources works on a target
+	* @param t target
+	* @param sources the array of sources
+	* @param time time
+	*/
+	function fnMultiSourceWave(t, sources, time){
+		var zAcc = 0;
+		for(var i = 0; i < sources.length; i++){
+			s = sources[i];
+			z = fnWave(t, s, time);
+			zAcc += z;
+		}
+		return zAcc;
+	}
+
+	/**
+	* @brief calculate the surface of water, currently a line of water surface
+	* @param sources the array of sources
+	* @param time time
+	*/
+	function calcWaveSurface(sources,targets, time){
+		for( var i = 0; i < targets.length; i++){
+				t = targets[i];
+				t.z = fnMultiSourceWave(t, sources, time);
+		}
+	}
+
+	/**
+	* @brief draw the wave
+	*/
+	function drawWave(){
+		var date = new Date();
+		var seconds = date.getSeconds() + date.getMilliseconds() / 1000;
+		sources = waveSourcePoints;
+		targets = waveTargetPoints;
+		calcWaveSurface(sources, targets, seconds);
+
+		var waveCanvas = document.getElementById("wave");
+		var ctx = waveCanvas.getContext("2d");
+
+		var width = waveCanvas.width;
+		var height = waveCanvas.height;
+		// clear the canvas
+		ctx.fillStyle = 'rgba(0,0,0,10)';
+		//ctx.clearRect(0,0,width,height);
+		ctx.fillRect(0,0,width,height);
+		
+		for(var i = targets.length - 1; i >= 0; i--){
+			p = targets[i];
+			//ctx.lineTo(p.x, p.z + waveCanvas.height/2);
+			//ctx.drawImage(particle, p.x, p.z + height / 2);
+			//ctx.arc(p.x, p.z + height / 2,5, 0,Math.PI*2,true);
+			d = 1500 / (300 + p.y);
+			var intensity = 100 / (100 + p.y);
+			//intensity = 1;
+			if(intensity > 1)
+				intensity = 1;
+			ctx.fillStyle="rgba(" + Math.floor(255*intensity) + "," + 
+									Math.floor(255*intensity) + "," + 
+									Math.floor(255*intensity) + ", 255)";
+			ctx.fillRect(p.x, p.z + height / 2,d,d);
+		}
+
+		ctx.fill();
+		window.requestAnimationFrame(drawWave);
+	}
+
+	function init(){
+		waveSourcePoints = genWaveSource(10);
+		waveTargetPoints = sampleTarget(1000);
+		window.requestAnimationFrame(drawWave);
+	}
+
+	init();
+</script>

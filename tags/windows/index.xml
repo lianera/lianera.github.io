@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on Lianera</title>
+    <link>https://lianera.github.io/tags/windows/</link>
+    <description>Recent content in Windows on Lianera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 01 Dec 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>装甲之战</title>
+      <link>https://lianera.github.io/2012/panzerwar/</link>
+      <pubDate>Sat, 01 Dec 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2012/panzerwar/</guid>
+      <description>简介 坦克游戏，通过控制坦克消灭敌人获取胜利。 技术 这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Wi</description>
+    </item>
+    
+    <item>
+      <title>俄罗斯方块（一）</title>
+      <link>https://lianera.github.io/2008/tetris/</link>
+      <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2008/tetris/</guid>
+      <description>简介 经典的俄罗斯方块。 技术 中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用</description>
+    </item>
+    
+    <item>
+      <title>贪吃蛇（一）</title>
+      <link>https://lianera.github.io/2008/snake1/</link>
+      <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2008/snake1/</guid>
+      <description>简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用</description>
+    </item>
+    
+    <item>
+      <title>按键助手</title>
+      <link>https://lianera.github.io/2008/keyhelper/</link>
+      <pubDate>Sun, 12 Oct 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2008/keyhelper/</guid>
+      <description>简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>图像处理 on Lianera</title>
+    <link>https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</link>
+    <description>Recent content in 图像处理 on Lianera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>快速高斯模糊综述</title>
+      <link>https://lianera.github.io/2017/fast-gaussian/</link>
+      <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/fast-gaussian/</guid>
+      <description>高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</description>
+    </item>
+    
+    <item>
+      <title>多图片平均法降噪</title>
+      <link>https://lianera.github.io/2015/average-denoise/</link>
+      <pubDate>Wed, 09 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2015/average-denoise/</guid>
+      <description>理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示</description>
+    </item>
+    
+  </channel>
+</rss>

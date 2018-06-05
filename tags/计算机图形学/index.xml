@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机图形学 on Lianera</title>
+    <link>https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</link>
+    <description>Recent content in 计算机图形学 on Lianera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 07 Mar 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LtRay 开发备忘录</title>
+      <link>https://lianera.github.io/2017/ltray-memo/</link>
+      <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/ltray-memo/</guid>
+      <description>数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</description>
+    </item>
+    
+    <item>
+      <title>球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</title>
+      <link>https://lianera.github.io/2017/sh-lighting-apply/</link>
+      <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/sh-lighting-apply/</guid>
+      <description>上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</description>
+    </item>
+    
+    <item>
+      <title>LtRay的艰难重构</title>
+      <link>https://lianera.github.io/2017/ltray-refactoring/</link>
+      <pubDate>Wed, 15 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2017/ltray-refactoring/</guid>
+      <description>从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</description>
+    </item>
+    
+    <item>
+      <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</title>
+      <link>https://lianera.github.io/2016/sh-lighting-exp/</link>
+      <pubDate>Tue, 06 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2016/sh-lighting-exp/</guid>
+      <description>简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</description>
+    </item>
+    
+    <item>
+      <title>海水截面模拟</title>
+      <link>https://lianera.github.io/2016/ocean-sectional/</link>
+      <pubDate>Fri, 29 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2016/ocean-sectional/</guid>
+      <description>介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波</description>
+    </item>
+    
+  </channel>
+</rss>

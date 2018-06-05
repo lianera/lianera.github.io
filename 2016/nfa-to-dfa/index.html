@@ -1,0 +1,814 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+
+  
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.41 with theme Tranquilpeak 0.4.3-BETA">
+    <title>NFA转DFA-json数字识别</title>
+    <meta name="author" content="Lianera">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://lianera.github.io/favicon.png">
+    
+
+    
+    <meta name="description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际">
+    <meta property="og:description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="NFA转DFA-json数字识别">
+    <meta property="og:url" content="/2016/nfa-to-dfa/">
+    <meta property="og:site_name" content="Lianera">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Lianera">
+    <meta name="twitter:description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="https://lianera.github.io/images/avatar.jpg">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://lianera.github.io/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+      
+        <link rel="stylesheet"  href="https://lianera.github.io/css/mystyle.css">
+      
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://lianera.github.io/">Lianera</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://lianera.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://lianera.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Lianera</h4>
+        
+          <h5 class="sidebar-profile-bio">Do Something <strong>Cool</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lianera" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://liuqinh2s.github.io/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">liuqinh2s&#39; blog</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      NFA转DFA-json数字识别
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2016-10-30T00:00:00Z">
+        
+  
+  
+  
+  
+    2016年 十月 30日
+  
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>json的主页上，提供了number类型的符号识别过程，如下：</p>
+
+<p><img src="json.png" alt="" /></p>
+
+<p>图片引用：<a href="http://www.json.org/json-zh.html">http://www.json.org/json-zh.html</a>
+实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。
+首先把这个NFA规范一下，写成状态与箭头的形式：</p>
+
+<p><img src="1.png" alt="" /></p>
+
+<p>NFA转DFA最常用的方法是子集法，不过由于这个状态机的字符类型比较多，使用表格方式会使得表格很大并且很稀疏。这里用简便的记法，直接从左至右进行确定化：
+考虑初始状态0，ε-closure(0)={0,1}，就直接简记为{0,1}状态，写出它相邻的状态，如果相邻状态包含ε，则做同样的处理：</p>
+
+<p><img src="2.png" alt="" /></p>
+
+<p>然后再选定{2,6,10}，写出它的相邻状态：</p>
+
+<p><img src="3.png" alt="" /></p>
+
+<p>用同样的方式，写出1、{2,3,6,10}的相邻状态，得到状态4和{7,8}，这里需要注意的是1跟{0,1}是两个不同的状态。并且{2,3,6,10}是包含{2,6,10}的，因此可以利用之前{2,6,10}的结果来简化运算，所以只需要考虑3的相邻状态，有点像动态规划思想。重复以上步骤，最终得到一个不含ε的DFA：</p>
+
+<p><img src="4.png" alt="" /></p>
+
+<p>得到这个DFA之后并不一定是最简的，我们可以对它进行简化。首先为了方便，对它的状态都用字母替代吧：</p>
+
+<p><img src="5.png" alt="" /></p>
+
+<p>简化的主要思路就是将状态的集合不断划分成子集。划分的办法是用一个集合相关的符号去测试这个集合中的状态，如果发现某个状态测试结果与其他状态不同，则划分状态，如果无法区分，则放到同一个集合中。
+比如上述的DFA，首先可以肯定的是所有状态可以划分成“非终止状态”和“终止状态”两个集合，因为非终止状态总要转换到终止状态的。由于状态机是从左至右写出的，所以通常情况下，只需要考虑相邻的状态是否等价。并且，如果把这个状态机写成状态转换表，表项是很稀疏的，所以实际上可以合并的状态很少。具体过程如下：
+对于终结符{A,C,F,G}每两个都互不等价，因此划分成四个状态{A},{C},{F},{G}
+对于非终结符{S,B,D,E,G}，E和G不等价，原因在于E对于+/-结果为G，而G不能通过+/-，并且E,G可以通过digit转换到H，而其他都不能这样转换，所以原集合可以划分成{S,B,D},{E},{G}
+{S,B}和{D}很明显是不等价的，而对于S和B，唯一的区别就是S能够通过-转换到B，而B不能通过-
+任何状态都不能合并，所以上述的状态机已经不能再简化。
+正规式把上面的状态机写出来就是（非通常的正则表达式语法）：
+A=0|-0
+C=([1-9]|-[1-9])d*
+F=(A|C).dd*
+H=(A|C|F)(e|E)(d|(+|-)d)d*</p>
+
+<p>有了以上的状态机，我们就可以实现一个number识别程序了：</p>
+
+<pre><code class="language-cpp">#include &lt;assert.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;iostream&gt;
+
+enum STATE{ S, A, B, C, D, E, F, G, H };
+
+const char* RecognizeNumber(const char* str, STATE* last_state)
+{   
+    STATE state = S;
+    *last_state = S;
+    const char *p = str;
+    for (; *p != '\0'; p++){
+        const char&amp; ch = *p;
+        switch (state){
+        case S:
+            if (ch == '0')      state = A;
+            else if (ch == '-') state = B;
+            else if (ch &gt;= '1' &amp;&amp; ch &lt;= '9')state = C;
+            else return p;
+            break;
+        case A:
+            if (ch == 'e' || ch == 'E') state = E;
+            else if (ch == '.') state = D;
+            else return p;
+            break;
+        case B:
+            if (ch == '0')  state = A;
+            else if (ch &gt;= '1' &amp;&amp; ch &lt;= '9') state = C;
+            else return p;
+            break;
+        case C:
+            if (isdigit(ch)) state = C;
+            else if (ch == '.') state = D;
+            else if (ch == 'e' || ch == 'E') state = E;
+            else return p;
+            break;
+        case D:
+            if (isdigit(ch)) state = F;
+            else return p;
+            break;
+        case E:
+            if (isdigit(ch)) state = H;
+            else if (ch == '+' || ch == '-') state = G;
+            else return p;
+            break;
+        case F:
+            if (isdigit(ch)) state = F;
+            else if (ch == 'e' || ch == 'E') state = E;
+            else return p;
+            break;
+        case G:
+            if (isdigit(ch)) state = H;
+            else return p;
+            break;
+        case H:
+            if (isdigit(ch)) state = H;
+            else return p;
+            break;
+        default:
+            assert(true);
+        }
+        *last_state = state;
+
+    }
+    return p;
+}
+
+void Recognize(const char* s)
+{
+    STATE state;
+    const char* endp = RecognizeNumber(s, &amp;state);
+    bool onterminal = (state == A || state == C || state == F || state == H);
+    std::cout &lt;&lt; s &lt;&lt; (*endp == '\0' &amp;&amp; onterminal ? &quot;\tYes&quot; : &quot;\tNo&quot;) &lt;&lt; std::endl;
+}
+
+int main()
+{
+    Recognize(&quot;0&quot;);
+    Recognize(&quot;-1&quot;);
+    Recognize(&quot;23&quot;);
+    Recognize(&quot;-3.4&quot;);
+    Recognize(&quot;5e6&quot;);
+    Recognize(&quot;5.3E+7&quot;);
+    Recognize(&quot;-&quot;);
+    Recognize(&quot;-0.4e&quot;);
+    Recognize(&quot;-0.&quot;);
+    Recognize(&quot;3.6a&quot;);
+    Recognize(&quot;-3.6ea&quot;);
+    Recognize(&quot;053ab4&quot;);
+    Recognize(&quot;01&quot;);
+    Recognize(&quot;00.01&quot;);
+
+    return 0;
+}
+</code></pre>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2016/sh-lighting-exp/" data-tooltip="球谐光照（Spherical Harmonics Lighting）及其应用-实验篇">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2016/ocean-sectional/" data-tooltip="海水截面模拟">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2016/nfa-to-dfa/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2016/nfa-to-dfa/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2016/nfa-to-dfa/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Lianera. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2016/sh-lighting-exp/" data-tooltip="球谐光照（Spherical Harmonics Lighting）及其应用-实验篇">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2016/ocean-sectional/" data-tooltip="海水截面模拟">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2016/nfa-to-dfa/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2016/nfa-to-dfa/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2016/nfa-to-dfa/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2016%2Fnfa-to-dfa%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2016%2Fnfa-to-dfa%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2016%2Fnfa-to-dfa%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Lianera</h4>
+    
+      <div id="about-card-bio">Do Something <strong>Cool</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Graduate Student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Wuhan China
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="搜索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/fast-gaussian/">
+                <h3 class="media-heading">快速高斯模糊综述</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/magicplainv2/">
+                <h3 class="media-heading">Magic Plain v2</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/synthetic-rgbd/">
+                <h3 class="media-heading">RGB-D数据集的合成</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/ltray-memo/">
+                <h3 class="media-heading">LtRay 开发备忘录</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/sh-lighting-apply/">
+                <h3 class="media-heading">球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/ltray-refactoring/">
+                <h3 class="media-heading">LtRay的艰难重构</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/complicated-compound-derivative/">
+                <h3 class="media-heading">复杂多元复合函数的导数和雅克比矩阵</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/gradient-descent/">
+                <h3 class="media-heading">梯度下降法及其实现</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2016/sh-lighting-exp/">
+                <h3 class="media-heading">球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2016/nfa-to-dfa/">
+                <h3 class="media-heading">NFA转DFA-json数字识别</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         25 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://lianera.github.io/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://lianera.github.io/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+    
+  </body>
+</html>
+
