@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.41 with theme Tranquilpeak 0.4.3-BETA">
-    <title>Sudoku</title>
+    <title>本征图像的合成</title>
     <meta name="author" content="Lianera">
     <meta name="keywords" content="">
 
@@ -28,15 +28,15 @@
     
 
     
-    <meta name="description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复">
-    <meta property="og:description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复">
+    <meta name="description" content="从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需">
+    <meta property="og:description" content="从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Sudoku">
-    <meta property="og:url" content="/2015/sudoku/">
+    <meta property="og:title" content="本征图像的合成">
+    <meta property="og:url" content="/2018/synthetic-intrinsic-images/">
     <meta property="og:site_name" content="Lianera">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Lianera">
-    <meta name="twitter:description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复">
+    <meta name="twitter:description" content="从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需">
     
     
 
@@ -47,8 +47,6 @@
       <meta property="og:image" content="https://lianera.github.io/images/avatar.jpg">
     
 
-    
-      <meta property="og:image" content="https://lianera.github.io/thumbnails/sudoku.png">
     
     
     
@@ -197,19 +195,19 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      Sudoku
+      本征图像的合成
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2015-01-10T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-07-12T00:00:00Z">
         
   
   
   
   
-    2015年 一月 10日
+    2018年 七月 12日
   
 
       </time>
@@ -223,72 +221,51 @@
             <div class="main-content-wrap">
               
 
+<p>从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需要用到比较准确的本征图像，最好的办法还是用3D软件来进行渲染。</p>
+
+<p>对于渲染的算法过程来说，其复杂度远远高于本征分解的方法。尤其是对于渲染软件，最简单的都是以BRDF为基础，通过渲染方程进行光线跟踪来渲染的。而本征分解至今仍然是假设物体都是lambertian，并且以Retinex理论为基础的，也就是I=R*L，把图像看作是物体反射率和光照的结合。这就有点不好办了，因为渲染的图像可能有各向异性、反射、折射、发光等各种情况，这些没办法单单用物体反射率和光照来组合。所以在建模的时候需要注意一下，都应该用lambertian材质，高光也可以考虑在内，折射和反射就不能加了。</p>
+
+<h2 id="建模">建模</h2>
+
+<p>这里用blender来进行建模，用cycles渲染，虽然blender的操作方式是我见过最反人类的，不过看在是免费的也无可厚非了。模型的构建无非就是放几个模型，加上材质和纹理，设置好光照和相机就行了，只是要注意加材质的时候最好只加Diffuse BRDF和Glossy BRDF。</p>
+
+<h2 id="渲染">渲染</h2>
+
+<p>渲染是关键步骤，首先需要在Render Layers中的Passes下面开启Diffuse和Glossy的几个选项</p>
+
+<p><img src="1.png" alt="" /></p>
+
+<p>这里面的Direct指的是直接光源照射，Indirect指的是其他物体反射过来的光线，Color指的是物体反射率。关于Indirect要不要加到Shading里面呢，我个人认为应该是要加的，按照Retinex理论，除了物体自身反射率，其他不管是哪里来的光线，都应该算是Shading，不过这样的话，可能虽然加的灯源只有白色，但是因为物体相互之间互相反射光线，所以Shading里面会包含其它颜色。另外一个问题就是如果场景里面加入了高光，那合成Shading的时候，也应该把高光算进去。</p>
+
+<p>然后切换到Node Editor，Node tree type选择Compositing，并开启Use Nodes，如图下所示</p>
+
+<p><img src="2.png" alt="" /></p>
+
+<p>我们把Diffuse和Gloss的Direct、InDirect光照都加起来，这样就能够得到Shading图像。把Diffuse和Gloss的Color加起来，就能得到Albedo图像。值得注意的是，这里的加是指的图像每个通道每个像素相加，所以应该用Mix结点，然后改成Add。结点树如下图所示：</p>
+
+<p><img src="nodes.png" alt="" /></p>
+
+<p>然后进行渲染，即可获得Image、Albedo和Shading图像：</p>
+
 <table>
 <thead>
 <tr>
-<th><img src="sudoku.png" alt="" /></th>
-<th><img src="sudoku2.png" alt="" /></th>
-<th><img src="sudoku3.png" alt="" /></th>
+<th>Image</th>
+<th>Albedo</th>
+<th>Shading</th>
 </tr>
 </thead>
 
 <tbody>
+<tr>
+<td><img src="image.png" alt="Image" /></td>
+<td><img src="albedo.png" alt="Albedo" /></td>
+<td><img src="shading.png" alt="Shading" /></td>
+</tr>
 </tbody>
 </table>
 
-<h2 id="简介">简介</h2>
-
-<p>数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复。</p>
-
-<p>这个程序能够判断重复的数字，并能够根据给定的题目进行自动解题。</p>
-
-<h2 id="技术">技术</h2>
-
-<p>程序可以分为四个模块，分别如下：</p>
-
-<p>核心模块（Core）：负责游戏逻辑。</p>
-
-<p>用户界面模块（Gui）：对界面进行生成和事件的管理。</p>
-
-<p>人工智能模块（Ai）：用于数独的自动求解。</p>
-
-<p>测试模块（test）：在开发的各个阶段进行模块测试。</p>
-
-<h3 id="逻辑分析">逻辑分析</h3>
-
-<p>数独对于每一个数字，必须满足一行、一列、一宫格都没有与之相同的数字。因此，游戏应该在每次改变矩阵数据时检测发生冲突的数字。</p>
-
-<p>为了减小算法的复杂度，这里设置一个数组，用来累加同一行、同一列、同一个宫格各个数字出现的数量，当且仅当数字对应的数组值为0时，该数字不冲突，否则发生冲突。通过分析不难发现该算法的复杂度为O(n)。</p>
-
-<h3 id="ai算法设计思路">AI算法设计思路</h3>
-
-<h4 id="问题分析">问题分析</h4>
-
-<p>从数独的规则上面不难看出，要求出某一个数独的所有解，对于计算机来说，实际上是一个NP完全问题。对于NP完全问题，只能通过逐个试探或猜测的方法求得可行解。由于需要求出所有的可行解，所以必须通过遍历的方法，尝试所有的潜在解法。</p>
-
-<p>在尝试填解的过程中，必须对每一步进行冲突检测，为了进一步提高算法的效率，Ai自身实现了一个避免冲突的算法，提供一个获取可填数字列表的函数，该函数的实现过程是：维持一个数字数组，对于目标数字所在行列、宫格的每一个数字进行遍历，没遇到一个不为零的数，对应数组的值加一，遍历完成时，如果数组元素的值为零，则表示该数可填。</p>
-
-<h4 id="解决方案">解决方案</h4>
-
-<p>在这里，由于需要遍历所有的解空间，所以使用的算法是回溯法。</p>
-
-<p>回溯法在包含问题的所有解的解空间树中，按照深度优先搜索的策略，从根结点出发深度探索解空间树。当探索到某一结点时，要先判断该结点是否包含符合数独规则的解，如果包含，就从该结点出发继续探索下去，如果该结点不包含问题的解，则逐层向其祖先结点回溯。（也即对隐式图的深度优先搜索算法）。 用回溯法求问题的所有解时，一直回溯到根，且根结点的所有可行的子树都要已被搜索遍则束。</p>
-
-<h3 id="ai算法性能分析">AI算法性能分析</h3>
-
-<p>AI的算法是回溯法，其解空间的大小由给定的题目决定。根据相关资料可知，空的数独解空间约为6.67×10的21次方，而对于标准数独，解空间是唯一的，因此，很难通过理论分析判定该算法的复杂度。但是，可以通过实测得到近似的平均求解时间。</p>
-
-<p>通过多次测试去平均值，该AI算法解决一个数独用的时间平均为0.453ms。</p>
-
-<h2 id="环境">环境</h2>
-
-<ul>
-<li>Intellij IDEA</li>
-</ul>
-
-<p><a href="https://github.com/lianera/archives/tree/master/2015/sudoku">源代码</a></p>
-
-<p><a href="https://github.com/lianera/archives/releases/download/20180514/sudoku.jar">可执行文件</a></p>
+<p>注意到shading图上面的球和锥体边缘有些瑕疵，这是因为光线跟踪采样的时候是进行的随机采样，这样Diffuse和Gloss的边缘就会因为随机采样而不一致，这个问题理论上是无法解决的。如果一定要避免边缘瑕疵，可以只用Diffuse材质。</p>
 
               
             </div>
@@ -301,11 +278,7 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/java/">Java</a>
-
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
-
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
 
                   </div>
                 
@@ -318,7 +291,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2015/cv-mouse/" data-tooltip="基于计算机视觉的虚拟鼠标">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -326,7 +299,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2014/cpu-step-by-step/" data-tooltip="简单CPU设计实践">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2017/fast-gaussian/" data-tooltip="快速高斯模糊综述">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -344,19 +317,19 @@
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2015/sudoku/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/synthetic-intrinsic-images/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2015/sudoku/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/synthetic-intrinsic-images/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2015/sudoku/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/synthetic-intrinsic-images/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -394,7 +367,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2015/cv-mouse/" data-tooltip="基于计算机视觉的虚拟鼠标">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -402,7 +375,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2014/cpu-step-by-step/" data-tooltip="简单CPU设计实践">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2017/fast-gaussian/" data-tooltip="快速高斯模糊综述">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -420,19 +393,19 @@
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2015/sudoku/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/synthetic-intrinsic-images/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2015/sudoku/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/synthetic-intrinsic-images/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2015/sudoku/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/synthetic-intrinsic-images/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -456,19 +429,19 @@
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2015%2Fsudoku%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2018%2Fsynthetic-intrinsic-images%2F">
           <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2015%2Fsudoku%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2018%2Fsynthetic-intrinsic-images%2F">
           <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2015%2Fsudoku%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2018%2Fsynthetic-intrinsic-images%2F">
           <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
         </a>
       </li>

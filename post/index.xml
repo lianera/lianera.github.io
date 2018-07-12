@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Lianera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://lianera.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>本征图像的合成</title>
+      <link>https://lianera.github.io/2018/synthetic-intrinsic-images/</link>
+      <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2018/synthetic-intrinsic-images/</guid>
+      <description>从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需</description>
+    </item>
     
     <item>
       <title>快速高斯模糊综述</title>
