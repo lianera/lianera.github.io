@@ -6,10 +6,19 @@
     <description>Recent content in 图像处理 on Lianera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 Jul 2018 15:48:41 +0800</lastBuildDate>
     
 	<atom:link href="https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DFT和DCT以及空间域的高斯滤波对比</title>
+      <link>https://lianera.github.io/2018/frequency-gaussian/</link>
+      <pubDate>Sat, 21 Jul 2018 15:48:41 +0800</pubDate>
+      
+      <guid>https://lianera.github.io/2018/frequency-gaussian/</guid>
+      <description>最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶</description>
+    </item>
     
     <item>
       <title>快速高斯模糊综述</title>
