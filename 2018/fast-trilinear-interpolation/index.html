@@ -1,0 +1,827 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+
+  
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.41 with theme Tranquilpeak 0.4.3-BETA">
+    <title>快速三线性插值</title>
+    <meta name="author" content="Lianera">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://lianera.github.io/favicon.png">
+    
+
+    
+    <meta name="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小">
+    <meta property="og:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="快速三线性插值">
+    <meta property="og:url" content="/2018/fast-trilinear-interpolation/">
+    <meta property="og:site_name" content="Lianera">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Lianera">
+    <meta name="twitter:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="https://lianera.github.io/images/avatar.jpg">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://lianera.github.io/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+      
+        <link rel="stylesheet"  href="https://lianera.github.io/css/mystyle.css">
+      
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="5">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://lianera.github.io/">Lianera</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://lianera.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="5">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://lianera.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">Lianera</h4>
+        
+          <h5 class="sidebar-profile-bio">Do Something <strong>Cool</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://lianera.github.io/about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lianera" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://liuqinh2s.github.io/blog/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">liuqinh2s&#39; blog</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="5"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      快速三线性插值
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-25T10:48:41&#43;08:00">
+        
+  
+  
+  
+  
+    2018年 七月 25日
+  
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<p>最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。</p>
+
+<h2 id="原理">原理</h2>
+
+<p>借用一张常用的三线性插值示意图：</p>
+
+<p><img src="trilinear_cube.png" alt="" /></p>
+
+<p>三线性插值实际上可以通过7次线性插值实现。首先假定使用左手坐标系，z轴朝上，在x方向上对四条棱边进行四次插值，得到每条边上的四个点的值c00,c01,c10,c11，然后在y方向上对四个点进行插值，得到两条线段以及中间的两个点的值c0,c1，然后在z方向上插值，得到最终的c点的值。</p>
+
+<p>我们知道，对于线性插值来说，其公式为：</p>
+
+<p><img src="linear.svg" alt="" /></p>
+
+<p>其中包括四次加减运算，三次乘除运算，因此总的来说，进行一次三线性插值，运算总数为28次加减运算，21次乘除运算，并且往体素中寻找位置并且取值还要花费大量的运算，对于大图像来说，总的运算耗费的时间非常大。</p>
+
+<p>假定立方体原点为(x0,y0,z0)，离原点最远的点为(x1,y1,z1)，立方体的每个顶点的值在体素中是知道的。值得注意的是，虽然现在计算的坐标位置实际上是插值时的位置，但是实际上插值只与待求点(x,y,z)与(x0,y0,z0)和(x1,y1,z1)的相对位置比有关，不过为了后续插值的方便，建议首先将点映射到目标坐标上，这样在插值的时候就不需要再进行坐标映射。首先对x方向上插值，得到yz平面上四个点的值分别为f1,f2,f3,f4：</p>
+
+<p><img src="f1.svg" alt="" /></p>
+
+<p><img src="f2.svg" alt="" /></p>
+
+<p><img src="f3.svg" alt="" /></p>
+
+<p><img src="f4.svg" alt="" /></p>
+
+<p>我们可以把它们转换成矩阵的形式，比如：</p>
+
+<p><img src="a1.svg" alt="" /></p>
+
+<p><img src="b1.svg" alt="" /></p>
+
+<p><img src="m1.svg" alt="" /></p>
+
+<p><img src="f1m.svg" alt="" /></p>
+
+<p>注意一下，这里面隐含了x1和x0不能相等，如果两者相等，则f1=f(x0,y0,z0)=f(x1,y0,z0)恒成立，所以直接设置成x1=1,x0=0，再用上述公式即可。注意到，这里面的矩阵是不包含未知数的，这是个常数矩阵。这样一来，我们可以事先在体素上计算好矩阵，最后再应用到图像上就好了。当然我们这还只是一次线性插值，现在继续插值。我们令上面式子f1,f2,f3,f4中右侧矩阵分别为M1,M2,M3,M4，因为是常数矩阵，我们将他们用常数a,b替换。同样利用线性插值方法，现在在y轴方向上插值，计算1,2插值的点5,以及3,4插值的点6</p>
+
+<p><img src="f5.svg" alt="" /></p>
+
+<p><img src="f6.svg" alt="" /></p>
+
+<p>我们将a,b代入M，并且简化一下，同样提取出变量和常量，可以将f5和f6成矩阵的形式，跟上面一样，我们将常数矩阵用四个常数替换：</p>
+
+<p><img src="f5m.svg" alt="" /></p>
+
+<p><img src="m5.svg" alt="" /></p>
+
+<p><img src="c5.svg" alt="" /></p>
+
+<p>这里当y1=y0时，f5=f1=f2恒成立，同样地，事先设置一下y1=1,y0=0即可。</p>
+
+<p>得到了点5和点6的值后，我们就剩下最后一个插值，沿z方向上进行插值，得到点7的值f7。不过f7表示成矩阵有点困难，因为包含三个变量x,y,z，需要三个维度的常数矩阵，也就是三阶张量，不过好在变量z在表达式中只包含常数项和一次项，因此，我们将z的常数项和z的一次项用两个矩阵表示：</p>
+
+<p><img src="mc.svg" alt="" /></p>
+
+<p><img src="mz.svg" alt="" /></p>
+
+<p>常数项先计算成中间值h1~h8，然后f7的计算如下图所示</p>
+
+<p><img src="f7.svg" alt="" /></p>
+
+<p>当z1=z0时，则令z1=1,z0=0。</p>
+
+<p>上式计算出来的f7即为三线性插值的结果。注意上面的h1~h8在插值前都是已知的，我们可以在插值前，首先计算好每个体素的h值，然后最后再应用f7的计算公式，直接求出f7即可。对于常数项的计算，因为有许多项公用分母，所以可以把分子和分母分开计算。</p>
+
+<p><img src="f7result.svg" alt="" /></p>
+
+<p>因此插值的时候总共需要进行的运算为7次乘法和7次加法，并且h1~h8是包含在小体素内的，对应于插值之后的大块区域，因此插值后的一块区域是公用h1~h8的，在插值的时候可以按区域插值，从而提高cache的效率。</p>
+
+<p>当然f7也可以写成这样：</p>
+
+<p><img src="f7alter.svg" alt="" /></p>
+
+<h2 id="实现">实现</h2>
+
+<p>预计算参数的实现直接按照上面的常数参数计算即可，因为预计算是在小的体素上面实现的，所以不用太担心速度。</p>
+
+<pre><code class="language-cpp">/* precompute trilinear coefficients
+* v: f(x0,y0,z0), f(x1,y0,z0), f(x0,y1,z0), f(x1,y1,z0)
+*    f(x0,y0,z1), f(x1,y0,z1), f(x0,y1,z1), f(x1,y1,z1)
+*/
+template &lt;typename T&gt;
+array&lt;T,8&gt; PreComp(float x0, float y0, float z0, 
+	float x1, float y1, float z1, const array&lt;T,8&gt;&amp; v)
+{
+	const float epsilon = 10e-6f;
+	if (x1 - x0 &lt; epsilon) { x1 = 1.f; x0 = 0.f; }
+	if (y1 - y0 &lt; epsilon) { y1 = 1.f; y0 = 0.f; }
+	if (z1 - z0 &lt; epsilon) { z1 = 1.f; z0 = 0.f; }
+
+	float deno = (x1 - x0)*(y1 - y0)*(z1 - z0);
+	float nume = 1.f / deno;
+
+	T a1 = x1 * v[0] - x0 * v[1];
+	T a2 = x1 * v[2] - x0 * v[3];
+	T a3 = x1 * v[4] - x0 * v[5];
+	T a4 = x1 * v[6] - x0 * v[7];
+	T b1 = v[1] - v[0];
+	T b2 = v[3] - v[2];
+	T b3 = v[5] - v[4];
+	T b4 = v[7] - v[6];
+	
+	T c5 = y1 * a1 - y0 * a2;
+	T c6 = y1 * a3 - y0 * a4;
+	T d5 = a2 - a1;
+	T d6 = a4 - a3;
+	T e5 = y1 * b1 - y0 * b2;
+	T e6 = y1 * b3 - y0 * b4;
+	T f5 = b2 - b1;
+	T f6 = b4 - b3;
+	
+	T h1 = z1 * c5 - z0 * c6;
+	T h2 = z1 * d5 - z0 * d6;
+	T h3 = z1 * e5 - z0 * e6;
+	T h4 = z1 * f5 - z0 * f6;
+	T h5 = c6 - c5;
+	T h6 = d6 - d5;
+	T h7 = e6 - e5;
+	T h8 = f6 - f5;
+
+	array&lt;T, 8&gt; h = {h1*nume, h2*nume, h3*nume, h4*nume, 
+		h5*nume, h6*nume, h7*nume, h8*nume};
+	return h;
+}
+</code></pre>
+
+<p>而插值的时候，速度就是比较重要的了，因为大体素与小体素对应的时候，block是共享参数的，并且即使是变量x,y,z也可以预先计算一部分，不用每个cell都计算。具体来说，插值的时候直接应用f7的计算公式即可：</p>
+
+<pre><code class="language-cpp">T val = zf * (yf*(h[7] * xf + h[5]) + h[6] * xf + h[4])
+      + yf * (h[3] * xf + h[1]) + h[2] * xf + h[0];
+
+</code></pre>
+
+<h2 id="结果">结果</h2>
+
+<p>对一个20x20x20的小体素进行预计算，然后用上述的三线性插值放大5倍，形成一个100x100x100大小的体素。</p>
+
+<p>原体素：</p>
+
+<p><img src="origin.png" alt="" /></p>
+
+<p>三线性插值之后：</p>
+
+<p><img src="trilineared.png" alt="" /></p>
+
+<p><a href="main.cpp">完整代码</a></p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2018/frequency-gaussian/" data-tooltip="DFT和DCT以及空间域的高斯滤波对比">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/fast-trilinear-interpolation/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/fast-trilinear-interpolation/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/fast-trilinear-interpolation/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Lianera. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2018/frequency-gaussian/" data-tooltip="DFT和DCT以及空间域的高斯滤波对比">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/fast-trilinear-interpolation/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/fast-trilinear-interpolation/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/fast-trilinear-interpolation/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2018%2Ffast-trilinear-interpolation%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2018%2Ffast-trilinear-interpolation%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2018%2Ffast-trilinear-interpolation%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://lianera.github.io/images/avatar.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">Lianera</h4>
+    
+      <div id="about-card-bio">Do Something <strong>Cool</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Graduate Student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Wuhan China
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="搜索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2018/fast-trilinear-interpolation/">
+                <h3 class="media-heading">快速三线性插值</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2018/frequency-gaussian/">
+                <h3 class="media-heading">DFT和DCT以及空间域的高斯滤波对比</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2018/synthetic-intrinsic-images/">
+                <h3 class="media-heading">本征图像的合成</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/fast-gaussian/">
+                <h3 class="media-heading">快速高斯模糊综述</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/magicplainv2/">
+                <h3 class="media-heading">Magic Plain v2</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/synthetic-rgbd/">
+                <h3 class="media-heading">RGB-D数据集的合成</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/ltray-memo/">
+                <h3 class="media-heading">LtRay 开发备忘录</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/sh-lighting-apply/">
+                <h3 class="media-heading">球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/ltray-refactoring/">
+                <h3 class="media-heading">LtRay的艰难重构</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://lianera.github.io/2017/complicated-compound-derivative/">
+                <h3 class="media-heading">复杂多元复合函数的导数和雅克比矩阵</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         28 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://lianera.github.io/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://lianera.github.io/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+    
+  </body>
+</html>
+

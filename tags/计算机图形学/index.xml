@@ -6,10 +6,19 @@
     <description>Recent content in 计算机图形学 on Lianera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 07 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Jul 2018 10:48:41 +0800</lastBuildDate>
     
 	<atom:link href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>快速三线性插值</title>
+      <link>https://lianera.github.io/2018/fast-trilinear-interpolation/</link>
+      <pubDate>Wed, 25 Jul 2018 10:48:41 +0800</pubDate>
+      
+      <guid>https://lianera.github.io/2018/fast-trilinear-interpolation/</guid>
+      <description>最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小</description>
+    </item>
     
     <item>
       <title>LtRay 开发备忘录</title>
