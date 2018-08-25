@@ -1,5 +1,9 @@
 
 
+  
+    
+  
+
 
   
 
@@ -16,25 +20,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.41 with theme Tranquilpeak 0.4.3-BETA">
-    <title>游戏开发</title>
+    <title>三路快速排序</title>
     <meta name="author" content="Lianera">
     <meta name="keywords" content="">
 
     <link rel="icon" href="https://lianera.github.io/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://lianera.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/index.xml">
-    
 
     
-    <meta name="description" content="Hugo tranquilpeak theme demo">
-    <meta property="og:description" content="Hugo tranquilpeak theme demo">
+    <meta name="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2">
+    <meta property="og:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="游戏开发">
-    <meta property="og:url" content="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">
+    <meta property="og:title" content="三路快速排序">
+    <meta property="og:url" content="/2018/three-way-quicksort/">
     <meta property="og:site_name" content="Lianera">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Lianera">
-    <meta name="twitter:description" content="Hugo tranquilpeak theme demo">
+    <meta name="twitter:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2">
     
     
 
@@ -73,7 +75,7 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="2">
+      <header id="header" data-behavior="5">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
     <a class="header-title-link" href="https://lianera.github.io/">Lianera</a>
@@ -93,7 +95,7 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="2">
+      <nav id="sidebar" data-behavior="5">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
@@ -182,44 +184,30 @@
 </nav>
 
       
-        
 
-      
-      <div id="main" data-behavior="2"
+      <div id="main" data-behavior="5"
         class="
                hasCoverMetaIn
                ">
-        
-          <section class="postShorten-group main-content-wrap">
-            
-            
-              
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
   
-    
+    <h1 class="post-title" itemprop="headline">
+      三路快速排序
+    </h1>
   
-
-
   
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2017/magicplainv2/">
-          Magic Plain v2
-        </a>
-      </h1>
-      
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2017-07-26T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-08-25T00:00:00Z">
         
   
   
   
   
-    2017年 七月 26日
+    2018年 八月 25日
   
 
       </time>
@@ -227,506 +215,108 @@
     
   </div>
 
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面
-      <p>
-        <a href="https://lianera.github.io/2017/magicplainv2/" class="postShorten-excerpt_link link">阅读全文</a>
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2D物体的距离也就是z值进行排序。排序当然快排是首选，但是快排有个缺点是当元素相同的时候，复杂度就变成了O(n^2)，然而2D绘制中z值重复的现象太常见了。除了快排我第一想到的是用红黑树解决这个问题，这样可以一边插入一边排序，最坏情况下也是O(nlogn)。然而红黑树是比较复杂的，而我需要解决的问题只能用C语言。后面发现了一个更好的方法：三路快速排序。普通快速排序在进行划分的时候只划分成左右小于和大于的两个部分，而三路快速排序则考虑了相等元素的影响，划分的时候分成三个区间。</p>
+
+<p><img src="partition.png" alt="" /></p>
+
+<p>算法的实现也不是很复杂，只是在partition阶段要从两个方向往中间划分，方法如下，给定一个数组a以及头元素的位置p，尾元素的位置q，因为需要划分三个区间，所以需要额外两个指针标记小于区间和大于区间的位置，其中lt总是指向小于区间的最后一个元素，gt总是指向大于区间的第一个元素，需要注意的是，一开始小于大于区间长度都为0，所以应该初始化lt=p-1, gt=p+1。然后随机选定一个主元，以及移动指针i从左往右依次与主元比较，如果与主元相等，则直接移到下一个元素；比主元小，则p自增1，于是p指向等于区间的第一个元素，然后将这个元素与i指向的元素进行交换，i再移动到下一个元素。类似的，当i指向元素大于主元时，gt先往左移，然后与i的值交互，不过这个地方需要注意移到i的元素未与主元做比较，所以指针i应该保持不变。
+除此之外，还可以用随机的方法来选择主元，稳定性更强。</p>
+
+<p>和普通快速排序（蓝线）做一下不严谨的比较，对于十万个元素，随着重复率的增强，三路快速排序（红线）效果卓然。</p>
+
+<p><img src="comparison.png" alt="" /></p>
+
+<p><a href="main.c">代码</a></p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2018/fast-trilinear-interpolation/" data-tooltip="快速三线性插值">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-      </p>
-    </div>
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/three-way-quicksort/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/three-way-quicksort/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/three-way-quicksort/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
   </div>
-  
-    <a href="https://lianera.github.io/2017/magicplainv2/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/magicplainv2.png"/>
-      </div>
-    </a>
-  
-</article>
+
 
             
               
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2015/sudoku/">
-          Sudoku
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2015-01-10T00:00:00Z">
-        
-  
-  
-  
-  
-    2015年 一月 10日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复
-      <p>
-        <a href="https://lianera.github.io/2015/sudoku/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2015/sudoku/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/sudoku.png"/>
-      </div>
-    </a>
-  
-</article>
-
             
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2014/game2048/">
-          Game2048
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2014-09-18T00:00:00Z">
-        
-  
-  
-  
-  
-    2014年 九月 18日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 这是一个用Java写的实现2048游戏的程序，加入了人工智能，能够自动运行。 技术 项目引入MVC架构的思想，将逻辑与界面分离。这个程序的难
-      <p>
-        <a href="https://lianera.github.io/2014/game2048/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2014/game2048/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/game2048.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2013/magicplain/">
-          Magic Plain
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2013-12-31T00:00:00Z">
-        
-  
-  
-  
-  
-    2013年 十二月 31日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了
-      <p>
-        <a href="https://lianera.github.io/2013/magicplain/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2013/magicplain/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/magicplain.jpg"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2013/snake2/">
-          贪吃蛇（二）
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2013-07-07T00:00:00Z">
-        
-  
-  
-  
-  
-    2013年 七月 7日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但
-      <p>
-        <a href="https://lianera.github.io/2013/snake2/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2013/snake2/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/snake2.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2012/panzerwar/">
-          装甲之战
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2012-12-01T00:00:00Z">
-        
-  
-  
-  
-  
-    2012年 十二月 1日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 坦克游戏，通过控制坦克消灭敌人获取胜利。 技术 这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Wi
-      <p>
-        <a href="https://lianera.github.io/2012/panzerwar/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2012/panzerwar/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/panzerwar.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2012/blockgame/">
-          俄罗斯方块（二）
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2012-11-20T00:00:00Z">
-        
-  
-  
-  
-  
-    2012年 十一月 20日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 俄罗斯方块游戏。 技术 纯控制台程序，画面全部由字符组成，具有存档功能。 在刚刚学C语言的时候写的。那个时候分模块的概念不是很强，所有函数写在
-      <p>
-        <a href="https://lianera.github.io/2012/blockgame/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2012/blockgame/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/blockgame.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2008/tetris/">
-          俄罗斯方块（一）
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2008-11-26T00:00:00Z">
-        
-  
-  
-  
-  
-    2008年 十一月 26日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 经典的俄罗斯方块。 技术 中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用
-      <p>
-        <a href="https://lianera.github.io/2008/tetris/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2008/tetris/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/tetris.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2008/snake1/">
-          贪吃蛇（一）
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2008-11-26T00:00:00Z">
-        
-  
-  
-  
-  
-    2008年 十一月 26日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用
-      <p>
-        <a href="https://lianera.github.io/2008/snake1/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2008/snake1/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/snake1.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://lianera.github.io/2008/keyhelper/">
-          按键助手
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2008-10-12T00:00:00Z">
-        
-  
-  
-  
-  
-    2008年 十月 12日
-  
-
-      </time>
-    
-    
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自
-      <p>
-        <a href="https://lianera.github.io/2008/keyhelper/" class="postShorten-excerpt_link link">阅读全文</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="https://lianera.github.io/2008/keyhelper/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://lianera.github.io/thumbnails/keyhelper.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
-            
-
-          </section>
-        
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2018 Lianera. All Rights Reserved
@@ -734,6 +324,96 @@
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2018/fast-trilinear-interpolation/" data-tooltip="快速三线性插值">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/three-way-quicksort/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/three-way-quicksort/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/three-way-quicksort/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2018%2Fthree-way-quicksort%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2018%2Fthree-way-quicksort%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2018%2Fthree-way-quicksort%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -997,6 +677,10 @@ $(document).ready(function() {
 });
 </script>
 
+
+  
+    
+  
 
 
 

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://lianera.github.io/2018/three-way-quicksort/</loc>
+    <lastmod>2018-08-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://lianera.github.io/2018/fast-trilinear-interpolation/</loc>
     <lastmod>2018-07-25T10:48:41+08:00</lastmod>
   </url>
@@ -172,7 +177,7 @@
   
   <url>
     <loc>https://lianera.github.io/</loc>
-    <lastmod>2018-07-25T10:48:41+08:00</lastmod>
+    <lastmod>2018-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -190,7 +195,7 @@
   
   <url>
     <loc>https://lianera.github.io/post/</loc>
-    <lastmod>2018-07-25T10:48:41+08:00</lastmod>
+    <lastmod>2018-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -247,6 +252,12 @@
   <url>
     <loc>https://lianera.github.io/tags/%E7%A8%8B%E5%BA%8F/</loc>
     <lastmod>2017-07-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2018-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Lianera</title>
+    <link>https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Lianera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 25 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>三路快速排序</title>
+      <link>https://lianera.github.io/2018/three-way-quicksort/</link>
+      <pubDate>Sat, 25 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/2018/three-way-quicksort/</guid>
+      <description>最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2</description>
+    </item>
+    
+  </channel>
+</rss>
