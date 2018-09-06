@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.41 with theme Tranquilpeak 0.4.3-BETA">
-    <title>贪吃蛇（二）</title>
+    <title>点云球心拟合</title>
     <meta name="author" content="Lianera">
     <meta name="keywords" content="">
 
@@ -28,15 +28,15 @@
     
 
     
-    <meta name="description" content="简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但">
-    <meta property="og:description" content="简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但">
+    <meta name="description" content="最近有人问怎么对球状的三维点云进行拟合，得到球心的位置和半径，对于这类问题，我首先想到的是二维图像中圆检测的方法霍夫变换，但是霍夫变换是在图">
+    <meta property="og:description" content="最近有人问怎么对球状的三维点云进行拟合，得到球心的位置和半径，对于这类问题，我首先想到的是二维图像中圆检测的方法霍夫变换，但是霍夫变换是在图">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="贪吃蛇（二）">
-    <meta property="og:url" content="/2013/snake2/">
+    <meta property="og:title" content="点云球心拟合">
+    <meta property="og:url" content="/2018/sphere-fitting/">
     <meta property="og:site_name" content="Lianera">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Lianera">
-    <meta name="twitter:description" content="简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但">
+    <meta name="twitter:description" content="最近有人问怎么对球状的三维点云进行拟合，得到球心的位置和半径，对于这类问题，我首先想到的是二维图像中圆检测的方法霍夫变换，但是霍夫变换是在图">
     
     
 
@@ -47,8 +47,6 @@
       <meta property="og:image" content="https://lianera.github.io/images/avatar.jpg">
     
 
-    
-      <meta property="og:image" content="https://lianera.github.io/thumbnails/snake2.png">
     
     
     
@@ -197,19 +195,19 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      贪吃蛇（二）
+      点云球心拟合
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2013-07-07T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-09-06T00:00:00Z">
         
   
   
   
   
-    2013年 七月 7日
+    2018年 九月 6日
   
 
       </time>
@@ -221,88 +219,69 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              
+              <p>最近有人问怎么对球状的三维点云进行拟合，得到球心的位置和半径，对于这类问题，我首先想到的是二维图像中圆检测的方法霍夫变换，但是霍夫变换是在图像中进行的，而这是三维点云，如果是体素的话还有可能。</p>
 
-<table>
-<thead>
-<tr>
-<th><img src="snake2_menu.png" alt="" /></th>
-<th><img src="snake2_1.png" alt="" /></th>
-<th><img src="snake2_2.png" alt="" /></th>
-</tr>
-</thead>
+<p>另外比较常用的拟合方法是ransac，不过提问者说ransac速度较慢不予考虑，所以最合适的还是最小二乘法了，然而在求导的时候会发现这个问题用普通最小二乘法是不能解的，因为求导之后是一个非线性的超定方程，这样就会变得非常复杂了，所以最好的方法还是结合能量最小化的方法，用高斯牛顿法试了一下，效果很好。</p>
 
-<tbody>
-</tbody>
-</table>
+<p>首先生成一堆点云，近似圆的形状，这个过程很简单，先随机生成很多点，然后单位化就成圆了，然后再随机设定长度。</p>
 
-<h2 id="简介">简介</h2>
+<p>高斯牛顿法需要给定一个初始的圆心c和半径r，这个对结果影响不大，随机给定就可以了，比如c0=(0.4768, 0.0457, 0.0253), r0=0.0884</p>
 
-<p>传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但不能放到蛇身。每进食一次，蛇身增长一格，得分相应增加。蛇碰到边界时转到对面边界出来。当蛇头碰到自身时，蛇死亡，游戏结束。</p>
+<p><img src="initial.png" alt="" /></p>
 
-<p>程序具有良好的可视化操作界面，有良好的声音效果。通过键盘鼠标控制，并且实现用户菜单及提示信息。游戏采用实时控制和动画刷新，保证系统稳定流畅运行。能够根据游戏规则自动判断游戏状态，并将信息实时反馈给用户。</p>
+<p>然后进行迭代求解更新c和r，这个很快的，我用matlab迭代10次只需要7ms的时间，就得到了最终收敛的c和r。</p>
 
-<p>游戏启动时显示游戏LOGO或加载信息，随后进入菜单界面，可选菜单要有：新的游戏、继续游戏、选择关卡、帮助及退出。游戏时，左边及中心显示游戏面板，右边显示信息栏。通过上下左右四个方向键控制蛇的移动，通过鼠标进行按钮的点击。游戏能够在任何时候暂停和退出游戏。通过关卡或者失败时，显示全屏的提示信息，并提供按钮供用户选择。游戏加入音乐功能模块，实现音效和背景音乐的播放。</p>
+<p>具体的迭代算法推导过程是这样的，主要是雅可比矩阵的求解，其它都是标准过程</p>
 
-<h2 id="技术">技术</h2>
+<p><img src="math.png" alt="" /></p>
 
-<h3 id="游戏控制模块">游戏控制模块：</h3>
+<p>结果如下，其中c=(-0.0013, 0.0038, -0.0007)，r=0.9969，我随机生成点云的时候是默认圆心在原点，半径为1的，所以效果很好了。</p>
 
-<p>游戏控制类的成员包含有窗口的基本信息，游戏资源管理类对象，面板类对象。在窗口建立好后接着构造游戏控制类，实现对其他部分类的初始化工作，并调用资源管理类进行资源的加载以及绘图设备的初始化。</p>
+<p><img src="result.png" alt="" /></p>
 
-<p>游戏控制类采用状态进行驱动，通过改变记录状态的变量实现流程的跳转。</p>
+<p>而且这个对初始值不敏感，把初始位置改到其它比较远的地方，也能收敛</p>
 
-<p>在游戏开始进行时，游戏控制模块负责面板的创建，从而建立起游戏规则类对象。游戏控制类接管了窗口的定时器消息，定时对游戏进行更新。许多页面的显示，例如菜单页面、成功页面、失败页面、帮助信息页面都由游戏控制类负责。</p>
+<p><img src="far.png" alt="" /></p>
 
-<p>此外，游戏控制类实现了游戏存档的读取与保存。</p>
+<p>代码如下：</p>
 
-<h3 id="资源管理模块">资源管理模块：</h3>
+<pre><code class="language-matlab">n = 1000;
+epsilon=10e-6;
 
-<p>资源管理模块用Manager类实现，Manager类依赖Picture类、Tile类、Animation类和Mid类，用四个顺序容器分别储存四个类的对象，实现资源的统一管理。此外Manager类实现了对背景音乐的控制。</p>
+%% random points
+sp = rand(n,3)*2-1;
+slen = sqrt(sum(sp.^2,2));
+sp = sp ./ (repmat(slen, 1, 3)+epsilon);
+sr = rand(n,1)*0.2+0.9;
+p = sp.*repmat(sr, 1, 3);
 
-<h3 id="交互元素模块">交互元素模块：</h3>
+%pcshow(p)
 
-<p>以Elebase为虚基类，只要能在屏幕上画出来的都看做交互元素，每个交互元素必须与一个动画对象相关联，且都从Elebase依次多层继承下去。Elebase类储存有动画指针，提供的绘图的虚函数。</p>
+%% fitting
+c0=[3,4,5];%rand(1,3);
+r0=rand(1,1);
 
-<h3 id="游戏规则模块">游戏规则模块：</h3>
+c=c0;
+r=r0;
 
-<p>游戏规则模块是游戏的核心，它构成了一个独立的系统，控制着游戏的运行。能读取键盘按键状态，并将游戏跳转信息发给游戏控制模块。游戏规则模块包括Food类、Node类、Panel类、Snake类，Food类保存食物信息并随机产生食物，Node类为蛇的节点类，Panel类是游戏的控制类，实现游戏的更新与画面的刷新，并检测游戏的状态。此外Panel有一Snake类的子对象。Panel类通过检测按键，向Snake类发送改变方向的消息，并让其移动。在每一帧中，Panel会检测蛇的长度、蛇是否已撞到自身，从而做出相应的响应。蛇的身体由一个Node顺序容器构成，Node类包含的成员主要有坐标、方向。蛇移动时，从尾开始，每个节点的位置都移动到下一个节点位置，最后一个节点（即蛇头）则根据蛇的方向移动。</p>
-
-<h3 id="绘图模块">绘图模块:</h3>
-
-<p>本游戏通过Windows GDI实现图形的绘制。其基本绘图过程为：加载位图、创建兼容设备，位块传输。由于考虑到游戏的刷新率较高，直接绘图会产生闪动的现象，所以采用了双缓冲技术。双缓冲的基本原理是：把图画全部画到缓冲设备上，再在最后一次性位块传输到原设备上。</p>
-
-<h3 id="音效模块">音效模块：</h3>
-
-<p>游戏中采用wav声音作为普通的短暂的音效，这种音效的播放分散在程序的各个地方。具体的播放方法是调用PlaySound函数，即时加载即时播放。对于背景音乐，则采用mid格式文件。mid文件具有格式小，播放简单的特点，其实现方法是调用mciSendCommand函数。</p>
-
-<h3 id="错误处理模块">错误处理模块：</h3>
-
-<p>错误处理类用来供程序抛出与捕捉程序，主要的类有Error基类、Init_Error类、Outer_Error类。通过错误处理模块，程序能够有序地处理错误。</p>
-
-<h2 id="sdl2更新">SDL2更新</h2>
-
-<p>将程序绘图和输入部分改成SDL2，提高绘图的效率和流畅度。（原版程序移到snake2-gdi内）</p>
-
-<p>使用到的第三方库：sdl2, sdl2_image, sdl2_tiff, sdl2_mixer</p>
-
-<p>建议使用vcpkg安装第三方库：</p>
-
-<pre><code>vcpkg install sdl2:x86-windows-static 
-vcpkg install sdl2-image:x86-windows-static
-vcpkg install sdl2-ttf:x86-windows-static 
-vcpkg install sdl2-mixer:x86-windows-static
+tic
+for k = 1:100
+    vc = repmat(c,n,1);
+    vr = repmat(r, n, 1);
+    dc = 2*(vc-p);
+    dr = -2*vr;
+    J = [dc,dr];
+    F= sum((vc-p).^2,2)-vr.^2;
+    delta = J\(-F);
+    c=c+delta(1:3)';
+    r=r+delta(4);
+    delta_sq = sum(delta.^2);
+    if delta_sq &lt; 0.01
+        break;
+    end
+end
+toc
 </code></pre>
-
-<h2 id="环境">环境</h2>
-
-<ul>
-<li>Visual Studio 2017</li>
-</ul>
-
-<p><a href="https://github.com/lianera/archives/tree/master/2013/snake2">源代码</a></p>
-
-<p><a href="https://github.com/lianera/archives/releases/download/20180514/snake2.zip">可执行程序</a></p>
 
               
             </div>
@@ -315,13 +294,7 @@ vcpkg install sdl2-mixer:x86-windows-static
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/c&#43;&#43;/">C&#43;&#43;</a>
-
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
-
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
-
-  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/sdl/">SDL</a>
+  <a class="tag tag--primary tag--small" href="https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/">算法</a>
 
                   </div>
                 
@@ -334,7 +307,7 @@ vcpkg install sdl2-mixer:x86-windows-static
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2013/magicplain/" data-tooltip="Magic Plain">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -342,7 +315,7 @@ vcpkg install sdl2-mixer:x86-windows-static
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2012/tiebadigger/" data-tooltip="贴吧用户ID挖掘机">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2018/three-way-quicksort/" data-tooltip="三路快速排序">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -360,19 +333,19 @@ vcpkg install sdl2-mixer:x86-windows-static
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2013/snake2/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/sphere-fitting/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2013/snake2/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/sphere-fitting/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2013/snake2/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/sphere-fitting/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -410,7 +383,7 @@ vcpkg install sdl2-mixer:x86-windows-static
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2013/magicplain/" data-tooltip="Magic Plain">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -418,7 +391,7 @@ vcpkg install sdl2-mixer:x86-windows-static
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2012/tiebadigger/" data-tooltip="贴吧用户ID挖掘机">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://lianera.github.io/2018/three-way-quicksort/" data-tooltip="三路快速排序">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -436,19 +409,19 @@ vcpkg install sdl2-mixer:x86-windows-static
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2013/snake2/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://lianera.github.io/2018/sphere-fitting/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2013/snake2/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://lianera.github.io/2018/sphere-fitting/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2013/snake2/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://lianera.github.io/2018/sphere-fitting/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -472,19 +445,19 @@ vcpkg install sdl2-mixer:x86-windows-static
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2013%2Fsnake2%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flianera.github.io%2F2018%2Fsphere-fitting%2F">
           <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2013%2Fsnake2%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Flianera.github.io%2F2018%2Fsphere-fitting%2F">
           <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2013%2Fsnake2%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Flianera.github.io%2F2018%2Fsphere-fitting%2F">
           <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
         </a>
       </li>
