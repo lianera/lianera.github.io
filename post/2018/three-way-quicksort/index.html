@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>三路快速排序 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2018/three-way-quicksort/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="三路快速排序" />
+<meta property="og:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2018/three-way-quicksort/" /><meta property="article:published_time" content="2018-08-25T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-08-25T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="三路快速排序">
+<meta itemprop="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2">
+
+
+<meta itemprop="datePublished" content="2018-08-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-08-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="747">
+
+
+
+<meta itemprop="keywords" content="算法," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="三路快速排序"/>
+<meta name="twitter:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">三路快速排序</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018年08月25日 </span>
+        
+        <span class="more-meta"> 约 747 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2D物体的距离也就是z值进行排序。排序当然快排是首选，但是快排有个缺点是当元素相同的时候，复杂度就变成了O(n^2)，然而2D绘制中z值重复的现象太常见了。除了快排我第一想到的是用红黑树解决这个问题，这样可以一边插入一边排序，最坏情况下也是O(nlogn)。然而红黑树是比较复杂的，而我需要解决的问题只能用C语言。后面发现了一个更好的方法：三路快速排序。普通快速排序在进行划分的时候只划分成左右小于和大于的两个部分，而三路快速排序则考虑了相等元素的影响，划分的时候分成三个区间。</p>
+
+<p><img src="partition.png" alt="" /></p>
+
+<p>算法的实现也不是很复杂，只是在partition阶段要从两个方向往中间划分，方法如下，给定一个数组a以及头元素的位置p，尾元素的位置q，因为需要划分三个区间，所以需要额外两个指针标记小于区间和大于区间的位置，其中lt总是指向小于区间的最后一个元素，gt总是指向大于区间的第一个元素，需要注意的是，一开始小于大于区间长度都为0，所以应该初始化lt=p-1, gt=p+1。然后随机选定一个主元，以及移动指针i从左往右依次与主元比较，如果与主元相等，则直接移到下一个元素；比主元小，则p自增1，于是p指向等于区间的第一个元素，然后将这个元素与i指向的元素进行交换，i再移动到下一个元素。类似的，当i指向元素大于主元时，gt先往左移，然后与i的值交互，不过这个地方需要注意移到i的元素未与主元做比较，所以指针i应该保持不变。
+除此之外，还可以用随机的方法来选择主元，稳定性更强。</p>
+
+<p>和普通快速排序（蓝线）做一下不严谨的比较，对于十万个元素，随着重复率的增强，三路快速排序（红线）效果卓然。</p>
+
+<p><img src="comparison.png" alt="" /></p>
+
+<p><a href="main.c">代码</a></p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018年08月25日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2018/sphere-fitting/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">点云球心拟合</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2018/fast-trilinear-interpolation/">
+            <span class="next-text nav-default">快速三线性插值</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

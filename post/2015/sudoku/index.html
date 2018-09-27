@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Sudoku - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2015/sudoku/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Sudoku" />
+<meta property="og:description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2015/sudoku/" /><meta property="article:published_time" content="2015-01-10T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2015-01-10T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Sudoku">
+<meta itemprop="description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复">
+
+
+<meta itemprop="datePublished" content="2015-01-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2015-01-10T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1039">
+
+
+
+<meta itemprop="keywords" content="Java,游戏开发,程序," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Sudoku"/>
+<meta name="twitter:description" content="简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Sudoku</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015年01月10日 </span>
+        
+        <span class="more-meta"> 约 1039 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#技术">技术</a>
+<ul>
+<li><a href="#逻辑分析">逻辑分析</a></li>
+<li><a href="#ai算法设计思路">AI算法设计思路</a>
+<ul>
+<li><a href="#问题分析">问题分析</a></li>
+<li><a href="#解决方案">解决方案</a></li>
+</ul></li>
+<li><a href="#ai算法性能分析">AI算法性能分析</a></li>
+</ul></li>
+<li><a href="#环境">环境</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<table>
+<thead>
+<tr>
+<th><img src="sudoku.png" alt="" /></th>
+<th><img src="sudoku2.png" alt="" /></th>
+<th><img src="sudoku3.png" alt="" /></th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<h2 id="简介">简介</h2>
+
+<p>数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复。</p>
+
+<p>这个程序能够判断重复的数字，并能够根据给定的题目进行自动解题。</p>
+
+<h2 id="技术">技术</h2>
+
+<p>程序可以分为四个模块，分别如下：</p>
+
+<p>核心模块（Core）：负责游戏逻辑。</p>
+
+<p>用户界面模块（Gui）：对界面进行生成和事件的管理。</p>
+
+<p>人工智能模块（Ai）：用于数独的自动求解。</p>
+
+<p>测试模块（test）：在开发的各个阶段进行模块测试。</p>
+
+<h3 id="逻辑分析">逻辑分析</h3>
+
+<p>数独对于每一个数字，必须满足一行、一列、一宫格都没有与之相同的数字。因此，游戏应该在每次改变矩阵数据时检测发生冲突的数字。</p>
+
+<p>为了减小算法的复杂度，这里设置一个数组，用来累加同一行、同一列、同一个宫格各个数字出现的数量，当且仅当数字对应的数组值为0时，该数字不冲突，否则发生冲突。通过分析不难发现该算法的复杂度为O(n)。</p>
+
+<h3 id="ai算法设计思路">AI算法设计思路</h3>
+
+<h4 id="问题分析">问题分析</h4>
+
+<p>从数独的规则上面不难看出，要求出某一个数独的所有解，对于计算机来说，实际上是一个NP完全问题。对于NP完全问题，只能通过逐个试探或猜测的方法求得可行解。由于需要求出所有的可行解，所以必须通过遍历的方法，尝试所有的潜在解法。</p>
+
+<p>在尝试填解的过程中，必须对每一步进行冲突检测，为了进一步提高算法的效率，Ai自身实现了一个避免冲突的算法，提供一个获取可填数字列表的函数，该函数的实现过程是：维持一个数字数组，对于目标数字所在行列、宫格的每一个数字进行遍历，没遇到一个不为零的数，对应数组的值加一，遍历完成时，如果数组元素的值为零，则表示该数可填。</p>
+
+<h4 id="解决方案">解决方案</h4>
+
+<p>在这里，由于需要遍历所有的解空间，所以使用的算法是回溯法。</p>
+
+<p>回溯法在包含问题的所有解的解空间树中，按照深度优先搜索的策略，从根结点出发深度探索解空间树。当探索到某一结点时，要先判断该结点是否包含符合数独规则的解，如果包含，就从该结点出发继续探索下去，如果该结点不包含问题的解，则逐层向其祖先结点回溯。（也即对隐式图的深度优先搜索算法）。 用回溯法求问题的所有解时，一直回溯到根，且根结点的所有可行的子树都要已被搜索遍则束。</p>
+
+<h3 id="ai算法性能分析">AI算法性能分析</h3>
+
+<p>AI的算法是回溯法，其解空间的大小由给定的题目决定。根据相关资料可知，空的数独解空间约为6.67×10的21次方，而对于标准数独，解空间是唯一的，因此，很难通过理论分析判定该算法的复杂度。但是，可以通过实测得到近似的平均求解时间。</p>
+
+<p>通过多次测试去平均值，该AI算法解决一个数独用的时间平均为0.453ms。</p>
+
+<h2 id="环境">环境</h2>
+
+<ul>
+<li>Intellij IDEA</li>
+</ul>
+
+<p><a href="https://github.com/lianera/archives/tree/master/2015/sudoku">源代码</a></p>
+
+<p><a href="https://github.com/lianera/archives/releases/download/20180514/sudoku.jar">可执行文件</a></p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2015年01月10日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/java/">Java</a>
+          
+          <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a>
+          
+          <a href="/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2015/cv-mouse/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">基于计算机视觉的虚拟鼠标</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2014/cpu-step-by-step/">
+            <span class="next-text nav-default">简单CPU设计实践</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

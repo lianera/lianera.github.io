@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Javascript on Lianera</title>
+    <title>Javascript on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/javascript/</link>
-    <description>Recent content in Javascript on Lianera</description>
+    <description>Recent content in Javascript on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 26 Jul 2017 00:00:00 +0000</lastBuildDate>
@@ -13,19 +13,19 @@
     
     <item>
       <title>Magic Plain v2</title>
-      <link>https://lianera.github.io/2017/magicplainv2/</link>
+      <link>https://lianera.github.io/post/2017/magicplainv2/</link>
       <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/magicplainv2/</guid>
+      <guid>https://lianera.github.io/post/2017/magicplainv2/</guid>
       <description>简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</description>
     </item>
     
     <item>
       <title>海水截面模拟</title>
-      <link>https://lianera.github.io/2016/ocean-sectional/</link>
+      <link>https://lianera.github.io/post/2016/ocean-sectional/</link>
       <pubDate>Fri, 29 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2016/ocean-sectional/</guid>
+      <guid>https://lianera.github.io/post/2016/ocean-sectional/</guid>
       <description>介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波</description>
     </item>
     

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>复杂多元复合函数的导数和雅克比矩阵 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2017/complicated-compound-derivative/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="复杂多元复合函数的导数和雅克比矩阵" />
+<meta property="og:description" content="我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2017/complicated-compound-derivative/" /><meta property="article:published_time" content="2017-01-04T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-01-04T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="复杂多元复合函数的导数和雅克比矩阵">
+<meta itemprop="description" content="我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的">
+
+
+<meta itemprop="datePublished" content="2017-01-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-01-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1069">
+
+
+
+<meta itemprop="keywords" content="数学," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="复杂多元复合函数的导数和雅克比矩阵"/>
+<meta name="twitter:description" content="我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">复杂多元复合函数的导数和雅克比矩阵</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017年01月04日 </span>
+        
+        <span class="more-meta"> 约 1069 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的变元比较多，并且复合的层数也比较多，这样复杂度就会大大增加。</p>
+
+<p>假设存在一个函数<img src="f1.svg" alt="F:R^{N} \rightarrow R^{N}" />由M个函数复合而成，每一个函数作用在N个变量上，也就是每个函数为<img src="f2.svg" alt="f_{k}:R^{N} \rightarrow R^{N},\ k = \{ 1,2\ldots M\}" />，在求F某个因变量对某个自变量的总的导数时，需要涉及到中间函数的所有的求导链路，也就是说复杂度接近于<img src="f3.svg" alt="O(N^{M})" />，这还只是单个因变量对单个自变量的求导，对于梯度和雅克比矩阵则更加复杂。比如说，<img src="f4.svg" alt="y = f_{1}\left( u \right),\ u = f_{2}\left( v \right),\ v = f_{3}\left( w \right),\ w = f_{4}(x)" />，其中y,u, v, w,x都是维度为N的向量，需要求y1对于x1的导数，y1对x的梯度以及y对x的雅克比矩阵怎么求？要求得y1对x2的导数，需要计算出y1对每个u，每个u对每个v … 的导数，最后复合而成，这样的复杂度完全无法通过常规的链式求导实现。当然实际中，上述情况比较少见，但是复杂的多元复合函数求雅克比矩阵还是经常要用到的。</p>
+
+<p>一种方法是使用数值求导，但是数值求导会损失精度，另外如果变量维度比较多，计算量也比较大。实际上复合函数的求导不管简单还是复杂，其重要的地方在于，分析好自变量和因变量之间的关系，理清好求导的链路。对于上面的这个函数的求导，假如不画出求导链路，直接分析的话，那真是太复杂了！我之前遇到过类似的问题，每个函数的自变量和因变量都是640X480的图片（矩阵），转换成向量的话，维度为307200，并且求导表达式非常复杂，在求雅克比矩阵的时候完全是一团糟了。很多时候，即使意识到应该理清好求导链路，但是这个链路怎么画图来还是个问题，这里推荐graphviz，尤其是求导链路分析的时候，特别方便。如果我们把上面的函数每个变量画成节点，每个分步导数项画成边，其求导链如下</p>
+
+<p><img src="chain.png" alt="chain" /></p>
+
+<p>有着这个链路图，理论上是可以求出雅克比矩阵的，比如y1对v1的导数为：</p>
+
+<p><img src="f5.svg" alt="\frac{\partial y1}{\partial v1} = \frac{\partial y1}{\partial u1}*\frac{\partial u1}{\partial v1} + \frac{\partial y1}{\partial u2}*\frac{\partial u2}{\partial v1} + \ldots + \ \frac{\partial y1}{\partial u4}*\frac{\partial u4}{\partial v1}" /></p>
+
+<p>同样的，每个变量的雅克比矩阵都可以求出来。但是这里的边数实在太多了，即使每个分步项求出来了，最后复合的时候都是个问题。如果仔细观察导数项，就会发现，其实每个函数的导数可以写成矩阵，比如<img src="f7.svg" alt="y = f_{1}(u1)" />的导数可以表示成这样：</p>
+
+<p><img src="f6.svg" alt="\begin{bmatrix}\frac{\partial y1}{\partial u1} &amp; \cdots &amp; \frac{\partial y1}{\partial u_{N}} \\ \vdots &amp; \ddots &amp; \vdots \\\frac{\partial y_{N}}{\partial u1} &amp; \cdots &amp; \frac{\partial y_{N}}{\partial u_{N}} \\\end{bmatrix}" /></p>
+
+<p>同样的，每个函数都可以写成以上形式，然后将两个矩阵相乘就可以得到对应的两个函数复合而成的函数的导数。这样，只要计算出每个函数的矩阵，最终的导数就很容易求了。</p>
+
+<p>但是等等，Just One More Thing
+…，如果仔细看上面写出的矩阵就会发现，这不就是雅克比矩阵吗？是的，整个多元复合函数的求导过程可以表述成更简洁的形式：</p>
+
+<p><img src="CompoundJacobian.png" alt="CompoundJacobian" /></p>
+
+<p>也就是说，一个复合函数的雅克比矩阵是它的单个函数雅克比矩阵的乘积！如此复杂的过程竟然能够用这么简洁的方式表达，amazing！</p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017年01月04日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2017/ltray-refactoring/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LtRay的艰难重构</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2017/gradient-descent/">
+            <span class="next-text nav-default">梯度下降法及其实现</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

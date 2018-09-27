@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>网络编程 on Lianera</title>
+    <title>网络编程 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
-    <description>Recent content in 网络编程 on Lianera</description>
+    <description>Recent content in 网络编程 on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 23 Dec 2012 00:00:00 +0000</lastBuildDate>
@@ -13,10 +13,10 @@
     
     <item>
       <title>贴吧用户ID挖掘机</title>
-      <link>https://lianera.github.io/2012/tiebadigger/</link>
+      <link>https://lianera.github.io/post/2012/tiebadigger/</link>
       <pubDate>Sun, 23 Dec 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2012/tiebadigger/</guid>
+      <guid>https://lianera.github.io/post/2012/tiebadigger/</guid>
       <description>简介 这是一个用来挖掘贴吧用户ID的程序，能够将某个贴吧的所有用户名都按格式记录下来，可用于@大量用户。 技术 程序用C语言写成的，使用Windo</description>
     </item>
     

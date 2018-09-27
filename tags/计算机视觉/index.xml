@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>计算机视觉 on Lianera</title>
+    <title>计算机视觉 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</link>
-    <description>Recent content in 计算机视觉 on Lianera</description>
+    <description>Recent content in 计算机视觉 on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 21 Jul 2018 15:48:41 +0800</lastBuildDate>
@@ -13,37 +13,37 @@
     
     <item>
       <title>DFT和DCT以及空间域的高斯滤波对比</title>
-      <link>https://lianera.github.io/2018/frequency-gaussian/</link>
+      <link>https://lianera.github.io/post/2018/frequency-gaussian/</link>
       <pubDate>Sat, 21 Jul 2018 15:48:41 +0800</pubDate>
       
-      <guid>https://lianera.github.io/2018/frequency-gaussian/</guid>
+      <guid>https://lianera.github.io/post/2018/frequency-gaussian/</guid>
       <description>最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶</description>
     </item>
     
     <item>
       <title>本征图像的合成</title>
-      <link>https://lianera.github.io/2018/synthetic-intrinsic-images/</link>
+      <link>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</link>
       <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2018/synthetic-intrinsic-images/</guid>
+      <guid>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</guid>
       <description>从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需</description>
     </item>
     
     <item>
       <title>RGB-D数据集的合成</title>
-      <link>https://lianera.github.io/2017/synthetic-rgbd/</link>
+      <link>https://lianera.github.io/post/2017/synthetic-rgbd/</link>
       <pubDate>Sun, 19 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/synthetic-rgbd/</guid>
+      <guid>https://lianera.github.io/post/2017/synthetic-rgbd/</guid>
       <description>在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG</description>
     </item>
     
     <item>
       <title>基于计算机视觉的虚拟鼠标</title>
-      <link>https://lianera.github.io/2015/cv-mouse/</link>
+      <link>https://lianera.github.io/post/2015/cv-mouse/</link>
       <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2015/cv-mouse/</guid>
+      <guid>https://lianera.github.io/post/2015/cv-mouse/</guid>
       <description>概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络</description>
     </item>
     

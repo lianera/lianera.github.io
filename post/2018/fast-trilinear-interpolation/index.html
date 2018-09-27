@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>快速三线性插值 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2018/fast-trilinear-interpolation/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="快速三线性插值" />
+<meta property="og:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2018/fast-trilinear-interpolation/" /><meta property="article:published_time" content="2018-07-25T10:48:41&#43;08:00"/>
+<meta property="article:modified_time" content="2018-07-25T10:48:41&#43;08:00"/>
+
+<meta itemprop="name" content="快速三线性插值">
+<meta itemprop="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小">
+
+
+<meta itemprop="datePublished" content="2018-07-25T10:48:41&#43;08:00" />
+<meta itemprop="dateModified" content="2018-07-25T10:48:41&#43;08:00" />
+<meta itemprop="wordCount" content="2149">
+
+
+
+<meta itemprop="keywords" content="计算机图形学," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="快速三线性插值"/>
+<meta name="twitter:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">快速三线性插值</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018年07月25日 </span>
+        
+        <span class="more-meta"> 约 2149 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#原理">原理</a></li>
+<li><a href="#实现">实现</a></li>
+<li><a href="#结果">结果</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<p>最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。</p>
+
+<h2 id="原理">原理</h2>
+
+<p>借用一张常用的三线性插值示意图：</p>
+
+<p><img src="trilinear_cube.png" alt="" /></p>
+
+<p>三线性插值实际上可以通过7次线性插值实现。首先假定使用左手坐标系，z轴朝上，在x方向上对四条棱边进行四次插值，得到每条边上的四个点的值c00,c01,c10,c11，然后在y方向上对四个点进行插值，得到两条线段以及中间的两个点的值c0,c1，然后在z方向上插值，得到最终的c点的值。</p>
+
+<p>我们知道，对于线性插值来说，其公式为：</p>
+
+<p><img src="linear.svg" alt="" /></p>
+
+<p>其中包括四次加减运算，三次乘除运算，因此总的来说，进行一次三线性插值，运算总数为28次加减运算，21次乘除运算，并且往体素中寻找位置并且取值还要花费大量的运算，对于大图像来说，总的运算耗费的时间非常大。</p>
+
+<p>假定立方体原点为(x0,y0,z0)，离原点最远的点为(x1,y1,z1)，立方体的每个顶点的值在体素中是知道的。值得注意的是，虽然现在计算的坐标位置实际上是插值时的位置，但是实际上插值只与待求点(x,y,z)与(x0,y0,z0)和(x1,y1,z1)的相对位置比有关，不过为了后续插值的方便，建议首先将点映射到目标坐标上，这样在插值的时候就不需要再进行坐标映射。首先对x方向上插值，得到yz平面上四个点的值分别为f1,f2,f3,f4：</p>
+
+<p><img src="f1.svg" alt="" /></p>
+
+<p><img src="f2.svg" alt="" /></p>
+
+<p><img src="f3.svg" alt="" /></p>
+
+<p><img src="f4.svg" alt="" /></p>
+
+<p>我们可以把它们转换成矩阵的形式，比如：</p>
+
+<p><img src="a1.svg" alt="" /></p>
+
+<p><img src="b1.svg" alt="" /></p>
+
+<p><img src="m1.svg" alt="" /></p>
+
+<p><img src="f1m.svg" alt="" /></p>
+
+<p>注意一下，这里面隐含了x1和x0不能相等，如果两者相等，则f1=f(x0,y0,z0)=f(x1,y0,z0)恒成立，所以直接设置成x1=1,x0=0，再用上述公式即可。注意到，这里面的矩阵是不包含未知数的，这是个常数矩阵。这样一来，我们可以事先在体素上计算好矩阵，最后再应用到图像上就好了。当然我们这还只是一次线性插值，现在继续插值。我们令上面式子f1,f2,f3,f4中右侧矩阵分别为M1,M2,M3,M4，因为是常数矩阵，我们将他们用常数a,b替换。同样利用线性插值方法，现在在y轴方向上插值，计算1,2插值的点5,以及3,4插值的点6</p>
+
+<p><img src="f5.svg" alt="" /></p>
+
+<p><img src="f6.svg" alt="" /></p>
+
+<p>我们将a,b代入M，并且简化一下，同样提取出变量和常量，可以将f5和f6成矩阵的形式，跟上面一样，我们将常数矩阵用四个常数替换：</p>
+
+<p><img src="f5m.svg" alt="" /></p>
+
+<p><img src="m5.svg" alt="" /></p>
+
+<p><img src="c5.svg" alt="" /></p>
+
+<p>这里当y1=y0时，f5=f1=f2恒成立，同样地，事先设置一下y1=1,y0=0即可。</p>
+
+<p>得到了点5和点6的值后，我们就剩下最后一个插值，沿z方向上进行插值，得到点7的值f7。不过f7表示成矩阵有点困难，因为包含三个变量x,y,z，需要三个维度的常数矩阵，也就是三阶张量，不过好在变量z在表达式中只包含常数项和一次项，因此，我们将z的常数项和z的一次项用两个矩阵表示：</p>
+
+<p><img src="mc.svg" alt="" /></p>
+
+<p><img src="mz.svg" alt="" /></p>
+
+<p>常数项先计算成中间值h1~h8，然后f7的计算如下图所示</p>
+
+<p><img src="f7.svg" alt="" /></p>
+
+<p>当z1=z0时，则令z1=1,z0=0。</p>
+
+<p>上式计算出来的f7即为三线性插值的结果。注意上面的h1~h8在插值前都是已知的，我们可以在插值前，首先计算好每个体素的h值，然后最后再应用f7的计算公式，直接求出f7即可。对于常数项的计算，因为有许多项公用分母，所以可以把分子和分母分开计算。</p>
+
+<p><img src="f7result.svg" alt="" /></p>
+
+<p>因此插值的时候总共需要进行的运算为7次乘法和7次加法，并且h1~h8是包含在小体素内的，对应于插值之后的大块区域，因此插值后的一块区域是公用h1~h8的，在插值的时候可以按区域插值，从而提高cache的效率。</p>
+
+<p>当然f7也可以写成这样：</p>
+
+<p><img src="f7alter.svg" alt="" /></p>
+
+<h2 id="实现">实现</h2>
+
+<p>预计算参数的实现直接按照上面的常数参数计算即可，因为预计算是在小的体素上面实现的，所以不用太担心速度。</p>
+
+<pre><code class="language-cpp">/* precompute trilinear coefficients
+* v: f(x0,y0,z0), f(x1,y0,z0), f(x0,y1,z0), f(x1,y1,z0)
+*    f(x0,y0,z1), f(x1,y0,z1), f(x0,y1,z1), f(x1,y1,z1)
+*/
+template &lt;typename T&gt;
+array&lt;T,8&gt; PreComp(float x0, float y0, float z0, 
+	float x1, float y1, float z1, const array&lt;T,8&gt;&amp; v)
+{
+	const float epsilon = 10e-6f;
+	if (x1 - x0 &lt; epsilon) { x1 = 1.f; x0 = 0.f; }
+	if (y1 - y0 &lt; epsilon) { y1 = 1.f; y0 = 0.f; }
+	if (z1 - z0 &lt; epsilon) { z1 = 1.f; z0 = 0.f; }
+
+	float deno = (x1 - x0)*(y1 - y0)*(z1 - z0);
+	float nume = 1.f / deno;
+
+	T a1 = x1 * v[0] - x0 * v[1];
+	T a2 = x1 * v[2] - x0 * v[3];
+	T a3 = x1 * v[4] - x0 * v[5];
+	T a4 = x1 * v[6] - x0 * v[7];
+	T b1 = v[1] - v[0];
+	T b2 = v[3] - v[2];
+	T b3 = v[5] - v[4];
+	T b4 = v[7] - v[6];
+	
+	T c5 = y1 * a1 - y0 * a2;
+	T c6 = y1 * a3 - y0 * a4;
+	T d5 = a2 - a1;
+	T d6 = a4 - a3;
+	T e5 = y1 * b1 - y0 * b2;
+	T e6 = y1 * b3 - y0 * b4;
+	T f5 = b2 - b1;
+	T f6 = b4 - b3;
+	
+	T h1 = z1 * c5 - z0 * c6;
+	T h2 = z1 * d5 - z0 * d6;
+	T h3 = z1 * e5 - z0 * e6;
+	T h4 = z1 * f5 - z0 * f6;
+	T h5 = c6 - c5;
+	T h6 = d6 - d5;
+	T h7 = e6 - e5;
+	T h8 = f6 - f5;
+
+	array&lt;T, 8&gt; h = {h1*nume, h2*nume, h3*nume, h4*nume, 
+		h5*nume, h6*nume, h7*nume, h8*nume};
+	return h;
+}
+</code></pre>
+
+<p>而插值的时候，速度就是比较重要的了，因为大体素与小体素对应的时候，block是共享参数的，并且即使是变量x,y,z也可以预先计算一部分，不用每个cell都计算。具体来说，插值的时候直接应用f7的计算公式即可：</p>
+
+<pre><code class="language-cpp">T val = zf * (yf*(h[7] * xf + h[5]) + h[6] * xf + h[4])
+      + yf * (h[3] * xf + h[1]) + h[2] * xf + h[0];
+
+</code></pre>
+
+<h2 id="结果">结果</h2>
+
+<p>对一个20x20x20的小体素进行预计算，然后用上述的三线性插值放大5倍，形成一个100x100x100大小的体素。</p>
+
+<p>原体素：</p>
+
+<p><img src="origin.png" alt="" /></p>
+
+<p>三线性插值之后：</p>
+
+<p><img src="trilineared.png" alt="" /></p>
+
+<p><a href="main.cpp">完整代码</a></p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018年07月25日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2018/three-way-quicksort/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">三路快速排序</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2018/frequency-gaussian/">
+            <span class="next-text nav-default">DFT和DCT以及空间域的高斯滤波对比</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

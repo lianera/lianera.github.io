@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>RGB-D数据集的合成 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2017/synthetic-rgbd/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="RGB-D数据集的合成" />
+<meta property="og:description" content="在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2017/synthetic-rgbd/" /><meta property="article:published_time" content="2017-03-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-03-19T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="RGB-D数据集的合成">
+<meta itemprop="description" content="在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG">
+
+
+<meta itemprop="datePublished" content="2017-03-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-03-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1244">
+
+
+
+<meta itemprop="keywords" content="计算机视觉," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RGB-D数据集的合成"/>
+<meta name="twitter:description" content="在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">RGB-D数据集的合成</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017年03月19日 </span>
+        
+        <span class="more-meta"> 约 1244 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#更新-2018年7月16日">更新 2018年7月16日</a></li>
+<li><a href="#原文-2017年3月19日">原文 2017年3月19日</a>
+<ul>
+<li><a href="#场景准备">场景准备</a></li>
+<li><a href="#节点编辑">节点编辑</a></li>
+<li><a href="#生成点云">生成点云</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<p>在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RGB-D数据往往很难达到理想的要求，而使用合成数据集则能够任意的构造数据集。</p>
+
+<p>之前用过一个RGB-D设备仿真工具：<a href="http://www.blensor.org/">blensor</a>，但是感觉不怎么好用，主要是RGB相机和深度相机很难保持一致，生成的rgb image和depth map很难配准。其次就是不知为何，导出的PPM图片没法在Photoshop中正常查看，并且深度图是反的。后面就一直用我自己写的<a href="https://github.com/lianera/LtRay">LtRay</a>来生成RGB和Depth，效果很好，不过可惜的是我写的LtRay不支持一些高级特性，满足不了一些要求。今天又探索了一种深度图的生成方法：采用blender的Compositing node来同时渲染RGB和Depth。</p>
+
+<p>首先我们知道RGB的渲染是很容易的，给定好相机参数就行，关键在于Depth。好在Blender里面提供了z通道，可以转换成depth，步骤如下：</p>
+
+<hr />
+
+<h1 id="更新-2018年7月16日">更新 2018年7月16日</h1>
+
+<p>目前blender进行了更新，z通道在Render Layers上面改名为了Depth。</p>
+
+<p>此外，因为blender提供了radiance hdr的输出选项，所以不需要经过相除已经相减等步骤，直接把depth输出为radiance hdr即可。</p>
+
+<p>关于坐标的转换，可以设置好相机sensor的大小以及focal length，通过相机内参矩阵即可将图像上的位置转换成世界坐标位置。</p>
+
+<p><img src="f1.svg" alt="" /></p>
+
+<p>其中x,y,z为世界坐标点的位置，i,j为像素位置，w,h为图像大小，c_w,c_h为图像中心，w_sensor, h_sensor为感光器大小，f为焦距，d为hdr图像对应像素的depth值。</p>
+
+<hr />
+
+<h1 id="原文-2017年3月19日">原文 2017年3月19日</h1>
+
+<h2 id="场景准备">场景准备</h2>
+
+<p>设定好场景和相机，如Kinect v2的深度相机fov为70，分辨率为512 x 424。</p>
+
+<h2 id="节点编辑">节点编辑</h2>
+
+<p>切换到Node Editor并且使用Compositing Node，如图所示：</p>
+
+<p><img src="1489940553221.png" alt="" /></p>
+
+<p>注意到Render Layers中有z通道，这里的z是原始数值。以相机为原点，相机方向为z轴组成一个坐标系，像素点的z值就是场景中对应点在相机坐标系中的z坐标值。添加一个Viewer查看z通道，显示全白，这很好理解，因为图片的范围是[0,1]，而距离往往大于这个范围。所以为了将深度渲染到图片上，需要先除以一个常量，把数值范围压缩到[0,1]，输出图片后再乘以这个常数就能复原。比如我这个场景中，模型位置为(0,0,0)，相机位置为(2,-2,1)，最大距离不超过3，把z除以10，就能映射到[0,1]了：</p>
+
+<p><img src="1489940949247.png" alt="" /></p>
+
+<p>不过对于一般的深度设备，超过范围的像素点一般数值为0，所以需要做一下裁剪。此外，节点编辑器里面可以同时添加两个输出节点，把rgb和depth同时输出到文件，值得注意的是Depth应该输出为16bit灰度图。完整的节点如图所示：</p>
+
+<p><img src="1489941597975.png" alt="" /></p>
+
+<p>进行渲染后，就能得到两幅输出的图：</p>
+
+<p><img src="blender_rgb.png" alt="rgb" /></p>
+
+<p><img src="blender_depth.png" alt="depth" /></p>
+
+<p>并且这两张图是完全配准的。</p>
+
+<h2 id="生成点云">生成点云</h2>
+
+<p>有了fov和深度图，点云就可以直接通过几何关系得出来。</p>
+
+<p><img src="pc.png" alt="pc" /></p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017年03月19日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2017/magicplainv2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Magic Plain v2</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2017/ltray-memo/">
+            <span class="next-text nav-default">LtRay 开发备忘录</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sdl on Lianera</title>
+    <title>SDL on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/sdl/</link>
-    <description>Recent content in Sdl on Lianera</description>
+    <description>Recent content in SDL on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 07 Jul 2013 00:00:00 +0000</lastBuildDate>
@@ -13,10 +13,10 @@
     
     <item>
       <title>贪吃蛇（二）</title>
-      <link>https://lianera.github.io/2013/snake2/</link>
+      <link>https://lianera.github.io/post/2013/snake2/</link>
       <pubDate>Sun, 07 Jul 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2013/snake2/</guid>
+      <guid>https://lianera.github.io/post/2013/snake2/</guid>
       <description>简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但</description>
     </item>
     

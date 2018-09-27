@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>编译原理 on Lianera</title>
+    <title>编译原理 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</link>
-    <description>Recent content in 编译原理 on Lianera</description>
+    <description>Recent content in 编译原理 on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 30 Oct 2016 00:00:00 +0000</lastBuildDate>
@@ -13,10 +13,10 @@
     
     <item>
       <title>NFA转DFA-json数字识别</title>
-      <link>https://lianera.github.io/2016/nfa-to-dfa/</link>
+      <link>https://lianera.github.io/post/2016/nfa-to-dfa/</link>
       <pubDate>Sun, 30 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2016/nfa-to-dfa/</guid>
+      <guid>https://lianera.github.io/post/2016/nfa-to-dfa/</guid>
       <description>json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际</description>
     </item>
     

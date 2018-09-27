@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>梯度下降法及其实现 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2017/gradient-descent/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="梯度下降法及其实现" />
+<meta property="og:description" content="摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2017/gradient-descent/" /><meta property="article:published_time" content="2017-01-04T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-01-04T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="梯度下降法及其实现">
+<meta itemprop="description" content="摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度">
+
+
+<meta itemprop="datePublished" content="2017-01-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-01-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2176">
+
+
+
+<meta itemprop="keywords" content="数学,C&#43;&#43;," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="梯度下降法及其实现"/>
+<meta name="twitter:description" content="摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">梯度下降法及其实现</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017年01月04日 </span>
+        
+        <span class="more-meta"> 约 2176 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#摘要">摘要</a></li>
+<li><a href="#引言">引言</a></li>
+<li><a href="#梯度下降法">梯度下降法</a></li>
+<li><a href="#梯度下降法的实现">梯度下降法的实现</a></li>
+<li><a href="#局限">局限</a></li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<h2 id="摘要">摘要</h2>
+
+<p>本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。</p>
+
+<h2 id="引言">引言</h2>
+
+<p>梯度下降法是一种最优化算法，在最优化理论里面也叫最速下降法，在常用的优化算法当中算是最简单的一种算法了。一般来说求解优化问题根据具体情况有很多其他更好的办法，不过下降法思想是其他大多数优化迭代算法的基础。</p>
+
+<h2 id="梯度下降法">梯度下降法</h2>
+
+<p>对于一般的优化问题，可以表述成这样的形式，给定<img src="clip_image002.svg" alt="f:R^N\rightarrow R" />，要求得一个<img src="clip_image004.svg" alt="x" />使得<img src="clip_image006.svg" alt="f(x)" />最小，也即</p>
+
+<p><img src="clip_image008.svg" alt="x^*=\mathop{\arg\min}_{s.t\in R^N}f(x)" /></p>
+
+<p>梯度下降法是求解无约束优化问题的一种优化方法，无约束是针对可行域来说的，也即可行域没有约束。另外，梯度下降法适合求解凸优化问题，本文讨论的都是针对凸优化问题范围之内的。</p>
+
+<p>以一个二次型为例：</p>
+
+<p><img src="clip_image010.jpg" alt="1  2 " /></p>
+
+<p>如果我们确定好A, b, c，就能确定整个函数，比如给定</p>
+
+<p><img src="clip_image012.jpg" alt="img" /></p>
+
+<p>我们可以把它的函数画出来</p>
+
+<p><img src="clip_image014.jpg" alt="150  100  50 " /></p>
+
+<p>为了对函数值的分布有直观的印象，我们可以把它对应的等高线画出来，如下图所示：</p>
+
+<p><img src="clip_image016.jpg" alt="img" /></p>
+
+<p>对于这个函数的最优化，我们要实现的目标就是找到函数的最小值点，从等高线图中，我们可以明显的看出最小值点在(2,-2)附近。但是如何设计一个算法进行自动求解呢？一种自然的想法是求得这个函数的导数，然后令导数为0解出方程，对于多元来说则是令梯度为零向量解出正规方程。这确实是一种可行的办法，但是需要注意的是正规方程的求解是需要求逆的，而我们知道矩阵求逆的代价非常大，其时间复杂度为<img src="clip_image018.svg" alt="O(n^3)" />对于维数较多、矩阵较大的函数，这样的运算量太大了。此外，梯度组成的正规方程不一定是可解的，例如超越方程等，可能有人会说，可以利用数值方法求解，但是不要忘了数值方法也是用的迭代的方法，梯度下降法正是迭代求解的一种方法，至于他们求解的快慢，则需要比较收敛速度。</p>
+
+<p>对于上面的二次型函数，其对应的梯度为：</p>
+
+<p><img src="clip_image020.jpg" alt="img" /></p>
+
+<p>我们知道，梯度方向是函数上升最快的方向，而我们需要求解的是最小值点，通过取梯度的反方向就能得到下降最快的方向，但有个问题，在函数可行域里面任意取定一个点，沿着它的梯度反方向（最速下降方向）的一条射线，并不一定能够经过最小值点的。对于一维函数来说，是会经过的，因为方向也就两个方向，往最速下降方向肯定能找到最小值点。对于二维和多维，情况就不一样了，但是我们可以通过迭代下降的方法来求解。</p>
+
+<p>对于一般的下降算法来说有两大方法：线性搜索和信赖域，线性搜索在每次迭代的时候确定好方向，然后选定步长进行迭代，最后直到收敛。而信赖域算法是根据一定的原则，直接确定位移，同时，与线性搜索不同的是，它并没有先确定搜索方向，如果根据“某种原则”确定的位移能使目标函数值充分下降，则扩大信赖域，若不能使目标函数值充分下降，则缩小信赖域，如此迭代下去，直到收敛。这里我们讨论线性搜索方法。</p>
+
+<p>对于线性搜索，其迭代过程为：</p>
+
+<p><img src="clip_image022.jpg" alt="Xk+l " /></p>
+
+<p>其中x为可行解，α为步长，p为方向，从这个过程中可以看出，要解决的两个问题就是：一、如何确定方向，二、如何确定步长。对于方向的确定，刚刚已经提到过，梯度下降法的迭代方向为梯度的反向法，那步长怎么确定呢？当我们确定好方向以后，要想在本次迭代取得到下降的最大值，问题就转化成了求一元函数<img src="clip_image024.svg" alt="g(\alpha)=f(x_k+\alpha_kp_k)" />的最小值点。具体来说，步长的确定方法主要可分为精确步长和非精确步长，精确的步长确定方法可以用解析式法，也就是直接求解上面一元函数的最小值点，但是大多数情况下是难以得到步长的解析式的，这种情况下则可以采用0.618法。非精确步长方法主要有Armijo、Wolfe-Powell方法，其主要思路是缩小步长的范围，这里不做详细介绍，有个时候也用固定步长进行迭代，其优点就是简单方便，但是缺点就是收敛速度慢，并且有个时候不一定能收敛。</p>
+
+<p>对于上面的二次型来说，是可以写出单次迭代一元函数最小值求解表达式的，不过有个条件，就是A必须正定，不然不存在最小值点的，这里用Q来表示正定的A，解得其结果为：</p>
+
+<p><img src="clip_image026.jpg" alt="img" /></p>
+
+<p>确定好了这个步长，每次迭代的时候就能找到该方向上的最小值点，然后再结合迭代方向，就能在全局的可行域内进行下降搜索。不过最后还需要给定一个算法终止条件，当每次迭代梯度比较小的时候，下降就进行得很慢了，所以可以通过给定条件<img src="clip_image028.svg" alt="\Vert{d}\Vert\le\epsilon" />来确定终止条件。</p>
+
+<p>总的来说，梯度下降法的算法步骤为：</p>
+
+<p><img src="clip_image030.jpg" alt="img" /></p>
+
+<h2 id="梯度下降法的实现">梯度下降法的实现</h2>
+
+<p>根据上述原理，可以写出梯度下降法的具体算法出来，这里采用C++进行实现。</p>
+
+<p>首先定义一个待求解问题的结构体，这个结构体中包含了待求解的函数、函数的梯度、初始搜索位置、终止条件<img src="clip_image032.svg" alt="\epsilon" />、最大迭代次数以及每次步长的确定策略。其具体的定义为：</p>
+
+<pre><code class="language-cpp">Struct Problem{
+    FUNC&lt;N&gt; f_;
+    GRAD&lt;N&gt; grad_;
+    Vec&lt;N&gt; x0_;
+    double epsilon_;
+    int maxiterate_;
+    STEPFUNC&lt;N&gt; step_;
+}
+</code></pre>
+
+<p>对于下降算法，由于它们的步骤都比较类似，所以可以将梯度算法抽象出来，具体的梯度下降法则通过虚函数来给定方向搜索策略，下降算法的通用框架为：</p>
+
+<pre><code class="language-cpp">class Desent {
+public:
+    Vec&lt;N&gt; operator()(const Problem&lt;N&gt;&amp; p)const
+    {
+        Vec&lt;N&gt; x = p.x0_;
+        for (int i = 0; i &lt; p.maxiterate_; i++) {
+            Vec&lt;N&gt; g = p.grad_(x);
+            if (g.norm() &lt;= p.epsilon_)
+                break;        // converge
+            Vec&lt;N&gt; d = this-&gt;dir(p, x);
+            double steplength = p.step_(x, g, d);
+            x += steplength * d;
+            if (postproc)
+                postproc(x);
+        }
+        return x;
+    }
+    
+    std::function&lt;void(const Vec&lt;N&gt;&amp;)&gt; postproc;
+    
+protected:
+    virtual Vec&lt;N&gt; dir(const Problem&lt;N&gt;&amp; p, const Vec&lt;N&gt;&amp; x) const= 0;
+};
+</code></pre>
+
+<p>而梯度下降法则是对下降法框架的方向进行确定：</p>
+
+<pre><code class="language-cpp">class SteepestDesent
+        : public Desent&lt;N&gt;{
+public:
+protected:
+    virtual Vec&lt;N&gt; dir(const Problem&lt;N&gt;&amp; p, const Vec&lt;N&gt;&amp; x)const
+    {
+        return -p.grad_(x);
+    }
+};
+
+</code></pre>
+
+<p>这样，每次给定一个Problem，就能通过SteepestDesent来求得最优解。</p>
+
+<h2 id="局限">局限</h2>
+
+<p>对于梯度下降法来说，虽然每一步是最速下降的，但是全局收敛速度并不快，特别是在接近最小值的时候，梯度很小，导致下降的速度减慢，对于一些狭长地带甚至会“之字形”下降。</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<p>[1] Nocedal J, Wright S. Numerical optimization[M]. Springer Science &amp; Business Media, 2006.</p>
+
+<p>[2] Shewchuk J R. An introduction to the conjugate gradient method without the agonizing pain[J]. 1994.</p>
+
+<p>[3]袁亚湘, 孙文瑜. 最优化理论和方法[J]. 1997.</p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017年01月04日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+          
+          <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2017/complicated-compound-derivative/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">复杂多元复合函数的导数和雅克比矩阵</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2016/sh-lighting-exp/">
+            <span class="next-text nav-default">球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

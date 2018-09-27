@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Matlab on Lianera</title>
+    <title>Matlab on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/matlab/</link>
-    <description>Recent content in Matlab on Lianera</description>
+    <description>Recent content in Matlab on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 09 Dec 2015 00:00:00 +0000</lastBuildDate>
@@ -13,10 +13,10 @@
     
     <item>
       <title>多图片平均法降噪</title>
-      <link>https://lianera.github.io/2015/average-denoise/</link>
+      <link>https://lianera.github.io/post/2015/average-denoise/</link>
       <pubDate>Wed, 09 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2015/average-denoise/</guid>
+      <guid>https://lianera.github.io/post/2015/average-denoise/</guid>
       <description>理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示</description>
     </item>
     

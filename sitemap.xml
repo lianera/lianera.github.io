@@ -1,288 +1,366 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<?xml-stylesheet type="text/xsl" href="https://lianera.github.io/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lianera.github.io/2018/sphere-fitting/</loc>
+    <loc>https://lianera.github.io/post/2018/sphere-fitting/</loc>
     <lastmod>2018-09-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2018/three-way-quicksort/</loc>
+    <loc>https://lianera.github.io/post/2018/three-way-quicksort/</loc>
     <lastmod>2018-08-25T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2018/fast-trilinear-interpolation/</loc>
+    <loc>https://lianera.github.io/post/2018/fast-trilinear-interpolation/</loc>
     <lastmod>2018-07-25T10:48:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2018/frequency-gaussian/</loc>
+    <loc>https://lianera.github.io/post/2018/frequency-gaussian/</loc>
     <lastmod>2018-07-21T15:48:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2018/synthetic-intrinsic-images/</loc>
+    <loc>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</loc>
     <lastmod>2018-07-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/fast-gaussian/</loc>
+    <loc>https://lianera.github.io/post/2017/fast-gaussian/</loc>
     <lastmod>2017-11-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/magicplainv2/</loc>
+    <loc>https://lianera.github.io/post/2017/magicplainv2/</loc>
     <lastmod>2017-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/synthetic-rgbd/</loc>
+    <loc>https://lianera.github.io/post/2017/synthetic-rgbd/</loc>
     <lastmod>2017-03-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/ltray-memo/</loc>
+    <loc>https://lianera.github.io/post/2017/ltray-memo/</loc>
     <lastmod>2017-03-07T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/sh-lighting-apply/</loc>
+    <loc>https://lianera.github.io/post/2017/sh-lighting-apply/</loc>
     <lastmod>2017-02-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/ltray-refactoring/</loc>
+    <loc>https://lianera.github.io/post/2017/ltray-refactoring/</loc>
     <lastmod>2017-02-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/complicated-compound-derivative/</loc>
+    <loc>https://lianera.github.io/post/2017/complicated-compound-derivative/</loc>
     <lastmod>2017-01-04T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2017/gradient-descent/</loc>
+    <loc>https://lianera.github.io/post/2017/gradient-descent/</loc>
     <lastmod>2017-01-04T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2016/sh-lighting-exp/</loc>
+    <loc>https://lianera.github.io/post/2016/sh-lighting-exp/</loc>
     <lastmod>2016-12-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2016/nfa-to-dfa/</loc>
+    <loc>https://lianera.github.io/post/2016/nfa-to-dfa/</loc>
     <lastmod>2016-10-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2016/ocean-sectional/</loc>
+    <loc>https://lianera.github.io/post/2016/ocean-sectional/</loc>
     <lastmod>2016-01-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2015/average-denoise/</loc>
+    <loc>https://lianera.github.io/post/2015/average-denoise/</loc>
     <lastmod>2015-12-09T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2015/cv-mouse/</loc>
+    <loc>https://lianera.github.io/post/2015/cv-mouse/</loc>
     <lastmod>2015-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2015/sudoku/</loc>
+    <loc>https://lianera.github.io/post/2015/sudoku/</loc>
     <lastmod>2015-01-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2014/cpu-step-by-step/</loc>
+    <loc>https://lianera.github.io/post/2014/cpu-step-by-step/</loc>
     <lastmod>2014-10-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2014/game2048/</loc>
+    <loc>https://lianera.github.io/post/2014/game2048/</loc>
     <lastmod>2014-09-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2014/transplant-tft/</loc>
+    <loc>https://lianera.github.io/post/2014/transplant-tft/</loc>
     <lastmod>2014-05-14T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2013/magicplain/</loc>
+    <loc>https://lianera.github.io/post/2013/magicplain/</loc>
     <lastmod>2013-12-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2013/snake2/</loc>
+    <loc>https://lianera.github.io/post/2013/snake2/</loc>
     <lastmod>2013-07-07T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2012/tiebadigger/</loc>
+    <loc>https://lianera.github.io/post/2012/tiebadigger/</loc>
     <lastmod>2012-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2012/panzerwar/</loc>
+    <loc>https://lianera.github.io/post/2012/panzerwar/</loc>
     <lastmod>2012-12-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2012/blockgame/</loc>
+    <loc>https://lianera.github.io/post/2012/blockgame/</loc>
     <lastmod>2012-11-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2008/tetris/</loc>
+    <loc>https://lianera.github.io/post/2008/tetris/</loc>
     <lastmod>2008-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2008/snake1/</loc>
+    <loc>https://lianera.github.io/post/2008/snake1/</loc>
     <lastmod>2008-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://lianera.github.io/2008/keyhelper/</loc>
+    <loc>https://lianera.github.io/post/2008/keyhelper/</loc>
     <lastmod>2008-10-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lianera.github.io/archives/</loc>
-    <priority>0</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/c&#43;&#43;/</loc>
     <lastmod>2017-03-07T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/categories/</loc>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/java/</loc>
     <lastmod>2015-01-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/javascript/</loc>
     <lastmod>2017-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/</loc>
     <lastmod>2018-09-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/linux/</loc>
     <lastmod>2015-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/matlab/</loc>
     <lastmod>2015-12-09T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/post/</loc>
     <lastmod>2018-09-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/sdl/</loc>
     <lastmod>2013-07-07T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/</loc>
     <lastmod>2017-03-07T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/windows/</loc>
     <lastmod>2012-12-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/about/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</loc>
     <lastmod>2018-07-21T15:48:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E6%95%B0%E5%AD%A6/</loc>
     <lastmod>2017-11-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2017-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E7%A1%AC%E4%BB%B6/</loc>
     <lastmod>2014-10-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E7%A8%8B%E5%BA%8F/</loc>
     <lastmod>2017-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2018-09-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2016-10-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2012-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</loc>
     <lastmod>2018-07-25T10:48:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</loc>
     <lastmod>2018-07-21T15:48:41+08:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   

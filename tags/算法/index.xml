@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>算法 on Lianera</title>
+    <title>算法 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%AE%97%E6%B3%95/</link>
-    <description>Recent content in 算法 on Lianera</description>
+    <description>Recent content in 算法 on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 06 Sep 2018 00:00:00 +0000</lastBuildDate>
@@ -13,19 +13,19 @@
     
     <item>
       <title>点云球心拟合</title>
-      <link>https://lianera.github.io/2018/sphere-fitting/</link>
+      <link>https://lianera.github.io/post/2018/sphere-fitting/</link>
       <pubDate>Thu, 06 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2018/sphere-fitting/</guid>
+      <guid>https://lianera.github.io/post/2018/sphere-fitting/</guid>
       <description>最近有人问怎么对球状的三维点云进行拟合，得到球心的位置和半径，对于这类问题，我首先想到的是二维图像中圆检测的方法霍夫变换，但是霍夫变换是在图</description>
     </item>
     
     <item>
       <title>三路快速排序</title>
-      <link>https://lianera.github.io/2018/three-way-quicksort/</link>
+      <link>https://lianera.github.io/post/2018/three-way-quicksort/</link>
       <pubDate>Sat, 25 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2018/three-way-quicksort/</guid>
+      <guid>https://lianera.github.io/post/2018/three-way-quicksort/</guid>
       <description>最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2</description>
     </item>
     

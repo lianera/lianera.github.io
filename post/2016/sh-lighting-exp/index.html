@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2016/sh-lighting-exp/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="球谐光照（Spherical Harmonics Lighting）及其应用-实验篇" />
+<meta property="og:description" content="简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2016/sh-lighting-exp/" /><meta property="article:published_time" content="2016-12-06T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-12-06T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="球谐光照（Spherical Harmonics Lighting）及其应用-实验篇">
+<meta itemprop="description" content="简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我">
+
+
+<meta itemprop="datePublished" content="2016-12-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-12-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2552">
+
+
+
+<meta itemprop="keywords" content="计算机图形学,C&#43;&#43;,数学,程序," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="球谐光照（Spherical Harmonics Lighting）及其应用-实验篇"/>
+<meta name="twitter:description" content="简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016年12月06日 </span>
+        
+        <span class="more-meta"> 约 2552 字 </span>
+        <span class="more-meta"> 预计阅读 6 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#实验">实验</a></li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<h2 id="简介">简介</h2>
+
+<p>之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我个人觉得如果之前对实时渲染技术不是很了解的话，球谐光照还是有一定难度的。大多数的资料都是从原理上描述球谐函数及其光照过程，而没有对具体的应用做解释，我直到真正动手实现了一遍球谐光照之后，才完全理解球谐光照具体的过程以及作用。</p>
+
+<p>球谐光照实际上是一种对光照的简化，对于空间上的一点，受到的光照在各个方向上是不同的，也即各向异性，所以空间上一点如果要完全还原光照情况，那就需要记录周围球面上所有方向的光照。注意这里考虑的周围环境往往是复杂的情况，而不是几个简单的光源，如果是那样的话，直接用光源的光照模型求和就可以了。</p>
+
+<p>如果环境光照可以用简单函数表示，那自然直接求点周围球面上的积分就可以了。但是通常光照不会那么简单，并且用函数表示光照也不方便，所以经常用的方法是使用环境光贴图，比如像这样的：</p>
+
+<p><img src="cubemap.jpg" alt="img" /></p>
+
+<p>上面的图是立方体展开得到的，这种贴图也就是cubemap，需要注意的是一般的cubemap是从里往外看的。</p>
+
+<p>考虑一个简单场景中有个点，他周围的各个方向上的环境光照就是上面的cubemap呈现的，假如我想知道这个点各个方向的光照情况，那么就必须在cubemap对应的各个方向进行采样。对于一个大的场景来说，每个位置点的环境光都有可能不同，如果把每个点的环境光贴图储存起来，并且每次获取光照都从相应的贴图里面采样，可想而知这样的方法是非常昂贵的。</p>
+
+<p>利用球谐函数就可以很好的解决这个问题，球谐函数的主要作用就是用简单的系数表示复杂的球面函数。关于球谐函数的理论推导与解释可以参考wiki(<a href="https://en.wikipedia.org/wiki/Spherical_harmonics)。如果只是要应用和实现球谐光照，不会涉及到推导过程，不过球谐基函数却是关键的内容，球谐基函数已经有人在wiki上列好了表格，参考（https://en.wikipedia.org/wiki/Table_of_spherical_harmonics），前3阶的球谐基函数如下：">https://en.wikipedia.org/wiki/Spherical_harmonics)。如果只是要应用和实现球谐光照，不会涉及到推导过程，不过球谐基函数却是关键的内容，球谐基函数已经有人在wiki上列好了表格，参考（https://en.wikipedia.org/wiki/Table_of_spherical_harmonics），前3阶的球谐基函数如下：</a></p>
+
+<p><img src="shbasis.png" alt="img" /></p>
+
+<p>这里值得注意的是很多资料用这张图来描述球谐基函数：</p>
+
+<p><img src="shbasis-vis.png" alt="img" /></p>
+
+<p>我刚开始看到这张图的时候简直觉得莫名其妙，实际上这里面每个曲面都是用球坐标系表示的，球谐基都是定义在球坐标系上的函数，r（也就是离中心的距离）表示的就是这个球谐基在这个方向分量的重要程度。我是用类比傅里叶变换的方法来理解的，其实球谐函数本身就是拉普拉斯变换在球坐标系下的表示，这里的每个球谐基可以类比成傅里叶变换中频域的各个离散的频率，各个球谐基乘以对应的系数就可以还原出原来的球面函数。一个复杂的波形可以用简单的谐波和相应系数表示，同样的，一个复杂的球面上的函数也可以用简单的球谐基和相应的系数表示。</p>
+
+<p>由于球谐基函数阶数是无限的，所以只能取前面几组基来近似，一般在光照中大都取3阶，也即9个球谐系数。</p>
+
+<h2 id="实验">实验</h2>
+
+<p>我们先考虑简单的情况，比如说定义一个光照函数：</p>
+
+<p><img src="lighting-func.png" alt="img" /></p>
+
+<p>在球坐标系下，将该函数的值当做光照强度值，可以画出光照在球面上的分布情况：</p>
+
+<p><img src="lighting-func-vis.jpg" alt="img" /></p>
+
+<p>不过由于这种方式可视化方式对于亮度变换不是很敏感，所以我们把强度当成球坐标系的r，画出来是这个样子：</p>
+
+<p><img src="lighting-func-vis2.jpg" alt="img" /></p>
+
+<p> 现在要将这个函数转换成球谐系数表示，首先要做的就是对其进行采样，采样的目标是确定在某个球谐基方向上强度的大小，也即求得每个球谐基Yi对应的系数ci。具体的采样方法如下：</p>
+
+<p><img src="formula1.png" alt="img" /></p>
+
+<p> 其中N为采样次数。也就是说在计算某个球谐系数ci的时候，首先在球面上采许多点，然后把这些点的光照强度和球谐基相乘（在那个方向上，球谐基函数的分量或者说重要程度就是Yi(xi)），通过这些采样点，从而得到了在每个球谐基函数上光照的分布情况。注意某个球谐基只能大致代表它那个方向上的光照强度，所以需要组合很多个球谐基函数才能近似还原出原光照。</p>
+
+<p>还原的过程比较简单，通过球谐基与对应的系数相乘得到：</p>
+
+<p><img src="formula2.png" alt="img" /></p>
+
+<p> 这里L&rsquo;是还原后的光照，s是球面上的一点（也可以看成某个方向），n是球谐函数的阶数，n^2也即球谐系数的个数。</p>
+
+<p>值得注意的是采样和计算ci是预先进行的，比如说复杂场景中，某个位置预先用光线跟踪方法计算环境光，从而采样出ci，这样这个位置的光照信息就压缩成几个ci表示了。但是重建光照的过程是在运行时实时进行的，从重建光照的过程中可以看出该式非常简单，其中Yi的计算从球谐基函数的表中就可以看出只涉及到简单的乘法和加法，完全可以在shader中实现（球谐基函数中的r一般默认都设置成1）。所以如果给我们一个点的球谐系数，利用上面的公式马上就等得到每个方向上的光照强度。</p>
+
+<p>对于上面的那个光照函数来说，首先对原函数进行采样，采样10000个点并计算出前6阶36个球谐系数，计算出的球谐系数（部分）如下：</p>
+
+<p><img src="shfunc.png" alt="img" /></p>
+
+<p> 计算好了球谐系数之后，我们就可以利用这些系数来还原原光照了，利用第二个公式还原之后的效果如下：</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="v1.jpg" alt="img" /></th>
+<th><img src="v2.jpg" alt="img" /></th>
+<th><img src="v3.jpg" alt="img" /></th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>从左至右分别是原光照、0~2阶球谐光照、0~5阶球谐光照，从中可以看出到第5阶球谐光照与原光照已经很接近了，只是有小部分的高频信息不同。说明球谐系数越多，还原的效果越好，同时还原光照时能够较好地保留低频部分，而高频信息则丢失得比较多。不过对于光照来说，一般都是比较低频的信息，所以3阶，也就是到l=2时就已经足够了。</p>
+
+<p>如果用CubeMap的方式来可视化就是这个样子：</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="c1.jpg" alt="" /></th>
+<th><img src="c2.jpg" alt="" /></th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p> 左图为原环境光的CubeMap，右图为0~5阶球谐系数还原之后的光照，可以看出已经还原得很好了。</p>
+
+<p> 抛开简单的函数，如果是复杂的环境光贴图，过程也是一样的，比如对于一个这样的环境光：</p>
+
+<p><img src="l1.jpg" alt="img" /></p>
+
+<p>对它进行采样并还原之后，得到了这样的结果：</p>
+
+<p><img src="l2.jpg" alt="img" /></p>
+
+<p>效果还不错，只是高频丢失了很多。不过这是对光照的还原，因此丢失了高频信息关系也不大。</p>
+
+<p>如果把这两个光照投射到球面上进行可视化，就是这个样子：</p>
+
+<table>
+<thead>
+<tr>
+<th><img src="s1.jpg" alt="" /></th>
+<th><img src="s2.jpg" alt="" /></th>
+</tr>
+</thead>
+
+<tbody>
+</tbody>
+</table>
+
+<p>可惜的是网页上没法进行交互，所以只能表现出某个角度的光照还原情况。</p>
+
+<p>有了上面这些实验的准备，我们就可以开始在实际的场景中应用球谐光照，下一篇我将会简要介绍一下我的实现过程。</p>
+
+<p><a href="https://github.com/lianera/archives/tree/master/2016/SphericalHarmonicsLighting">源代码</a></p>
+
+<p><a href="https://github.com/lianera/archives/releases/download/20180514/SphericalHarmonicsLighting.zip">可执行程序</a></p>
+
+<p>不过这些工具都是实验性质的，如果有问题欢迎反馈。</p>
+
+<p>下一篇<a href="/2017/sh-lighting-apply">《球谐光照（Spherical Harmonics Lighting）及其应用-应用篇》</a>将会介绍球谐光照的实现及应用。</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<p>Green R. Spherical harmonic lighting: The gritty details[C]//Archives of the Game Developers Conference. 2003, 56.</p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2016年12月06日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+          
+          <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          
+          <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+          
+          <a href="/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2017/gradient-descent/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">梯度下降法及其实现</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2016/nfa-to-dfa/">
+            <span class="next-text nav-default">NFA转DFA-json数字识别</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

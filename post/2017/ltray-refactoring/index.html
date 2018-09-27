@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LtRay的艰难重构 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" />
+  <meta name="description" content="从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的" />
+
+  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2017/ltray-refactoring/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="LtRay的艰难重构" />
+<meta property="og:description" content="从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2017/ltray-refactoring/" /><meta property="article:published_time" content="2017-02-15T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-02-15T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="LtRay的艰难重构">
+<meta itemprop="description" content="从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的">
+
+
+<meta itemprop="datePublished" content="2017-02-15T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-02-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1387">
+
+
+
+<meta itemprop="keywords" content="C&#43;&#43;,计算机图形学," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LtRay的艰难重构"/>
+<meta name="twitter:description" content="从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">LtRay的艰难重构</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017年02月15日 </span>
+        
+        <span class="more-meta"> 约 1387 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#第三方库">第三方库</a></li>
+<li><a href="#工程构建">工程构建</a></li>
+<li><a href="#规范">规范</a></li>
+<li><a href="#该不该用getter-setter">该不该用getter，setter？</a></li>
+<li><a href="#该不该用全部改用智能指针">该不该用全部改用智能指针？</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<p>从去年九月份开始，我就在着手实现一个光线跟踪器：<a href="https://github.com/lianera/LtRay">LtRay</a>。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的图元比如球体、平面等进行渲染，并且还具有反射、阴影效果。但是越到后面，开发的进度就越来越慢了，近两个月几乎就是做些填补工作。现在每改一个地方，几乎就得花费一两天的时间来修复相关的代码。前不久刚定下<a href="https://github.com/lianera/LtRay/releases/tag/v0.1.7">v0.1.7</a>版本，渲染的效果如下：</p>
+
+<p><img src="ltray.png" alt="ltray" /></p>
+
+<p>而这跟我两个月前的版本相比，几乎就只是把光线跟踪的核心分离出来，另外把场景文件的格式从json改成了toml。每遇到一个问题，我都在纠结到底该哪一种方式来解决，实际上，这种犹豫耗费了大量的时间。摆在我面前的方法仿佛有无数种，但就是没法确定哪一种是最好的，结果就是反复修改来修改去，比如我遇到的有这些坑：</p>
+
+<h2 id="第三方库">第三方库</h2>
+
+<p>针对于第三方库这个问题，其实一开始我是拒绝使用的。我使用的是CMake构建工程的方式，因为大量使用第三方库的话会导致环境配置麻烦，CMakeLists编写复杂，为此花费了很多时间。而很多库其实只用到了功能的一小部分，完全可以自己实现，比如PBM和PGM图片的读写，这个很简单，我就直接自己写了。到后面，需要用到json来定义场景文件的时候，我是依然选择了自己写json解析器。这真是已经费力不讨好的事情，我花了很多时间编写完善json解析器，到后面发现用json定义场景文件并不是很方便，转而又使用toml。前后一折腾，那些工作就相当于白干了。</p>
+
+<h2 id="工程构建">工程构建</h2>
+
+<p>我曾算是Linux和开源精神的簇拥，就连一个很小的程序都要写个CMakeLists，时时刻刻注意着跨平台。但现在让我去写代码，我会毫不犹豫选择Windows和Visual Studio，因为Visual Studio实在是太方便了，特别是结合NuGet来管理第三方库，简直畅快无比，再也不用手动去配置和管理第三方库了。所以我现在是大胆使用第三方库，只要这个库是比较稳定的有人在维护的就好，比如现在LtRay中就用了glfw来显示窗口、FreeImage来加载图片、cpptoml来解析toml文件。效率就是生产力，在生产力面前，那些Linux情怀就免谈了吧。</p>
+
+<h2 id="规范">规范</h2>
+
+<p>代码规范很容易解决，难的就是C++多范式带来的选择困难。同一个问题有无数种解决方法，而我往往是实现了一种，后来又发现不怎么好，又回过头来修改，就这样反反复复不知道修改了多少次。期初代码量很少还好，到现在几乎全是改代码了。</p>
+
+<h2 id="该不该用getter-setter">该不该用getter，setter？</h2>
+
+<p>我起初是恪守“类应该对外部只应该暴露接口函数”这一规则的，但是到后面发现这真是太繁琐了，可读性和可维护性都大大降低了。比如Point、Vector、Color这些类，只有三四个成员变量，而且这些变量是不受约束的，本来一个很简单的struct Color{float r,g,b};结果用getter、setter包装起来后，代码真是变得啰嗦无比。我个人觉得对于简单类使用这种getter、setter方式无异于掩耳盗铃。</p>
+
+<h2 id="该不该用全部改用智能指针">该不该用全部改用智能指针？</h2>
+
+<p>C++11中的智能指针确实很方便，但其实质还是个资源管理的工具，如果把所有的指针都用智能指针代替，那就会使得资源的生命周期难以掌控。最好的方法就是只在需要自动回收资源的地方使用智能指针，对于那些只是暂时借用对象的指针的函数，直接传递指针就好了。</p>
+
+<p>C++入门并不难，但这些寻求“最佳实践”的过程可能会永无止境。</p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2017年02月15日</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2017/sh-lighting-apply/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2017/complicated-compound-derivative/">
+            <span class="next-text nav-default">复杂多元复合函数的导数和雅克比矩阵</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2014 - 
+    2018
+    ,
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

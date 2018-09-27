@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>硬件 on Lianera</title>
+    <title>硬件 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%A1%AC%E4%BB%B6/</link>
-    <description>Recent content in 硬件 on Lianera</description>
+    <description>Recent content in 硬件 on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 27 Oct 2014 00:00:00 +0000</lastBuildDate>
@@ -13,19 +13,19 @@
     
     <item>
       <title>简单CPU设计实践</title>
-      <link>https://lianera.github.io/2014/cpu-step-by-step/</link>
+      <link>https://lianera.github.io/post/2014/cpu-step-by-step/</link>
       <pubDate>Mon, 27 Oct 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2014/cpu-step-by-step/</guid>
+      <guid>https://lianera.github.io/post/2014/cpu-step-by-step/</guid>
       <description>开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且</description>
     </item>
     
     <item>
       <title>TFT液晶屏Linux下的移植</title>
-      <link>https://lianera.github.io/2014/transplant-tft/</link>
+      <link>https://lianera.github.io/post/2014/transplant-tft/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2014/transplant-tft/</guid>
+      <guid>https://lianera.github.io/post/2014/transplant-tft/</guid>
       <description>预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,</description>
     </item>
     

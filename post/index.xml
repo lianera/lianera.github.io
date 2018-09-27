@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Lianera</title>
+    <title>Posts on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/post/</link>
-    <description>Recent content in Posts on Lianera</description>
+    <description>Recent content in Posts on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 06 Sep 2018 00:00:00 +0000</lastBuildDate>
@@ -13,271 +13,271 @@
     
     <item>
       <title>点云球心拟合</title>
-      <link>https://lianera.github.io/2018/sphere-fitting/</link>
+      <link>https://lianera.github.io/post/2018/sphere-fitting/</link>
       <pubDate>Thu, 06 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2018/sphere-fitting/</guid>
+      <guid>https://lianera.github.io/post/2018/sphere-fitting/</guid>
       <description>最近有人问怎么对球状的三维点云进行拟合，得到球心的位置和半径，对于这类问题，我首先想到的是二维图像中圆检测的方法霍夫变换，但是霍夫变换是在图</description>
     </item>
     
     <item>
       <title>三路快速排序</title>
-      <link>https://lianera.github.io/2018/three-way-quicksort/</link>
+      <link>https://lianera.github.io/post/2018/three-way-quicksort/</link>
       <pubDate>Sat, 25 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2018/three-way-quicksort/</guid>
+      <guid>https://lianera.github.io/post/2018/three-way-quicksort/</guid>
       <description>最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2</description>
     </item>
     
     <item>
       <title>快速三线性插值</title>
-      <link>https://lianera.github.io/2018/fast-trilinear-interpolation/</link>
+      <link>https://lianera.github.io/post/2018/fast-trilinear-interpolation/</link>
       <pubDate>Wed, 25 Jul 2018 10:48:41 +0800</pubDate>
       
-      <guid>https://lianera.github.io/2018/fast-trilinear-interpolation/</guid>
+      <guid>https://lianera.github.io/post/2018/fast-trilinear-interpolation/</guid>
       <description>最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小</description>
     </item>
     
     <item>
       <title>DFT和DCT以及空间域的高斯滤波对比</title>
-      <link>https://lianera.github.io/2018/frequency-gaussian/</link>
+      <link>https://lianera.github.io/post/2018/frequency-gaussian/</link>
       <pubDate>Sat, 21 Jul 2018 15:48:41 +0800</pubDate>
       
-      <guid>https://lianera.github.io/2018/frequency-gaussian/</guid>
+      <guid>https://lianera.github.io/post/2018/frequency-gaussian/</guid>
       <description>最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶</description>
     </item>
     
     <item>
       <title>本征图像的合成</title>
-      <link>https://lianera.github.io/2018/synthetic-intrinsic-images/</link>
+      <link>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</link>
       <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2018/synthetic-intrinsic-images/</guid>
+      <guid>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</guid>
       <description>从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需</description>
     </item>
     
     <item>
       <title>快速高斯模糊综述</title>
-      <link>https://lianera.github.io/2017/fast-gaussian/</link>
+      <link>https://lianera.github.io/post/2017/fast-gaussian/</link>
       <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/fast-gaussian/</guid>
+      <guid>https://lianera.github.io/post/2017/fast-gaussian/</guid>
       <description>高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</description>
     </item>
     
     <item>
       <title>Magic Plain v2</title>
-      <link>https://lianera.github.io/2017/magicplainv2/</link>
+      <link>https://lianera.github.io/post/2017/magicplainv2/</link>
       <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/magicplainv2/</guid>
+      <guid>https://lianera.github.io/post/2017/magicplainv2/</guid>
       <description>简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</description>
     </item>
     
     <item>
       <title>RGB-D数据集的合成</title>
-      <link>https://lianera.github.io/2017/synthetic-rgbd/</link>
+      <link>https://lianera.github.io/post/2017/synthetic-rgbd/</link>
       <pubDate>Sun, 19 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/synthetic-rgbd/</guid>
+      <guid>https://lianera.github.io/post/2017/synthetic-rgbd/</guid>
       <description>在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG</description>
     </item>
     
     <item>
       <title>LtRay 开发备忘录</title>
-      <link>https://lianera.github.io/2017/ltray-memo/</link>
+      <link>https://lianera.github.io/post/2017/ltray-memo/</link>
       <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/ltray-memo/</guid>
+      <guid>https://lianera.github.io/post/2017/ltray-memo/</guid>
       <description>数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</description>
     </item>
     
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</title>
-      <link>https://lianera.github.io/2017/sh-lighting-apply/</link>
+      <link>https://lianera.github.io/post/2017/sh-lighting-apply/</link>
       <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/sh-lighting-apply/</guid>
+      <guid>https://lianera.github.io/post/2017/sh-lighting-apply/</guid>
       <description>上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</description>
     </item>
     
     <item>
       <title>LtRay的艰难重构</title>
-      <link>https://lianera.github.io/2017/ltray-refactoring/</link>
+      <link>https://lianera.github.io/post/2017/ltray-refactoring/</link>
       <pubDate>Wed, 15 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/ltray-refactoring/</guid>
+      <guid>https://lianera.github.io/post/2017/ltray-refactoring/</guid>
       <description>从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</description>
     </item>
     
     <item>
       <title>复杂多元复合函数的导数和雅克比矩阵</title>
-      <link>https://lianera.github.io/2017/complicated-compound-derivative/</link>
+      <link>https://lianera.github.io/post/2017/complicated-compound-derivative/</link>
       <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/complicated-compound-derivative/</guid>
+      <guid>https://lianera.github.io/post/2017/complicated-compound-derivative/</guid>
       <description>我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的</description>
     </item>
     
     <item>
       <title>梯度下降法及其实现</title>
-      <link>https://lianera.github.io/2017/gradient-descent/</link>
+      <link>https://lianera.github.io/post/2017/gradient-descent/</link>
       <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2017/gradient-descent/</guid>
+      <guid>https://lianera.github.io/post/2017/gradient-descent/</guid>
       <description>摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度</description>
     </item>
     
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</title>
-      <link>https://lianera.github.io/2016/sh-lighting-exp/</link>
+      <link>https://lianera.github.io/post/2016/sh-lighting-exp/</link>
       <pubDate>Tue, 06 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2016/sh-lighting-exp/</guid>
+      <guid>https://lianera.github.io/post/2016/sh-lighting-exp/</guid>
       <description>简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</description>
     </item>
     
     <item>
       <title>NFA转DFA-json数字识别</title>
-      <link>https://lianera.github.io/2016/nfa-to-dfa/</link>
+      <link>https://lianera.github.io/post/2016/nfa-to-dfa/</link>
       <pubDate>Sun, 30 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2016/nfa-to-dfa/</guid>
+      <guid>https://lianera.github.io/post/2016/nfa-to-dfa/</guid>
       <description>json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际</description>
     </item>
     
     <item>
       <title>海水截面模拟</title>
-      <link>https://lianera.github.io/2016/ocean-sectional/</link>
+      <link>https://lianera.github.io/post/2016/ocean-sectional/</link>
       <pubDate>Fri, 29 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2016/ocean-sectional/</guid>
+      <guid>https://lianera.github.io/post/2016/ocean-sectional/</guid>
       <description>介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波</description>
     </item>
     
     <item>
       <title>多图片平均法降噪</title>
-      <link>https://lianera.github.io/2015/average-denoise/</link>
+      <link>https://lianera.github.io/post/2015/average-denoise/</link>
       <pubDate>Wed, 09 Dec 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2015/average-denoise/</guid>
+      <guid>https://lianera.github.io/post/2015/average-denoise/</guid>
       <description>理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示</description>
     </item>
     
     <item>
       <title>基于计算机视觉的虚拟鼠标</title>
-      <link>https://lianera.github.io/2015/cv-mouse/</link>
+      <link>https://lianera.github.io/post/2015/cv-mouse/</link>
       <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2015/cv-mouse/</guid>
+      <guid>https://lianera.github.io/post/2015/cv-mouse/</guid>
       <description>概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络</description>
     </item>
     
     <item>
       <title>Sudoku</title>
-      <link>https://lianera.github.io/2015/sudoku/</link>
+      <link>https://lianera.github.io/post/2015/sudoku/</link>
       <pubDate>Sat, 10 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2015/sudoku/</guid>
+      <guid>https://lianera.github.io/post/2015/sudoku/</guid>
       <description>简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复</description>
     </item>
     
     <item>
       <title>简单CPU设计实践</title>
-      <link>https://lianera.github.io/2014/cpu-step-by-step/</link>
+      <link>https://lianera.github.io/post/2014/cpu-step-by-step/</link>
       <pubDate>Mon, 27 Oct 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2014/cpu-step-by-step/</guid>
+      <guid>https://lianera.github.io/post/2014/cpu-step-by-step/</guid>
       <description>开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且</description>
     </item>
     
     <item>
       <title>Game2048</title>
-      <link>https://lianera.github.io/2014/game2048/</link>
+      <link>https://lianera.github.io/post/2014/game2048/</link>
       <pubDate>Thu, 18 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2014/game2048/</guid>
+      <guid>https://lianera.github.io/post/2014/game2048/</guid>
       <description>简介 这是一个用Java写的实现2048游戏的程序，加入了人工智能，能够自动运行。 技术 项目引入MVC架构的思想，将逻辑与界面分离。这个程序的难</description>
     </item>
     
     <item>
       <title>TFT液晶屏Linux下的移植</title>
-      <link>https://lianera.github.io/2014/transplant-tft/</link>
+      <link>https://lianera.github.io/post/2014/transplant-tft/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2014/transplant-tft/</guid>
+      <guid>https://lianera.github.io/post/2014/transplant-tft/</guid>
       <description>预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,</description>
     </item>
     
     <item>
       <title>Magic Plain</title>
-      <link>https://lianera.github.io/2013/magicplain/</link>
+      <link>https://lianera.github.io/post/2013/magicplain/</link>
       <pubDate>Tue, 31 Dec 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2013/magicplain/</guid>
+      <guid>https://lianera.github.io/post/2013/magicplain/</guid>
       <description>简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了</description>
     </item>
     
     <item>
       <title>贪吃蛇（二）</title>
-      <link>https://lianera.github.io/2013/snake2/</link>
+      <link>https://lianera.github.io/post/2013/snake2/</link>
       <pubDate>Sun, 07 Jul 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2013/snake2/</guid>
+      <guid>https://lianera.github.io/post/2013/snake2/</guid>
       <description>简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但</description>
     </item>
     
     <item>
       <title>贴吧用户ID挖掘机</title>
-      <link>https://lianera.github.io/2012/tiebadigger/</link>
+      <link>https://lianera.github.io/post/2012/tiebadigger/</link>
       <pubDate>Sun, 23 Dec 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2012/tiebadigger/</guid>
+      <guid>https://lianera.github.io/post/2012/tiebadigger/</guid>
       <description>简介 这是一个用来挖掘贴吧用户ID的程序，能够将某个贴吧的所有用户名都按格式记录下来，可用于@大量用户。 技术 程序用C语言写成的，使用Windo</description>
     </item>
     
     <item>
       <title>装甲之战</title>
-      <link>https://lianera.github.io/2012/panzerwar/</link>
+      <link>https://lianera.github.io/post/2012/panzerwar/</link>
       <pubDate>Sat, 01 Dec 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2012/panzerwar/</guid>
+      <guid>https://lianera.github.io/post/2012/panzerwar/</guid>
       <description>简介 坦克游戏，通过控制坦克消灭敌人获取胜利。 技术 这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Wi</description>
     </item>
     
     <item>
       <title>俄罗斯方块（二）</title>
-      <link>https://lianera.github.io/2012/blockgame/</link>
+      <link>https://lianera.github.io/post/2012/blockgame/</link>
       <pubDate>Tue, 20 Nov 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2012/blockgame/</guid>
+      <guid>https://lianera.github.io/post/2012/blockgame/</guid>
       <description>简介 俄罗斯方块游戏。 技术 纯控制台程序，画面全部由字符组成，具有存档功能。 在刚刚学C语言的时候写的。那个时候分模块的概念不是很强，所有函数写在</description>
     </item>
     
     <item>
       <title>俄罗斯方块（一）</title>
-      <link>https://lianera.github.io/2008/tetris/</link>
+      <link>https://lianera.github.io/post/2008/tetris/</link>
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2008/tetris/</guid>
+      <guid>https://lianera.github.io/post/2008/tetris/</guid>
       <description>简介 经典的俄罗斯方块。 技术 中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用</description>
     </item>
     
     <item>
       <title>贪吃蛇（一）</title>
-      <link>https://lianera.github.io/2008/snake1/</link>
+      <link>https://lianera.github.io/post/2008/snake1/</link>
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2008/snake1/</guid>
+      <guid>https://lianera.github.io/post/2008/snake1/</guid>
       <description>简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用</description>
     </item>
     
     <item>
       <title>按键助手</title>
-      <link>https://lianera.github.io/2008/keyhelper/</link>
+      <link>https://lianera.github.io/post/2008/keyhelper/</link>
       <pubDate>Sun, 12 Oct 2008 00:00:00 +0000</pubDate>
       
-      <guid>https://lianera.github.io/2008/keyhelper/</guid>
+      <guid>https://lianera.github.io/post/2008/keyhelper/</guid>
       <description>简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自</description>
     </item>
     

@@ -1,0 +1,24 @@
+f_i(c,r)=||c-p_i||^2-r^2
+
+E=\sum_{i=1}^{n}f_i(c,r)^2
+
+E=||F(\bold{c},\bold{r})||^2
+
+F(\bold{c},\bold{r})=[f_1(c,r),...,f_n(c,r)]^T
+
+(\bold{c},\bold{r})^*=argmin||F(\bold{c},\bold{r})||^2
+
+
+F(\bold{c}_{k+1},\bold{r}_{k+1}) \approx F(\bold{c}_k,\bold{r}_k)+\delta J_k(c,r)
+
+\delta=(\bold{c}_{k+1},\bold{r}_{k+1})-(\bold{c}_k,\bold{r}_k)
+
+\delta^*=argmin||F(\bold{c}_k,\bold{r}_k)+\delta J_k(c,r)||^2
+
+J_k(\bold{c}_k,\bold{r}_k)^TJ_k(\bold{c}_k,\bold{r}_k)\delta=-J_k(\bold{c}_k,\bold{r}_k)^TF(\bold{c}_k,\bold{r}_k)
+
+J(\bold{c},\bold{r})=\frac{\partial F}{\partial (\bold{c},\bold{r})}=[\frac{\partial f_1(c,r)}{\partial (c,r)},...,\frac{\partial f_n(c,r)}{\partial (c,r)}]^T
+
+\frac{\partial f(c,r)}{\partial c}=2(c-p)
+
+\frac{\partial f(c,r)}{\partial r}=-2r
