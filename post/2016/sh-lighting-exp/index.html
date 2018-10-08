@@ -61,7 +61,7 @@
 
 <meta itemprop="datePublished" content="2016-12-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2016-12-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2552">
+<meta itemprop="wordCount" content="2447">
 
 
 
@@ -136,8 +136,8 @@
       <div class="post-meta">
         <span class="post-time"> 2016年12月06日 </span>
         
-        <span class="more-meta"> 约 2552 字 </span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span class="more-meta"> 约 2447 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
         
       </div>
     </header>
@@ -182,7 +182,7 @@
 
 <p>考虑一个简单场景中有个点，他周围的各个方向上的环境光照就是上面的cubemap呈现的，假如我想知道这个点各个方向的光照情况，那么就必须在cubemap对应的各个方向进行采样。对于一个大的场景来说，每个位置点的环境光都有可能不同，如果把每个点的环境光贴图储存起来，并且每次获取光照都从相应的贴图里面采样，可想而知这样的方法是非常昂贵的。</p>
 
-<p>利用球谐函数就可以很好的解决这个问题，球谐函数的主要作用就是用简单的系数表示复杂的球面函数。关于球谐函数的理论推导与解释可以参考wiki(<a href="https://en.wikipedia.org/wiki/Spherical_harmonics)。如果只是要应用和实现球谐光照，不会涉及到推导过程，不过球谐基函数却是关键的内容，球谐基函数已经有人在wiki上列好了表格，参考（https://en.wikipedia.org/wiki/Table_of_spherical_harmonics），前3阶的球谐基函数如下：">https://en.wikipedia.org/wiki/Spherical_harmonics)。如果只是要应用和实现球谐光照，不会涉及到推导过程，不过球谐基函数却是关键的内容，球谐基函数已经有人在wiki上列好了表格，参考（https://en.wikipedia.org/wiki/Table_of_spherical_harmonics），前3阶的球谐基函数如下：</a></p>
+<p>利用球谐函数就可以很好的解决这个问题，球谐函数的主要作用就是用简单的系数表示复杂的球面函数。关于球谐函数的理论推导与解释可以参考wiki（ <a href="https://en.wikipedia.org/wiki/Spherical_harmonics">https://en.wikipedia.org/wiki/Spherical_harmonics</a> ）。如果只是要应用和实现球谐光照，不会涉及到推导过程，不过球谐基函数却是关键的内容，球谐基函数已经有人在wiki上列好了表格，参考（ <a href="https://en.wikipedia.org/wiki/Table_of_spherical_harmonics">https://en.wikipedia.org/wiki/Table_of_spherical_harmonics</a> ），前3阶的球谐基函数如下：</p>
 
 <p><img src="shbasis.png" alt="img" /></p>
 
