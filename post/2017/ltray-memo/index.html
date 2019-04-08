@@ -16,21 +16,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" />
-  <meta name="description" content="数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换" />
-
-  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+<meta name="author" content="Lianera" /><meta name="description" content="数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.53" />
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2017/ltray-memo/" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,15 +34,8 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
-
-
 
 
 <meta property="og:title" content="LtRay 开发备忘录" />
@@ -61,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2017-03-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-03-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4623">
+<meta itemprop="wordCount" content="4632">
 
 
 
@@ -136,17 +125,12 @@
       <div class="post-meta">
         <span class="post-time"> 2017年03月07日 </span>
         
-        <span class="more-meta"> 约 4623 字 </span>
-        <span class="more-meta"> 预计阅读 10 分钟 </span>
         
       </div>
     </header>
 
-    
-    
-<div class="post-toc" id="post-toc">
+    <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
@@ -167,11 +151,6 @@
 </nav>
   </div>
 </div>
-
-    
-    
-
-    
     <div class="post-content">
       
 
@@ -186,17 +165,30 @@
 <p>然后就是Vector类，向量则复杂的多！不过向量有一点方便的地方就是w总是1，所以不需要考虑归一化的问题，直接把w设成常量好了。操作符的话有+、-、*、/，都是对应位置的操作，比较简单。向量的辅助函数比较多，比如点积Dot、叉积Cross、长度Length、归一化函数Normal，对于这些辅助函数，应该作为类成员还是类外函数呢？我个人的倾向是放在类外，以减少耦合度。</p>
 
 <p>最后就是Matrix类，因为光线跟踪器需要考虑的变换都是在齐次坐标系内的，所以变换矩阵大小都是4x4，其内部成员变量也就固定了16的大小。我用的是float data[16]这样的数组来表示的，这样的好处就是可以使用C++11的initializer list来初始化。关于Matrix可以预先定义很多矩阵，比如单位矩阵IdentityMatrix，对角矩阵DiagMatrix、旋转、平移、伸缩矩阵等等，比如平移矩阵的函数可以这么定义：</p>
-
-<pre><code class="language-cpp">Matrix ltray::TranslationMatrix(Vector t)
-{
-    return{ {
-        1, 0, 0, t.x,
-        0, 1, 0, t.y,
-        0, 0, 1, t.z,
-        0, 0, 0, 1 } };
-}
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Matrix</span> <span class="n">ltray</span><span class="o">::</span><span class="n">TranslationMatrix</span><span class="p">(</span><span class="n">Vector</span> <span class="n">t</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span><span class="p">{</span> <span class="p">{</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">z</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 <p>可以看到使用initializer list来表示矩阵是非常直观的。另外就是矩阵的操作符，矩阵可以和点、向量、矩阵相乘，而且三种相乘方式都不相同。本来矩阵和点与向量相乘应该可以统一的，但是向量由于w分量设置成了常数1，所以最好还是分开实现了。</p>
 
 <p>实现好了这几个类，然后就是进行测试了，我用的是gtest。关于测试用例的多少以及覆盖率问题，为了兼顾效率，我选择了一次性测试多个函数的方法，比如测试点积Dot，我就同时把操作符+、-、=测试了，比如EXPECT_EQ(c,Dot(a+b,a-b))。因为从概率上来说，如果一个函数出错了，那还能通过测试的概率太小了，使用这种方式能够避免繁琐的测试用例。</p>
@@ -311,7 +303,6 @@
 
     </div>
 
-    
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -319,34 +310,26 @@
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
-    <span class="item-content">2017年03月07日</span>
+    <span class="item-content">
+        2017年03月07日
+        
+    </span>
   </p>
   
   
 </div>
-
-    
-    
-
-    <footer class="post-footer">
+<footer class="post-footer">
       <div class="post-tags">
-          
           <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
-          
           <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
-          
-        </div>
-
-      
+          </div>
       <nav class="post-nav">
-        
-          <a class="prev" href="/post/2017/synthetic-rgbd/">
+        <a class="prev" href="/post/2017/synthetic-rgbd/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">RGB-D数据集的合成</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        
-          <a class="next" href="/post/2017/sh-lighting-apply/">
+        <a class="next" href="/post/2017/sh-lighting-apply/">
             <span class="next-text nav-default">球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -356,9 +339,6 @@
   </article>
         </div>
         
-  
-
-  
 
       </div>
     </main>
@@ -369,23 +349,27 @@
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
       <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
   <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-  <span class="friend">
-    friend:
-    <a href="https://liuqinh2s.github.io/blog/">liuqin</a>
-  </span>
 </div>
 
 <div class="copyright">
-  
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
 
   
 
   <span class="copyright-year">
     &copy; 
-    
-      2014 - 
+    2014 - 
     2019
-    ,
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
     <span class="author">Lianera</span>
   </span>
 </div>
@@ -395,13 +379,10 @@
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-
-
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 
 

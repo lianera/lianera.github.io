@@ -16,21 +16,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" />
-  <meta name="description" content="摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度" />
-
-  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+<meta name="author" content="Lianera" /><meta name="description" content="摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.53" />
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2017/gradient-descent/" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,15 +34,8 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
-
-
 
 
 <meta property="og:title" content="梯度下降法及其实现" />
@@ -61,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2017-01-04T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-01-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2176">
+<meta itemprop="wordCount" content="2217">
 
 
 
@@ -136,17 +125,12 @@
       <div class="post-meta">
         <span class="post-time"> 2017年01月04日 </span>
         
-        <span class="more-meta"> 约 2176 字 </span>
-        <span class="more-meta"> 预计阅读 5 分钟 </span>
         
       </div>
     </header>
 
-    
-    
-<div class="post-toc" id="post-toc">
+    <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
@@ -163,11 +147,6 @@
 </nav>
   </div>
 </div>
-
-    
-    
-
-    
     <div class="post-content">
       
 
@@ -234,58 +213,112 @@
 <p>根据上述原理，可以写出梯度下降法的具体算法出来，这里采用C++进行实现。</p>
 
 <p>首先定义一个待求解问题的结构体，这个结构体中包含了待求解的函数、函数的梯度、初始搜索位置、终止条件<img src="clip_image032.svg" alt="\epsilon" />、最大迭代次数以及每次步长的确定策略。其具体的定义为：</p>
-
-<pre><code class="language-cpp">Struct Problem{
-    FUNC&lt;N&gt; f_;
-    GRAD&lt;N&gt; grad_;
-    Vec&lt;N&gt; x0_;
-    double epsilon_;
-    int maxiterate_;
-    STEPFUNC&lt;N&gt; step_;
-}
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">Struct</span> <span class="n">Problem</span><span class="p">{</span>
+    <span class="n">FUNC</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">f_</span><span class="p">;</span>
+    <span class="n">GRAD</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">grad_</span><span class="p">;</span>
+    <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">x0_</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">epsilon_</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">maxiterate_</span><span class="p">;</span>
+    <span class="n">STEPFUNC</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">step_</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 <p>对于下降算法，由于它们的步骤都比较类似，所以可以将梯度算法抽象出来，具体的梯度下降法则通过虚函数来给定方向搜索策略，下降算法的通用框架为：</p>
-
-<pre><code class="language-cpp">class Desent {
-public:
-    Vec&lt;N&gt; operator()(const Problem&lt;N&gt;&amp; p)const
-    {
-        Vec&lt;N&gt; x = p.x0_;
-        for (int i = 0; i &lt; p.maxiterate_; i++) {
-            Vec&lt;N&gt; g = p.grad_(x);
-            if (g.norm() &lt;= p.epsilon_)
-                break;        // converge
-            Vec&lt;N&gt; d = this-&gt;dir(p, x);
-            double steplength = p.step_(x, g, d);
-            x += steplength * d;
-            if (postproc)
-                postproc(x);
-        }
-        return x;
-    }
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span><span class="err"> </span><span class="nc">Desent</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">Problem</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;&amp;</span> <span class="n">p</span><span class="p">)</span><span class="k">const</span>
+    <span class="p">{</span>
+        <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">x0_</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">maxiterate_</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">g</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">grad_</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="p">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">.</span><span class="n">epsilon_</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>        <span class="c1">// converge
+</span><span class="c1"></span>            <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+            <span class="kt">double</span> <span class="n">steplength</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">step_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+            <span class="n">x</span> <span class="o">+=</span> <span class="n">steplength</span> <span class="o">*</span> <span class="n">d</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">postproc</span><span class="p">)</span>
+                <span class="n">postproc</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
     
-    std::function&lt;void(const Vec&lt;N&gt;&amp;)&gt; postproc;
+    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;&amp;</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">postproc</span><span class="p">;</span>
     
-protected:
-    virtual Vec&lt;N&gt; dir(const Problem&lt;N&gt;&amp; p, const Vec&lt;N&gt;&amp; x) const= 0;
-};
-</code></pre>
-
+<span class="k">protected</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">dir</span><span class="p">(</span><span class="k">const</span> <span class="n">Problem</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;&amp;</span> <span class="n">p</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 <p>而梯度下降法则是对下降法框架的方向进行确定：</p>
-
-<pre><code class="language-cpp">class SteepestDesent
-        : public Desent&lt;N&gt;{
-public:
-protected:
-    virtual Vec&lt;N&gt; dir(const Problem&lt;N&gt;&amp; p, const Vec&lt;N&gt;&amp; x)const
-    {
-        return -p.grad_(x);
-    }
-};
-
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span><span class="err"> </span><span class="nc">SteepestDesent</span>
+        <span class="o">:</span> <span class="k">public</span> <span class="n">Desent</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="k">protected</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">dir</span><span class="p">(</span><span class="k">const</span> <span class="n">Problem</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;&amp;</span> <span class="n">p</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vec</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;&amp;</span> <span class="n">x</span><span class="p">)</span><span class="k">const</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">p</span><span class="p">.</span><span class="n">grad_</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 <p>这样，每次给定一个Problem，就能通过SteepestDesent来求得最优解。</p>
 
 <h2 id="局限">局限</h2>
@@ -302,7 +335,6 @@ protected:
 
     </div>
 
-    
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -310,34 +342,26 @@ protected:
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
-    <span class="item-content">2017年01月04日</span>
+    <span class="item-content">
+        2017年01月04日
+        
+    </span>
   </p>
   
   
 </div>
-
-    
-    
-
-    <footer class="post-footer">
+<footer class="post-footer">
       <div class="post-tags">
-          
           <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
-          
           <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
-          
-        </div>
-
-      
+          </div>
       <nav class="post-nav">
-        
-          <a class="prev" href="/post/2017/complicated-compound-derivative/">
+        <a class="prev" href="/post/2017/complicated-compound-derivative/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">复杂多元复合函数的导数和雅克比矩阵</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        
-          <a class="next" href="/post/2016/sh-lighting-exp/">
+        <a class="next" href="/post/2016/sh-lighting-exp/">
             <span class="next-text nav-default">球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -347,9 +371,6 @@ protected:
   </article>
         </div>
         
-  
-
-  
 
       </div>
     </main>
@@ -360,23 +381,27 @@ protected:
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
       <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
   <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-  <span class="friend">
-    friend:
-    <a href="https://liuqinh2s.github.io/blog/">liuqin</a>
-  </span>
 </div>
 
 <div class="copyright">
-  
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
 
   
 
   <span class="copyright-year">
     &copy; 
-    
-      2014 - 
+    2014 - 
     2019
-    ,
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
     <span class="author">Lianera</span>
   </span>
 </div>
@@ -386,13 +411,10 @@ protected:
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-
-
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 
 

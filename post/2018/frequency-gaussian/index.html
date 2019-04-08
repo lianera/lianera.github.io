@@ -16,21 +16,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" />
-  <meta name="description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶" />
-
-  <meta name="keywords" content="Computer Graphics, C&#43;&#43;, Hugo, theme, even" />
+<meta name="author" content="Lianera" /><meta name="description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.53" />
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2018/frequency-gaussian/" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,15 +34,8 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
-
-
 
 
 <meta property="og:title" content="DFT和DCT以及空间域的高斯滤波对比" />
@@ -136,17 +125,12 @@
       <div class="post-meta">
         <span class="post-time"> 2018年07月21日 </span>
         
-        <span class="more-meta"> 约 1857 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
         
       </div>
     </header>
 
-    
-    
-<div class="post-toc" id="post-toc">
+    <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
@@ -161,11 +145,6 @@
 </nav>
   </div>
 </div>
-
-    
-    
-
-    
     <div class="post-content">
       
 
@@ -286,7 +265,6 @@
 
     </div>
 
-    
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
@@ -294,34 +272,26 @@
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
-    <span class="item-content">2018年07月21日</span>
+    <span class="item-content">
+        2018年07月21日
+        
+    </span>
   </p>
   
   
 </div>
-
-    
-    
-
-    <footer class="post-footer">
+<footer class="post-footer">
       <div class="post-tags">
-          
           <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
-          
           <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a>
-          
-        </div>
-
-      
+          </div>
       <nav class="post-nav">
-        
-          <a class="prev" href="/post/2018/fast-trilinear-interpolation/">
+        <a class="prev" href="/post/2018/fast-trilinear-interpolation/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">快速三线性插值</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        
-          <a class="next" href="/post/2018/synthetic-intrinsic-images/">
+        <a class="next" href="/post/2018/synthetic-intrinsic-images/">
             <span class="next-text nav-default">本征图像的合成</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -331,9 +301,6 @@
   </article>
         </div>
         
-  
-
-  
 
       </div>
     </main>
@@ -344,23 +311,27 @@
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
       <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
   <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-  <span class="friend">
-    friend:
-    <a href="https://liuqinh2s.github.io/blog/">liuqin</a>
-  </span>
 </div>
 
 <div class="copyright">
-  
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
 
   
 
   <span class="copyright-year">
     &copy; 
-    
-      2014 - 
+    2014 - 
     2019
-    ,
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
     <span class="author">Lianera</span>
   </span>
 </div>
@@ -370,13 +341,10 @@
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-
-
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 
 
