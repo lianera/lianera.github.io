@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2016-12-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-04-08T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2447">
+<meta itemprop="wordCount" content="2564">
 
 
 
@@ -191,7 +191,7 @@
 
 <p><img src="formula1.png" alt="img" /></p>
 
-<p> 其中N为采样次数。也就是说在计算某个球谐系数ci的时候，首先在球面上采许多点，然后把这些点的光照强度和球谐基相乘（在那个方向上，球谐基函数的分量或者说重要程度就是Yi(xi)），通过这些采样点，从而得到了在每个球谐基函数上光照的分布情况。注意某个球谐基只能大致代表它那个方向上的光照强度，所以需要组合很多个球谐基函数才能近似还原出原光照。</p>
+<p> 其中N为采样次数。也就是说在计算某个球谐系数ci的时候，首先在球面上采许多点，然后把这些点的光照强度和球谐基相乘（在那个方向上，球谐基函数的分量或者说重要程度就是Yi(xi)），通过这些采样点，从而得到了在每个球谐基函数上光照的分布情况。由于某个球谐基只能大致代表它那个方向上的光照强度，所以需要组合很多个球谐基函数才能近似还原出原光照。<strong>需要注意的是</strong>：采样时必须要在球面上均匀采样，如果在CubeMap的每个图像上面逐像素采样，将会导致每个面边角亮度提高，中心亮度降低。关于如何在球面上均匀采样方法有很多，比如用正态分布随机生成x,y,z，然后归一化成单位向量。</p>
 
 <p>还原的过程比较简单，通过球谐基与对应的系数相乘得到：</p>
 
@@ -266,9 +266,9 @@
 
 <p>有了上面这些实验的准备，我们就可以开始在实际的场景中应用球谐光照，下一篇我将会简要介绍一下我的实现过程。</p>
 
-<p><a href="https://github.com/lianera/archives/tree/master/2016/SphericalHarmonicsLighting">源代码</a></p>
+<p><a href="https://github.com/lianera/SphericalHarmonicsLighting">源代码和可执行程序</a></p>
 
-<p><a href="https://github.com/lianera/archives/releases/download/20180514/SphericalHarmonicsLighting.zip">可执行程序</a></p>
+<p><a href="https://www.bilibili.com/video/av48910058">演示视频</a></p>
 
 <p>不过这些工具都是实验性质的，如果有问题欢迎反馈。</p>
 
