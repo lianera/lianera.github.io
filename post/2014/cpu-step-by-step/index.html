@@ -49,7 +49,7 @@
 <meta itemprop="description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且">
 <meta itemprop="datePublished" content="2014-10-27T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2014-10-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="8361">
+<meta itemprop="wordCount" content="8478">
 
 
 
@@ -944,6 +944,35 @@ R3的值成功变为R2+R1！
 <p><img src="cpu_35.png" alt="bin"></p>
 <p>把编译出来的机器码导入ROM中，运行计算机，在RAM中成功得到了斐波那契数列！</p>
 <p><img src="cpu_36.png" alt="fb"></p>
+<p>再举个例子，从1加到10</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">MOV R0,0        // R0 = 0
+MOV R1,0        // R1 = 0
+INC R0,R0       // R0 ++
+ADD R1,R1,R0    // R1 += R0
+SUB R3,R0,10    // R3 = R0 - 10
+JZ 3            // if(R3 == 0) 往下跳3个地址 
+JMP -4          // 往上跳4个地址
+MOV R3,0        // R3 = 0
+STORE R3,R1     // 往R3地址存R1
+JMP 0           // 停机
+</code></pre></td></tr></table>
+</div>
+</div><p>结果为0x37，也就是10进制的55：
+<img src="add10.png" alt="add10"></p>
 <h2 id="不足">不足</h2>
 <p>上面介绍的处理器内容是最简单的模型，并且鲁棒性也不强，可能存在很多潜在的bug。首先是数据通路及其对应的指令集有很大的简化空间，其次是效率太低。对于在频率一定的情况下，要提高效率，总的思想是实现并行化，可以从这几个方面考虑：</p>
 <ol>
