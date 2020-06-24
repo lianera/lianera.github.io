@@ -135,34 +135,34 @@
 </div>
     <div class="post-content">
       <p>应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：<a href="https://www.minecraft.net/zh-hans/download/server/bedrock/">https://www.minecraft.net/zh-hans/download/server/bedrock/</a>
-然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……
-<img src="1.png" alt="1.png">
-既然这样，只有用破解的方法，防止服务端程序发送种子给客户端。
-IDA pro加载bedrock_server，反汇编
-从<a href="https://wiki.vg/Pocket_Minecraft_Protocol">minecraft pe protocol</a>可以得知，seed是通过StartGamePacket数据包发给客户端的，不过对比PocketMine的代码<a href="https://github.com/pmmp/PocketMine-MP/blob/a883c35fd0a41db4bdec7e08eae7f58a5115c5c3/src/pocketmine/network/mcpe/protocol/StartGamePacket.php">StartGamePacket.php</a>，好像PocketMine上的格式更加准确：
-<img src="2.png" alt="2.png">
-在IDA pro中找到StartGamePacket::write(BinaryStream &amp;)函数，反汇编之后：
-<img src="3.png" alt="3.png">
-<img src="4.png" alt="4.png">
-毫无疑问，种子信息就是通过serialize<!-- raw HTML omitted -->::write(class LevelSettings const &amp;, class BinaryStream &amp;)写入二进制流的，再找找这个函数的代码，结合PocketMine，关键点如下：
-<img src="5.png" alt="5.png">
-关键的一句就在这里了，现在要做的就是在这里写入一个假的种子，从而发给客户端。
-通过查阅<a href="https://zh.wikipedia.org/wiki/X86%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A">微软x86-64调用约定</a>，可以知道</p>
+然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……</p>
+<p><img src="1.png" alt="1.png"></p>
+<p>既然这样，只有用破解的方法，防止服务端程序发送种子给客户端。</p>
+<p>IDA pro加载bedrock_server，反汇编
+从<a href="https://wiki.vg/Pocket_Minecraft_Protocol">minecraft pe protocol</a>可以得知，seed是通过StartGamePacket数据包发给客户端的，不过对比PocketMine的代码<a href="https://github.com/pmmp/PocketMine-MP/blob/a883c35fd0a41db4bdec7e08eae7f58a5115c5c3/src/pocketmine/network/mcpe/protocol/StartGamePacket.php">StartGamePacket.php</a>，好像PocketMine上的格式更加准确：</p>
+<p><img src="2.png" alt="2.png"></p>
+<p>在IDA pro中找到StartGamePacket::write(BinaryStream &amp;)函数，反汇编之后：</p>
+<p><img src="3.png" alt="3.png">
+<img src="4.png" alt="4.png"></p>
+<p>毫无疑问，种子信息就是通过serialize<!-- raw HTML omitted -->::write(class LevelSettings const &amp;, class BinaryStream &amp;)写入二进制流的，再找找这个函数的代码，结合PocketMine，关键点如下：</p>
+<p><img src="5.png" alt="5.png"></p>
+<p>关键的一句就在这里了，现在要做的就是在这里写入一个假的种子，从而发给客户端。</p>
+<p>通过查阅<a href="https://zh.wikipedia.org/wiki/X86%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A">微软x86-64调用约定</a>，可以知道</p>
 <blockquote>
 <p>微软x64调用约定使用RCX, RDX, R8, R9四个寄存器用于存储函数调用时的4个参数(从左到右)，使用XMM0, XMM1, XMM2, XMM3来传递浮点变量。</p>
 </blockquote>
 <p>从这里看，很明显，函数调用的前面两条add edx, edx和move rcx, rdi分别是32位种子的值以及this指针的地址，所以这里可以修改一下add edx, edx，将其改成xor edx, edx，也即把edx的值归零，这样就行啦。需要注意的是修改代码的时候，指令长度不能变。
-patch一下exe，运行服务端，进游戏，成功隐藏种子：
-<img src="6.png" alt="6.png"></p>
+patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
+<p><img src="6.png" alt="6.png"></p>
 <hr>
 <p>对于Linux版本，步骤差不多，只是Linux的函数调用约定不同：</p>
 <blockquote>
 <p>System V AMD64 ABI
 此约定主要在Solaris，GNU/Linux，FreeBSD和其他非微软OS上使用。头六个整型参数放在寄存器RDI, RSI, RDX, RCX, R8和R9上；同时XMM0到XMM7用来放置浮点变元。</p>
 </blockquote>
-<p>Linux版本对应位置的代码是这样的：
-<img src="7.png" alt="7.png">
-所以this指针应该放在rdi上，种子放在esi上，同样地把mov     esi, eax修改成xor esi, esi。启动服务器，验证成功~</p>
+<p>Linux版本对应位置的代码是这样的：</p>
+<p><img src="7.png" alt="7.png"></p>
+<p>所以this指针应该放在rdi上，种子放在esi上，同样地把mov     esi, eax修改成xor esi, esi。启动服务器，验证成功~</p>
 <p><a href="https://github.com/lianera/FakeBedrockSeed">已破解程序</a></p>
 
     </div>
