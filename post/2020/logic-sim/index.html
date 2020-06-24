@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>基于事件驱动的逻辑电路仿真实现 - Lianera&#39;s homepage</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Lianera" /><meta name="description" content="数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
+
+
+<link rel="canonical" href="https://lianera.github.io/post/2020/logic-sim/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<meta property="og:title" content="基于事件驱动的逻辑电路仿真实现" />
+<meta property="og:description" content="数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lianera.github.io/post/2020/logic-sim/" />
+<meta property="article:published_time" content="2020-05-31T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-31T00:00:00+00:00" />
+<meta itemprop="name" content="基于事件驱动的逻辑电路仿真实现">
+<meta itemprop="description" content="数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写">
+<meta itemprop="datePublished" content="2020-05-31T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-31T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1931">
+
+
+
+<meta itemprop="keywords" content="电路,Java," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="基于事件驱动的逻辑电路仿真实现"/>
+<meta name="twitter:description" content="数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Lianera</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Lianera</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">基于事件驱动的逻辑电路仿真实现</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020年05月31日 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据结构">数据结构</a></li>
+    <li><a href="#连接">连接</a></li>
+    <li><a href="#求值">求值</a></li>
+    <li><a href="#测试">测试</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="数据结构">数据结构</h2>
+<p>首先观察一个简单的电路：</p>
+<p><img src="bVbHM2B.webp" alt="image.png"></p>
+<p>不难发现，根据信号的传导方向，可以将其转换成一个有向图：</p>
+<p><img src="bVbHM2L.webp" alt="image.png"></p>
+<p>其中小写字母的顶点表示导线的结点，拥有电平状态，大写字母表示逻辑门，拥有逻辑运算的功能。
+注意导线结点不能只作为边，因为可能会有多个逻辑门的端口连在一起，比如：</p>
+<p><img src="bVbHM4g.webp" alt="image.png"></p>
+<p>这个有向图里面存在几个特点，一是导线结点不允许接受多个输入，二是任意一条路径里面，导线结点和逻辑门一定会交替出现。
+另外这个图里面有可能出现环，比如SR锁存器：</p>
+<p><img src="bVbHM5i.webp" alt="image.png"></p>
+<p>对应的图里面就存在环路：</p>
+<p><img src="bVbHM5u.webp" alt="image.png"></p>
+<p>确定好了是个有向图就好办了，可以用邻接表来表示。
+这里采用Java实现。
+首先对于总的电路来说，需要记录所有的导线和逻辑门，虽然是在同一个图上，但为了方便，将导线结点和逻辑门分别存储在哈希表中，并且每个结点都拥有唯一的一个id：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">
+<span class="kd">class</span> <span class="nc">Circuit</span><span class="o">{</span>
+    <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Node</span><span class="o">&gt;</span> <span class="n">nodeTable</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Gate</span><span class="o">&gt;</span> <span class="n">gateTable</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于导线结点，需要记录一下相邻的所有逻辑门ID，然后用一个变量表示当前电平状态。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Node</span><span class="o">{</span>
+    <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">gateIDs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
+    <span class="kt">boolean</span> <span class="n">state</span><span class="o">;</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>对于逻辑门，需要分别记录输入和输出结点的ID，以及一个求值器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Gate</span><span class="o">{</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">inputNodeIDs</span><span class="o">;</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">outputNodeIDs</span><span class="o">;</span>
+    <span class="n">Evaluator</span> <span class="n">evaluator</span><span class="o">;</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>另外就是输出端和输入端需要处理，这里把输入端当成只有一个输出口的特殊逻辑门，输出端当成只有一个输入口的特殊逻辑门。输入端具有一个状态，输出端具有一个listener，用来在状态更新的时候回调。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">InputGate</span> <span class="kd">extends</span> <span class="n">Gate</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">state</span><span class="o">;</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+<span class="kd">interface</span> <span class="nc">OutputListener</span><span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">OnUpdate</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">state</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">OutputGate</span> <span class="kd">extends</span> <span class="n">Gate</span> <span class="o">{</span>
+    <span class="n">OutputListener</span> <span class="n">listener</span><span class="o">;</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="连接">连接</h2>
+<p>然后对Circuit类进行完善，虽然电路内部用node表示了连接状态，但是为了简化对外接口，只提供逻辑门的添加、删除和连接函数，导线结点node由Circuit内部维护，并且所有的逻辑门都通过ID进行索引，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Circuit</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="kt">int</span> <span class="nf">addGate</span><span class="o">(</span><span class="n">OperType</span> <span class="n">type</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="kt">int</span> <span class="nf">addInputGate</span><span class="o">(){...}</span>
+    <span class="kt">int</span> <span class="nf">addOutputGate</span><span class="o">(){...}</span>
+    <span class="kt">void</span> <span class="nf">setInputState</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">state</span><span class="o">){...}</span>
+    <span class="kt">void</span> <span class="nf">setOutputListener</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">,</span> <span class="n">OutputListener</span> <span class="n">listener</span><span class="o">){...}</span>
+    <span class="kt">void</span> <span class="nf">removeGate</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="kt">void</span> <span class="nf">connectGate</span><span class="o">(</span><span class="kt">int</span> <span class="n">src_gate_id</span><span class="o">,</span> <span class="kt">int</span> <span class="n">src_out_pin</span><span class="o">,</span> <span class="kt">int</span> <span class="n">dst_gate_id</span><span class="o">,</span> <span class="kt">int</span> <span class="n">dst_in_pin</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过这一系列的函数，可以任意构造逻辑电路，比如最开始的电路构造代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">        <span class="n">Circuit</span> <span class="n">circuit</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Circuit</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addInputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addInputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addInputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addInputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">A</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addGate</span><span class="o">(</span><span class="n">OperType</span><span class="o">.</span><span class="na">And</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">B</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addGate</span><span class="o">(</span><span class="n">OperType</span><span class="o">.</span><span class="na">And</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">C</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addGate</span><span class="o">(</span><span class="n">OperType</span><span class="o">.</span><span class="na">Not</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">D</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addGate</span><span class="o">(</span><span class="n">OperType</span><span class="o">.</span><span class="na">Or</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addOutputGate</span><span class="o">();</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">b</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">d</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">A</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">C</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">C</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">D</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">B</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">D</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">D</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">h</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>将所有的逻辑门和结点输出成graphvz源文件，可以很方便查看连接状态：</p>
+<p><img src="bVbHOro.webp" alt="o.png"></p>
+<h2 id="求值">求值</h2>
+<p>电路仿真的核心在于如何求值，最简单的方法是把输入结点加入队列，然后用广度优先的方法依次求值，但这会涉及到大量的运算，即使是一个输入的改变也会导致与之相关的所有逻辑门重新求值，比如一个与门，输入状态从01变成00，即使这个逻辑门的输出没变，也会导致大量电路的重新求值，其次对于有环的电路也不好处理。一种更好的方法是基于事件驱动的方法，只在当结点状态发生改变的时候对与之相关的逻辑门进行求值，并且只有当这些逻辑门的输出发生改变的时候，才产生新的事件继续下去，直到所有的事件都被处理完成。
+由于数据结构的设计上面，每个结点都保存了状态，因此事件产生的检测就较为容易了，只需要检测逻辑门的输出与对应的结点状态是不是一致即可。注意这里把输入端口也当作一个逻辑门，因此可以统一对待。
+具体实现来说，需要维护两个队列，一个逻辑门队列gateQueue，保存待求值的逻辑门，一个结点队列nodeQueue，用来标记状态发生改变的结点。这样一来，算法就很简单了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1.把所有已改变的输入端加入gateQueue
+2.从gateQueue取出所有gate进行求值，当求值的结果与输出端的node状态不一致时，更新node的状态，并将其加入nodeQueue
+3.当nodeQueue为空时，结束，否则将输入口与之想连的gate加入gateQueue（已有就不加）
+4.重复2、3步骤
+</code></pre></td></tr></table>
+</div>
+</div><p>添加逻辑门以及设置输入状态的时候把逻辑门加入gateQueue，删除逻辑门的时候从gateQueue中删除，然后进行求值，清空gateQueue，这样就能维护好一个电路的状态了。
+具体的代码实现来说，使用<code>LinkedHashSet</code>来存nodeQueue和gateQueue，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">    <span class="kt">void</span> <span class="nf">process</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(!</span><span class="n">gateQueue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">nodeQueue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashSet</span><span class="o">&lt;&gt;();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">gid</span> <span class="o">:</span> <span class="n">gateQueue</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Gate</span> <span class="n">gate</span> <span class="o">=</span> <span class="n">gateTable</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">gid</span><span class="o">);</span>
+                <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">changed</span> <span class="o">=</span> <span class="n">gate</span><span class="o">.</span><span class="na">Evaluate</span><span class="o">(</span><span class="n">nodeTable</span><span class="o">);</span>
+                <span class="n">nodeQueue</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">changed</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">gateQueue</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">nid</span> <span class="o">:</span> <span class="n">nodeQueue</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">nodeTable</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">nid</span><span class="o">);</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">gid</span> <span class="o">:</span> <span class="n">node</span><span class="o">.</span><span class="na">gateIDs</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">Gate</span> <span class="n">gate</span> <span class="o">=</span> <span class="n">gateTable</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">gid</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">gate</span><span class="o">.</span><span class="na">hasInput</span><span class="o">(</span><span class="n">nid</span><span class="o">))</span>
+                        <span class="n">gateQueue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gid</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">nodeQueue</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="测试">测试</h2>
+<p>把电路中的c输入口置为1，然后求值，结果如下：</p>
+<p><img src="bVbHOrS.webp" alt="o.png"></p>
+<p>可以看到已经得到了正确的结果。</p>
+<p>构造一个sr latch：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">        <span class="kt">int</span> <span class="n">A</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addGate</span><span class="o">(</span><span class="n">OperType</span><span class="o">.</span><span class="na">AndNot</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">B</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addGate</span><span class="o">(</span><span class="n">OperType</span><span class="o">.</span><span class="na">AndNot</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addInputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addInputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">q</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addOutputGate</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">qbar</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="na">addOutputGate</span><span class="o">();</span>
+        <span class="kd">final</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">2</span><span class="o">];</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">setOutputListener</span><span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="o">(</span><span class="n">state</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">});</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">setOutputListener</span><span class="o">(</span><span class="n">qbar</span><span class="o">,</span> <span class="o">(</span><span class="n">state</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">[</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+        <span class="o">});</span>
+
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">A</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">q</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">B</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">qbar</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">B</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">connectGate</span><span class="o">(</span><span class="n">A</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>连接图如下：</p>
+<p><img src="bVbHOtm.webp" alt="o.png"></p>
+<p>然后分别用01,11,10测试,01应该对qbar置位，11应该保持，10应该对q置位：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">        <span class="n">circuit</span><span class="o">.</span><span class="na">setInputState</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">process</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">result</span><span class="o">));</span>
+
+        <span class="n">circuit</span><span class="o">.</span><span class="na">setInputState</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">process</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">result</span><span class="o">));</span>
+
+        <span class="n">circuit</span><span class="o">.</span><span class="na">setInputState</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="n">circuit</span><span class="o">.</span><span class="na">process</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">result</span><span class="o">));</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>结果为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">[</span><span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">]</span>
+<span class="o">[</span><span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">]</span>
+<span class="o">[</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>符合预期。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Lianera</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020年05月31日
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%94%B5%E8%B7%AF/">电路</a>
+          <a href="/tags/java/">Java</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/bedrock-mc-crack/">
+            <span class="next-text nav-default">反汇编Minecraft基岩服务端，隐藏地图种子</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2014 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Lianera</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

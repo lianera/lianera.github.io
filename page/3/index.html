@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/" />
@@ -36,7 +36,8 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
@@ -44,12 +45,9 @@
 <meta property="og:description" content="Lianera&#39;s homepage." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://lianera.github.io/" />
-<meta property="og:updated_time" content="2014-09-18T00:00:00&#43;00:00"/>
-
+<meta property="og:updated_time" content="2020-05-31T00:00:00+00:00" />
 <meta itemprop="name" content="Lianera&#39;s homepage">
-<meta itemprop="description" content="Lianera&#39;s homepage.">
-
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="Lianera&#39;s homepage."><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Lianera&#39;s homepage"/>
 <meta name="twitter:description" content="Lianera&#39;s homepage."/>
 
@@ -112,6 +110,44 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/2015/sudoku/">Sudoku</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2015年01月10日 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复
+    </div>
+    <div class="read-more">
+      <a href="/post/2015/sudoku/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/2014/cpu-step-by-step/">简单CPU设计实践</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014年10月27日 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且
+    </div>
+    <div class="read-more">
+      <a href="/post/2014/cpu-step-by-step/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/2014/game2048/">Game2048</a></h1>
@@ -264,44 +300,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2008/snake1/">贪吃蛇（一）</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2008年11月26日 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用
-    </div>
-    <div class="read-more">
-      <a href="/post/2008/snake1/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2008/keyhelper/">按键助手</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2008年10月12日 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自
-    </div>
-    <div class="read-more">
-      <a href="/post/2008/keyhelper/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -309,7 +307,10 @@
         <i class="iconfont icon-left"></i>
         <span class="prev-text">上一页</span>
       </a>
-    
+    <a class="next" href="/page/4/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
   </nav>
         </div>
         
@@ -340,7 +341,7 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -356,7 +357,10 @@
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
 
 
 

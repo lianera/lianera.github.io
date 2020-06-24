@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2013/magicplain/" />
@@ -34,28 +34,26 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 <meta property="og:title" content="Magic Plain" />
 <meta property="og:description" content="简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2013/magicplain/" /><meta property="article:published_time" content="2013-12-31T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2013-12-31T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://lianera.github.io/post/2013/magicplain/" />
+<meta property="article:published_time" content="2013-12-31T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-12-31T00:00:00+00:00" />
 <meta itemprop="name" content="Magic Plain">
 <meta itemprop="description" content="简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了">
-
-
 <meta itemprop="datePublished" content="2013-12-31T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2013-12-31T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="261">
 
 
 
-<meta itemprop="keywords" content="Java,游戏开发,程序," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Java,游戏开发,程序," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Magic Plain"/>
 <meta name="twitter:description" content="简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了"/>
 
@@ -133,54 +131,39 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#简介">简介</a></li>
-<li><a href="#技术">技术</a></li>
-<li><a href="#环境">环境</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#技术">技术</a></li>
+    <li><a href="#环境">环境</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<table>
+      <table>
 <thead>
 <tr>
-<th><img src="magicplain1.png" alt="" /></th>
-<th><img src="magicplain2.png" alt="" /></th>
+<th><img src="magicplain1.png" alt=""></th>
+<th><img src="magicplain2.png" alt=""></th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
-<td><img src="magicplain3.png" alt="" /></td>
-<td><img src="magicplain4.png" alt="" /></td>
+<td><img src="magicplain3.png" alt=""></td>
+<td><img src="magicplain4.png" alt=""></td>
 </tr>
 </tbody>
 </table>
-
 <h2 id="简介">简介</h2>
-
 <p>一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了多个场景，十六张地图，每个场景的道具都不相同。</p>
-
 <h2 id="技术">技术</h2>
-
 <p>游戏采用纯Java编写，绘图方面采用了双缓存技术，使得动画比较流畅。地图的制作用到了Tilemap，通过研究tmx文件的结构，总结出了tmx的构造规律，实现了该类型地图文件的解析。</p>
-
 <p>游戏中加入了人工智能，敌人会靠近玩家并放置炸弹来攻击玩家，会躲避炸弹，还会寻找并收取道具。人工智能采用的是A星算法结合模糊算法。</p>
-
 <h2 id="环境">环境</h2>
-
 <ul>
 <li>Intellij IDEA</li>
 </ul>
-
 <p><a href="https://github.com/lianera/archives/tree/master/2013/MagicPlain">源代码</a></p>
-
 <p><a href="https://github.com/lianera/archives/releases/download/20180514/MagicPlain.jar">可执行程序</a></p>
 
     </div>
@@ -223,6 +206,10 @@
         </div>
         
 
+  
+
+  
+
       </div>
     </main>
 
@@ -249,7 +236,7 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -265,7 +252,10 @@
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
 
 
 

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2015/average-denoise/" />
@@ -34,28 +34,26 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 <meta property="og:title" content="多图片平均法降噪" />
 <meta property="og:description" content="理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2015/average-denoise/" /><meta property="article:published_time" content="2015-12-09T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2015-12-09T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://lianera.github.io/post/2015/average-denoise/" />
+<meta property="article:published_time" content="2015-12-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-12-09T00:00:00+00:00" />
 <meta itemprop="name" content="多图片平均法降噪">
 <meta itemprop="description" content="理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示">
-
-
 <meta itemprop="datePublished" content="2015-12-09T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2015-12-09T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="927">
+<meta itemprop="wordCount" content="926">
 
 
 
-<meta itemprop="keywords" content="图像处理,C&#43;&#43;,Matlab," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="图像处理,C&#43;&#43;,Matlab," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多图片平均法降噪"/>
 <meta name="twitter:description" content="理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示"/>
 
@@ -133,145 +131,97 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#理论">理论</a></li>
-<li><a href="#实验">实验</a>
-<ul>
-<li><a href="#目的">目的</a></li>
-<li><a href="#数据集">数据集</a></li>
-<li><a href="#程序设计">程序设计</a></li>
-<li><a href="#测试">测试</a></li>
-</ul></li>
-<li><a href="#参考">参考</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#理论-">理论</a></li>
+    <li><a href="#实验-">实验</a>
+      <ul>
+        <li><a href="#目的-">目的</a></li>
+        <li><a href="#数据集-">数据集</a></li>
+        <li><a href="#程序设计-">程序设计</a></li>
+        <li><a href="#测试-">测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考-">参考</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h2 id="理论">理论</h2>
-
+      <h2 id="理论-">理论</h2>
 <p>在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示为无噪声图像和加性噪声的组成，也即：</p>
-
 <table>
 <thead>
 <tr>
-<th><img src="f1.svg" alt="g(x,y)=f(x,y)+ \eta(x,y)" /></th>
+<th><img src="f1.svg" alt="g(x,y)=f(x,y)+ \eta(x,y)"></th>
 <th>(1)</th>
 </tr>
 </thead>
-
-<tbody>
-</tbody>
 </table>
-
-<p>其中：<img src="f2.svg" alt="g(x,y)" />为采集图像，<img src="f3.svg" alt="f(x,y)" />为无噪声图像，<img src="f4.svg" alt="\eta(x,y)" />为噪声。</p>
-
-<p>去噪的过程就是从已知的<img src="f2.svg" alt="g(x,y)" />来近似得到<img src="f3.svg" alt="f(x,y)" />的过程。</p>
-
-<p>对于同一个场景拍摄的多张图像来说，<img src="f5.svg" alt="f_{i}(x,y)" />是相同的，而<img src="f6.svg" alt="\eta_{i}(x,y)" />是随机的且相互之间不相关，相同场景的k幅图像图像的均值可以表示如下</p>
-
+<p>其中：<img src="f2.svg" alt="g(x,y)">为采集图像，<img src="f3.svg" alt="f(x,y)">为无噪声图像，<img src="f4.svg" alt="\eta(x,y)">为噪声。</p>
+<p>去噪的过程就是从已知的<img src="f2.svg" alt="g(x,y)">来近似得到<img src="f3.svg" alt="f(x,y)">的过程。</p>
+<p>对于同一个场景拍摄的多张图像来说，<img src="f5.svg" alt="f_{i}(x,y)">是相同的，而<img src="f6.svg" alt="\eta_{i}(x,y)">是随机的且相互之间不相关，相同场景的k幅图像图像的均值可以表示如下</p>
 <table>
 <thead>
 <tr>
-<th><img src="f7.svg" alt="\bar{g}(x,y)=\frac{1}{K}\sum_{i=1}^K[f_{i}(x,y)+\eta_{i}(x,y)]=f(x,y)+\frac{1}{K}\sum_{i=1}^K\eta_{i}(x,y)" /></th>
+<th><img src="f7.svg" alt="\bar{g}(x,y)=\frac{1}{K}\sum_{i=1}^K[f_{i}(x,y)+\eta_{i}(x,y)]=f(x,y)+\frac{1}{K}\sum_{i=1}^K\eta_{i}(x,y)"></th>
 <th>(2)</th>
 </tr>
 </thead>
-
-<tbody>
-</tbody>
 </table>
-
 <p>由于噪点随机且不相关，可得其平均图像的期望</p>
-
 <table>
 <thead>
 <tr>
-<th><img src="f9.svg" alt="E\{\bar{g}(x,y)\}=f(x,y)" /></th>
+<th><img src="f9.svg" alt="E\{\bar{g}(x,y)\}=f(x,y)"></th>
 <th>(3)</th>
 </tr>
 </thead>
-
-<tbody>
-</tbody>
 </table>
-
 <p>平均图像的方差</p>
-
 <table>
 <thead>
 <tr>
-<th><img src="f10.svg" alt="\sigma_{\bar{g}(x,y)}^{2}=\frac{1}{K}\sigma_{\eta(x,y)}^{2}" /></th>
+<th><img src="f10.svg" alt="\sigma_{\bar{g}(x,y)}^{2}=\frac{1}{K}\sigma_{\eta(x,y)}^{2}"></th>
 <th>(4)</th>
 </tr>
 </thead>
-
-<tbody>
-</tbody>
 </table>
-
 <p>即</p>
-
 <table>
 <thead>
 <tr>
-<th><img src="f11.svg" alt="\sigma_{\bar{g}(x,y)}=\frac{1}{\sqrt{K}}\sigma_{\eta(x,y)}" /></th>
+<th><img src="f11.svg" alt="\sigma_{\bar{g}(x,y)}=\frac{1}{\sqrt{K}}\sigma_{\eta(x,y)}"></th>
 <th>(5)</th>
 </tr>
 </thead>
-
-<tbody>
-</tbody>
 </table>
-
 <p>从式(3)中我们可以发现，同场景的多幅图像的均值的期望是无噪点图像，但是会存在一些扰动，这些扰动的标准差(3)就决定了噪声的强度。我们对图像去噪的本质就是减少在空间域上的标准差。从式(5)中我们不难发现，通过增大K值，即增加平均图像的数量，即可减少噪声。</p>
-
-<p>但同时我们可以发现：<img src="f12.svg" alt="\sigma\varpropto\frac{1}{\sqrt{K}}" />，<img src="f13.svg" alt="\frac{\partial\sigma}{\partial K}=-\frac{1}{2\sqrt{K^3}}" />，随着K值的增大，<img src="f14.svg" alt="\sigma" />的变化越来越小，用平均法去噪时，单单通过提高图像数量的作用是很小的。</p>
-
-<h2 id="实验">实验</h2>
-
-<h3 id="目的">目的</h3>
-
+<p>但同时我们可以发现：<img src="f12.svg" alt="\sigma\varpropto\frac{1}{\sqrt{K}}">，<img src="f13.svg" alt="\frac{\partial\sigma}{\partial K}=-\frac{1}{2\sqrt{K^3}}">，随着K值的增大，<img src="f14.svg" alt="\sigma">的变化越来越小，用平均法去噪时，单单通过提高图像数量的作用是很小的。</p>
+<h2 id="实验-">实验</h2>
+<h3 id="目的-">目的</h3>
 <ol>
 <li>验证同场景下多图像平均可以进行去噪。</li>
 <li>随着图像数量的增大，图像噪点变化越来越小。</li>
 </ol>
-
-<h3 id="数据集">数据集</h3>
-
+<h3 id="数据集-">数据集</h3>
 <p>同一场景的179幅照片，用短时间采集完成。</p>
-
 <p>以下是其中的一幅图片</p>
-
-<p><img src="denoise_origin.jpg" alt="origin" /></p>
-
+<p><img src="denoise_origin.jpg" alt="origin"></p>
 <p>其局部细节：</p>
-
-<p><img src="denoise_part.jpg" alt="part" /></p>
-
+<p><img src="denoise_part.jpg" alt="part"></p>
 <p>可以发现图像上的噪点是比较多的。</p>
-
-<h3 id="程序设计">程序设计</h3>
-
+<h3 id="程序设计-">程序设计</h3>
 <p>程序的处理过程为：</p>
-
 <ul>
 <li>读取图像</li>
 <li>求平均值</li>
 <li>显示图像</li>
 </ul>
-
 <p>程序源码：</p>
-
 <p>matlab</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-matlab" data-lang="matlab"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -291,30 +241,30 @@
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-matlab" data-lang="matlab">% get image file names
-DIR = &#39;imgs&#39;;
-imgFiles = dir([DIR , &#39;/*.jpg&#39;]);
-[N, C]= size(imgFiles);
+<pre class="chroma"><code class="language-matlab" data-lang="matlab"><span class="c">% get image file names</span>
+<span class="n">DIR</span> <span class="p">=</span> <span class="s">&#39;imgs&#39;</span><span class="p">;</span>
+<span class="n">imgFiles</span> <span class="p">=</span> <span class="n">dir</span><span class="p">([</span><span class="n">DIR</span> <span class="p">,</span> <span class="s">&#39;/*.jpg&#39;</span><span class="p">]);</span>
+<span class="p">[</span><span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">]=</span> <span class="nb">size</span><span class="p">(</span><span class="n">imgFiles</span><span class="p">);</span>
  
  
-% get the image size
-img = im2double(imread([DIR , &#39;/&#39;, imgFiles(1).name]));
-figure(1);
-imshow(img);
+<span class="c">% get the image size</span>
+<span class="n">img</span> <span class="p">=</span> <span class="n">im2double</span><span class="p">(</span><span class="n">imread</span><span class="p">([</span><span class="n">DIR</span> <span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="n">imgFiles</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">name</span><span class="p">]));</span>
+<span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
  
-img = img / N;
-% calculate the average
-for m = 2:N
-    img = img + im2double(imread([DIR , &#39;/&#39;, imgFiles(m).name])) / N;
-end
-figure(2);
-imshow(img);</code></pre></td></tr></table>
+<span class="n">img</span> <span class="p">=</span> <span class="n">img</span> <span class="o">/</span> <span class="n">N</span><span class="p">;</span>
+<span class="c">% calculate the average</span>
+<span class="k">for</span> <span class="n">m</span> <span class="p">=</span> <span class="mi">2</span><span class="p">:</span><span class="n">N</span>
+    <span class="n">img</span> <span class="p">=</span> <span class="n">img</span> <span class="o">+</span> <span class="n">im2double</span><span class="p">(</span><span class="n">imread</span><span class="p">([</span><span class="n">DIR</span> <span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="n">imgFiles</span><span class="p">(</span><span class="n">m</span><span class="p">).</span><span class="n">name</span><span class="p">]))</span> <span class="o">/</span> <span class="n">N</span><span class="p">;</span>
+<span class="k">end</span>
+<span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>C++(OpenCV2.4)</p>
+</div><p>C++(OpenCV2.4)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -357,7 +307,6 @@ imshow(img);</code></pre></td></tr></table>
 </span><span class="lnt">41
 </span><span class="lnt">42
 </span><span class="lnt">43
-</span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp">
@@ -405,27 +354,16 @@ imshow(img);</code></pre></td></tr></table>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="测试">测试</h3>
-
+</div><h3 id="测试-">测试</h3>
 <p>对179张图片进行测试，结果如下：</p>
-
-<p><img src="denoised.jpg" alt="denoised" /></p>
-
+<p><img src="denoised.jpg" alt="denoised"></p>
 <p>对照原图：</p>
-
-<p><img src="denoise_origin.jpg" alt="origin" /></p>
-
+<p><img src="denoise_origin.jpg" alt="origin"></p>
 <p>可以看出，噪点明显减少了，从而验证了多图像平均法去噪的可行性。</p>
-
 <p>改变平均的图片数量，K取{2,3 &hellip; 10}，可以得到一系列图像，如以下gif所示：</p>
-
-<p><img src="seq.gif" alt="seq" /></p>
-
+<p><img src="seq.gif" alt="seq"></p>
 <p>可以看出，从原图到K=2，噪点减少显著，而从K=9到K=10，噪点变化较少，验证了之前的数学模型。</p>
-
-<h2 id="参考">参考</h2>
-
+<h2 id="参考-">参考</h2>
 <p>[1] 冈萨雷斯.数字图像处理[M]. 阮秋琦译. 北京：电子工业出版社. 2011.6</p>
 
     </div>
@@ -468,6 +406,10 @@ imshow(img);</code></pre></td></tr></table>
         </div>
         
 
+  
+
+  
+
       </div>
     </main>
 
@@ -494,7 +436,7 @@ imshow(img);</code></pre></td></tr></table>
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -510,7 +452,10 @@ imshow(img);</code></pre></td></tr></table>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
 
 
 

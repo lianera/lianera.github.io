@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Lianera&#39;s homepage</title>
@@ -6,10 +6,28 @@
     <description>Recent content on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 06 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://lianera.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>基于事件驱动的逻辑电路仿真实现</title>
+      <link>https://lianera.github.io/post/2020/logic-sim/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/post/2020/logic-sim/</guid>
+      <description>数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写</description>
+    </item>
+    
+    <item>
+      <title>反汇编Minecraft基岩服务端，隐藏地图种子</title>
+      <link>https://lianera.github.io/post/2019/bedrock-mc-crack/</link>
+      <pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/post/2019/bedrock-mc-crack/</guid>
+      <description>应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/down</description>
+    </item>
     
     <item>
       <title>点云球心拟合</title>

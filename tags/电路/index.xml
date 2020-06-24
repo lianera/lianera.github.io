@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>电路 on Lianera&#39;s homepage</title>
+    <link>https://lianera.github.io/tags/%E7%94%B5%E8%B7%AF/</link>
+    <description>Recent content in 电路 on Lianera&#39;s homepage</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://lianera.github.io/tags/%E7%94%B5%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>基于事件驱动的逻辑电路仿真实现</title>
+      <link>https://lianera.github.io/post/2020/logic-sim/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://lianera.github.io/post/2020/logic-sim/</guid>
+      <description>数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写</description>
+    </item>
+    
+  </channel>
+</rss>

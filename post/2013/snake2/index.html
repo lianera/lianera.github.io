@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2013/snake2/" />
@@ -34,28 +34,26 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 <meta property="og:title" content="贪吃蛇（二）" />
 <meta property="og:description" content="简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2013/snake2/" /><meta property="article:published_time" content="2013-07-07T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2013-07-07T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://lianera.github.io/post/2013/snake2/" />
+<meta property="article:published_time" content="2013-07-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-07-07T00:00:00+00:00" />
 <meta itemprop="name" content="贪吃蛇（二）">
 <meta itemprop="description" content="简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但">
-
-
 <meta itemprop="datePublished" content="2013-07-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2013-07-07T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1713">
 
 
 
-<meta itemprop="keywords" content="C&#43;&#43;,游戏开发,程序,SDL," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="C&#43;&#43;,游戏开发,程序,SDL," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="贪吃蛇（二）"/>
 <meta name="twitter:description" content="简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但"/>
 
@@ -133,116 +131,80 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#简介">简介</a></li>
-<li><a href="#技术">技术</a>
-<ul>
-<li><a href="#游戏控制模块">游戏控制模块：</a></li>
-<li><a href="#资源管理模块">资源管理模块：</a></li>
-<li><a href="#交互元素模块">交互元素模块：</a></li>
-<li><a href="#游戏规则模块">游戏规则模块：</a></li>
-<li><a href="#绘图模块">绘图模块:</a></li>
-<li><a href="#音效模块">音效模块：</a></li>
-<li><a href="#错误处理模块">错误处理模块：</a></li>
-</ul></li>
-<li><a href="#sdl2更新">SDL2更新</a></li>
-<li><a href="#环境">环境</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#技术">技术</a>
+      <ul>
+        <li><a href="#游戏控制模块">游戏控制模块：</a></li>
+        <li><a href="#资源管理模块">资源管理模块：</a></li>
+        <li><a href="#交互元素模块">交互元素模块：</a></li>
+        <li><a href="#游戏规则模块">游戏规则模块：</a></li>
+        <li><a href="#绘图模块">绘图模块:</a></li>
+        <li><a href="#音效模块">音效模块：</a></li>
+        <li><a href="#错误处理模块">错误处理模块：</a></li>
+      </ul>
+    </li>
+    <li><a href="#sdl2更新">SDL2更新</a></li>
+    <li><a href="#环境">环境</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<table>
+      <table>
 <thead>
 <tr>
-<th><img src="snake2_menu.png" alt="" /></th>
-<th><img src="snake2_1.png" alt="" /></th>
-<th><img src="snake2_2.png" alt="" /></th>
+<th><img src="snake2_menu.png" alt=""></th>
+<th><img src="snake2_1.png" alt=""></th>
+<th><img src="snake2_2.png" alt=""></th>
 </tr>
 </thead>
-
-<tbody>
-</tbody>
 </table>
-
 <h2 id="简介">简介</h2>
-
 <p>传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但不能放到蛇身。每进食一次，蛇身增长一格，得分相应增加。蛇碰到边界时转到对面边界出来。当蛇头碰到自身时，蛇死亡，游戏结束。</p>
-
 <p>程序具有良好的可视化操作界面，有良好的声音效果。通过键盘鼠标控制，并且实现用户菜单及提示信息。游戏采用实时控制和动画刷新，保证系统稳定流畅运行。能够根据游戏规则自动判断游戏状态，并将信息实时反馈给用户。</p>
-
 <p>游戏启动时显示游戏LOGO或加载信息，随后进入菜单界面，可选菜单要有：新的游戏、继续游戏、选择关卡、帮助及退出。游戏时，左边及中心显示游戏面板，右边显示信息栏。通过上下左右四个方向键控制蛇的移动，通过鼠标进行按钮的点击。游戏能够在任何时候暂停和退出游戏。通过关卡或者失败时，显示全屏的提示信息，并提供按钮供用户选择。游戏加入音乐功能模块，实现音效和背景音乐的播放。</p>
-
 <h2 id="技术">技术</h2>
-
 <h3 id="游戏控制模块">游戏控制模块：</h3>
-
 <p>游戏控制类的成员包含有窗口的基本信息，游戏资源管理类对象，面板类对象。在窗口建立好后接着构造游戏控制类，实现对其他部分类的初始化工作，并调用资源管理类进行资源的加载以及绘图设备的初始化。</p>
-
 <p>游戏控制类采用状态进行驱动，通过改变记录状态的变量实现流程的跳转。</p>
-
 <p>在游戏开始进行时，游戏控制模块负责面板的创建，从而建立起游戏规则类对象。游戏控制类接管了窗口的定时器消息，定时对游戏进行更新。许多页面的显示，例如菜单页面、成功页面、失败页面、帮助信息页面都由游戏控制类负责。</p>
-
 <p>此外，游戏控制类实现了游戏存档的读取与保存。</p>
-
 <h3 id="资源管理模块">资源管理模块：</h3>
-
 <p>资源管理模块用Manager类实现，Manager类依赖Picture类、Tile类、Animation类和Mid类，用四个顺序容器分别储存四个类的对象，实现资源的统一管理。此外Manager类实现了对背景音乐的控制。</p>
-
 <h3 id="交互元素模块">交互元素模块：</h3>
-
 <p>以Elebase为虚基类，只要能在屏幕上画出来的都看做交互元素，每个交互元素必须与一个动画对象相关联，且都从Elebase依次多层继承下去。Elebase类储存有动画指针，提供的绘图的虚函数。</p>
-
 <h3 id="游戏规则模块">游戏规则模块：</h3>
-
 <p>游戏规则模块是游戏的核心，它构成了一个独立的系统，控制着游戏的运行。能读取键盘按键状态，并将游戏跳转信息发给游戏控制模块。游戏规则模块包括Food类、Node类、Panel类、Snake类，Food类保存食物信息并随机产生食物，Node类为蛇的节点类，Panel类是游戏的控制类，实现游戏的更新与画面的刷新，并检测游戏的状态。此外Panel有一Snake类的子对象。Panel类通过检测按键，向Snake类发送改变方向的消息，并让其移动。在每一帧中，Panel会检测蛇的长度、蛇是否已撞到自身，从而做出相应的响应。蛇的身体由一个Node顺序容器构成，Node类包含的成员主要有坐标、方向。蛇移动时，从尾开始，每个节点的位置都移动到下一个节点位置，最后一个节点（即蛇头）则根据蛇的方向移动。</p>
-
 <h3 id="绘图模块">绘图模块:</h3>
-
 <p>本游戏通过Windows GDI实现图形的绘制。其基本绘图过程为：加载位图、创建兼容设备，位块传输。由于考虑到游戏的刷新率较高，直接绘图会产生闪动的现象，所以采用了双缓冲技术。双缓冲的基本原理是：把图画全部画到缓冲设备上，再在最后一次性位块传输到原设备上。</p>
-
 <h3 id="音效模块">音效模块：</h3>
-
 <p>游戏中采用wav声音作为普通的短暂的音效，这种音效的播放分散在程序的各个地方。具体的播放方法是调用PlaySound函数，即时加载即时播放。对于背景音乐，则采用mid格式文件。mid文件具有格式小，播放简单的特点，其实现方法是调用mciSendCommand函数。</p>
-
 <h3 id="错误处理模块">错误处理模块：</h3>
-
 <p>错误处理类用来供程序抛出与捕捉程序，主要的类有Error基类、Init_Error类、Outer_Error类。通过错误处理模块，程序能够有序地处理错误。</p>
-
 <h2 id="sdl2更新">SDL2更新</h2>
-
 <p>将程序绘图和输入部分改成SDL2，提高绘图的效率和流畅度。（原版程序移到snake2-gdi内）</p>
-
 <p>使用到的第三方库：sdl2, sdl2_image, sdl2_tiff, sdl2_mixer</p>
-
 <p>建议使用vcpkg安装第三方库：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">vcpkg install sdl2:x86-windows-static 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vcpkg install sdl2:x86-windows-static 
 vcpkg install sdl2-image:x86-windows-static
 vcpkg install sdl2-ttf:x86-windows-static 
-vcpkg install sdl2-mixer:x86-windows-static</pre></td></tr></table>
+vcpkg install sdl2-mixer:x86-windows-static
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="环境">环境</h2>
-
+</div><h2 id="环境">环境</h2>
 <ul>
 <li>Visual Studio 2017</li>
 </ul>
-
 <p><a href="https://github.com/lianera/archives/tree/master/2013/snake2">源代码</a></p>
-
 <p><a href="https://github.com/lianera/archives/releases/download/20180514/snake2.zip">可执行程序</a></p>
 
     </div>
@@ -286,6 +248,10 @@ vcpkg install sdl2-mixer:x86-windows-static</pre></td></tr></table>
         </div>
         
 
+  
+
+  
+
       </div>
     </main>
 
@@ -312,7 +278,7 @@ vcpkg install sdl2-mixer:x86-windows-static</pre></td></tr></table>
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -328,7 +294,10 @@ vcpkg install sdl2-mixer:x86-windows-static</pre></td></tr></table>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
 
 
 

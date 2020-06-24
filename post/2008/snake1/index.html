@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2008/snake1/" />
@@ -34,28 +34,26 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 <meta property="og:title" content="贪吃蛇（一）" />
 <meta property="og:description" content="简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2008/snake1/" /><meta property="article:published_time" content="2008-11-26T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2008-11-26T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://lianera.github.io/post/2008/snake1/" />
+<meta property="article:published_time" content="2008-11-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2008-11-26T00:00:00+00:00" />
 <meta itemprop="name" content="贪吃蛇（一）">
 <meta itemprop="description" content="简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用">
-
-
 <meta itemprop="datePublished" content="2008-11-26T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2008-11-26T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="281">
 
 
 
-<meta itemprop="keywords" content="游戏开发,C&#43;&#43;,Windows,程序," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="游戏开发,C&#43;&#43;,Windows,程序," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="贪吃蛇（一）"/>
 <meta name="twitter:description" content="简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用"/>
 
@@ -133,40 +131,26 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#简介">简介</a></li>
-<li><a href="#技术">技术</a></li>
-<li><a href="#环境">环境</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#技术">技术</a></li>
+    <li><a href="#环境">环境</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><img src="snake1.png" alt="" /></p>
-
+      <p><img src="snake1.png" alt=""></p>
 <h2 id="简介">简介</h2>
-
 <p>经典的贪吃蛇小游戏。</p>
-
 <h2 id="技术">技术</h2>
-
 <p>程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用面向对象的特性。此外，界面与逻辑没有实现分离，导致程序的可重用性很低。采用Windows编程构造窗口界面，基于实时游戏的框架，利用消息处理机制处理用户输入，用定时器的方法按一定时间间隔刷新游戏内容并更新界面。游戏背景音乐采用MIDI，音效采用wav。</p>
-
 <p>程序采用的是Windows API，没有采用MFC。对于实时游戏，采用纯Windows程序能够充分发挥性能，并排除无关的干扰，使得程序的灵活性更高。</p>
-
 <h2 id="环境">环境</h2>
-
 <ul>
 <li>Visual Studio 2017</li>
 </ul>
-
 <p><a href="https://github.com/lianera/archives/tree/master/2008/snake1">源代码</a></p>
-
 <p><a href="https://github.com/lianera/archives/releases/download/20180514/snake1.zip">可执行程序</a></p>
 
     </div>
@@ -210,6 +194,10 @@
         </div>
         
 
+  
+
+  
+
       </div>
     </main>
 
@@ -236,7 +224,7 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -252,7 +240,10 @@
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
 
 
 

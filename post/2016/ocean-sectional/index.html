@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.73.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2016/ocean-sectional/" />
@@ -34,28 +34,26 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 <meta property="og:title" content="海水截面模拟" />
 <meta property="og:description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2016/ocean-sectional/" /><meta property="article:published_time" content="2016-01-29T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2016-01-29T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://lianera.github.io/post/2016/ocean-sectional/" />
+<meta property="article:published_time" content="2016-01-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-01-29T00:00:00+00:00" />
 <meta itemprop="name" content="海水截面模拟">
 <meta itemprop="description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波">
-
-
 <meta itemprop="datePublished" content="2016-01-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2016-01-29T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="254">
 
 
 
-<meta itemprop="keywords" content="计算机图形学,Javascript," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="计算机图形学,Javascript," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="海水截面模拟"/>
 <meta name="twitter:description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波"/>
 
@@ -133,51 +131,32 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#介绍">介绍</a></li>
-<li><a href="#预览">预览</a></li>
-<li><a href="#建模">建模</a></li>
-<li><a href="#改进">改进</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#介绍-">介绍</a></li>
+    <li><a href="#预览-">预览</a></li>
+    <li><a href="#建模-">建模</a></li>
+    <li><a href="#改进-">改进</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><img src="ocean-sectional.png" alt="" /></p>
-
-<h2 id="介绍">介绍</h2>
-
+      <p><img src="ocean-sectional.png" alt=""></p>
+<h2 id="介绍-">介绍</h2>
 <p>一个简单的海水模型截面视图的模拟。</p>
-
-<h2 id="预览">预览</h2>
-
+<h2 id="预览-">预览</h2>
 <p><a href="/assets/wave.html">预览页面</a></p>
-
-<h2 id="建模">建模</h2>
-
+<h2 id="建模-">建模</h2>
 <p>我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成：</p>
-
-<p><img src="f1.svg" alt="y(t)=A*sin(2\pi ft+\phi)" /></p>
-
-<p>其中<img src="f2.svg" alt="f" />是水波的振动频率，<img src="f3.svg" alt="\phi" />是相位。
-假设在平面<img src="f4.svg" alt="\sigma" />上有个振动源<img src="f5.svg" alt="\{S_i(x_i,y_i)\}" /> 和一个目标点<img src="f6.svg" alt="T(x_0,y_0)" />，我们可以推导出<img src="f6.svg" alt="T(x_0,y_0)" />位置的振动幅度为：</p>
-
-<p><img src="f7.svg" alt="f(T)=\sum_{i=1}^{n}A_i*sin(2\pi(ft-\frac{||T-S_i||}{\lambda})+\phi_i)" /></p>
-
-<p>这样，平面<img src="f4.svg" alt="\sigma" />上的每个点的振动幅度为：</p>
-
-<p><img src="f8.svg" alt="f(x,y)=\sum_{i=1}^{n}A_i*sin(2\pi(ft-\frac{\sqrt{(x-x_i)^2+(y-y_i)^2}}{\lambda})+\phi_i)" /></p>
-
+<p><img src="f1.svg" alt="y(t)=A*sin(2\pi ft+\phi)"></p>
+<p>其中<img src="f2.svg" alt="f">是水波的振动频率，<img src="f3.svg" alt="\phi">是相位。
+假设在平面<img src="f4.svg" alt="\sigma">上有个振动源<img src="f5.svg" alt="\{S_i(x_i,y_i)\}"> 和一个目标点<img src="f6.svg" alt="T(x_0,y_0)">，我们可以推导出<img src="f6.svg" alt="T(x_0,y_0)">位置的振动幅度为：</p>
+<p><img src="f7.svg" alt="f(T)=\sum_{i=1}^{n}A_i*sin(2\pi(ft-\frac{||T-S_i||}{\lambda})+\phi_i)"></p>
+<p>这样，平面<img src="f4.svg" alt="\sigma">上的每个点的振动幅度为：</p>
+<p><img src="f8.svg" alt="f(x,y)=\sum_{i=1}^{n}A_i*sin(2\pi(ft-\frac{\sqrt{(x-x_i)^2+(y-y_i)^2}}{\lambda})+\phi_i)"></p>
 <p>通过上面的公式，我们可以得到每时每刻平面上每个点的振动幅度，从而实现水波的模拟。</p>
-
-<h2 id="改进">改进</h2>
-
-<p>经过一些实验后，发现水面有点奇怪。大体上模型有点像海洋，但是当观察一段时间后会发现水的振动太有规律了。为了提高视觉效果，我们将每个振动源的频率<img src="f2.svg" alt="f" />同样设置成随机变量。</p>
+<h2 id="改进-">改进</h2>
+<p>经过一些实验后，发现水面有点奇怪。大体上模型有点像海洋，但是当观察一段时间后会发现水的振动太有规律了。为了提高视觉效果，我们将每个振动源的频率<img src="f2.svg" alt="f">同样设置成随机变量。</p>
 
     </div>
 
@@ -218,6 +197,10 @@
         </div>
         
 
+  
+
+  
+
       </div>
     </main>
 
@@ -244,7 +227,7 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -260,7 +243,10 @@
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
 
 
 
