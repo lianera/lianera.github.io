@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.73.0 with theme even" />
+<meta name="generator" content="Hugo 0.82.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2014/transplant-tft/" />
@@ -42,17 +42,14 @@
 <meta property="og:title" content="TFT液晶屏Linux下的移植" />
 <meta property="og:description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路," />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2014/transplant-tft/" />
-<meta property="article:published_time" content="2014-05-14T00:00:00+00:00" />
-<meta property="article:modified_time" content="2014-05-14T00:00:00+00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2014/transplant-tft/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-05-14T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2014-05-14T00:00:00&#43;00:00" />
+
 <meta itemprop="name" content="TFT液晶屏Linux下的移植">
-<meta itemprop="description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,">
-<meta itemprop="datePublished" content="2014-05-14T00:00:00&#43;00:00" />
+<meta itemprop="description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,"><meta itemprop="datePublished" content="2014-05-14T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2014-05-14T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="6196">
-
-
-
+<meta itemprop="wordCount" content="6197">
 <meta itemprop="keywords" content="硬件,Linux," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TFT液晶屏Linux下的移植"/>
 <meta name="twitter:description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,"/>
@@ -132,21 +129,21 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#预览-">预览</a></li>
-    <li><a href="#声明-">声明</a></li>
-    <li><a href="#准备-">准备</a></li>
-    <li><a href="#实践-">实践</a></li>
-    <li><a href="#软件-">软件</a></li>
-    <li><a href="#整合-">整合</a></li>
-    <li><a href="#测试-">测试</a></li>
-    <li><a href="#技巧-">技巧</a></li>
-    <li><a href="#debug过程-">DEBUG过程</a></li>
+    <li><a href="#预览">预览</a></li>
+    <li><a href="#声明">声明</a></li>
+    <li><a href="#准备">准备</a></li>
+    <li><a href="#实践">实践</a></li>
+    <li><a href="#软件">软件</a></li>
+    <li><a href="#整合">整合</a></li>
+    <li><a href="#测试">测试</a></li>
+    <li><a href="#技巧">技巧</a></li>
+    <li><a href="#debug过程">DEBUG过程</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h2 id="预览-">预览</h2>
+      <h2 id="预览">预览</h2>
 <p>手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:</p>
 <table>
 <thead>
@@ -158,12 +155,12 @@
 </tr>
 </thead>
 </table>
-<h2 id="声明-">声明</h2>
+<h2 id="声明">声明</h2>
 <p>这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡</p>
 <p>由于事先没有拍照,以下所显示的图片都是事后拍的,不要见怪｡本人技术有限,如果有弄错的地方,欢迎指正｡另外,转载请注明出处</p>
 <p>所用的屏幕大小为2.2英寸,分辨率176×220,TFT材质,引脚为18根,主控IC是ili9225b｡其他TFT液晶屏移植的方法差不多,只不过接线､驱动和参数不同｡</p>
 <p>采用SPI串行的方式传递数据,其他屏幕大点的一般采用并行传输,这里,树莓派上占用的端口有:GPIO3.3V､GND､SPI中的SCLK､MOSI､CE0以及GPIO25和GPIO24｡串行的接线较少,但是刷新率不高,一般SPI的CLK信号在16MHZ~32MHZ｡</p>
-<h2 id="准备-">准备</h2>
+<h2 id="准备">准备</h2>
 <p>在确定要移植之前,最好先做以下这几件事:</p>
 <p>一､找到液晶屏排线引脚的定义｡</p>
 <p>液晶屏背面或者排线上都有一个型号,把那型号Google吧｡很多小厂商生产的可能找不到足够的信息,但是实际上只是把一些常用的型号改一下布局,排线顺序还是一样,如果找不到这个型号的信息,可以找类似常用的比对,如果觉得可以冒这风险那就继续｡</p>
@@ -178,7 +175,7 @@
 <p>三､型号(主控IC或者TFT型号)支持列表:</p>
 <p>st7735r, hx8340bn, ili9225, ili9320, ili9325, ili9341, ssd1289, ssd1351,Adafruit 1.3,HY28A,HY28B,fb_hx8353d,Freetronics,ITDB02,Watterott MI0283QT-2,Watterott MI0283QT-9A,Nokia 5110/3310,ILSoft OLEDpioled,Sainsmart 1.8,Sainsmart 3.2,ssd1331,tinylcd.com,tm022hdh26</p>
 <p>如果你的屏幕型号或者主控IC型号不在以上的列表里面,那就需要一些初始化参数和指令代码｡详细的后面会说｡</p>
-<h2 id="实践-">实践</h2>
+<h2 id="实践">实践</h2>
 <p>好了,准备工作做好了之后就动手了!</p>
 <p>step1:拆机:</p>
 <p><img src="tft_4.jpg" alt="img"></p>
@@ -187,7 +184,7 @@
 <p>接线的同时可以把一些相同的引脚连到一起,比如GND和LED阴极､VCC和LED阳极(注意电压)｡</p>
 <p><img src="tft_3.jpg" alt="img"></p>
 <p><img src="tft_8.jpg" alt="img"></p>
-<h2 id="软件-">软件</h2>
+<h2 id="软件">软件</h2>
 <p>好啦,硬件部分到此就差不多了,很容易吧!软件可就没这么简单!</p>
 <p>接下来我们需要解决的就是:驱动!</p>
 <p>找了找,大部分都是MTK平台的驱动和一些示例程序,本来以为需要自己写Raspberry的驱动,没想到后来在github上面发现了一个专门针对Raspberry的TFT开源驱动项目,以上的支持列表就是从那里来的,传送门:</p>
@@ -221,11 +218,11 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">sudo <span class="nv">REPO_URI</span><span class="o">=</span>https://github.com/notro/rpi-firmware rpi-update
-<span class="c1">#重启</span> 
+<span class="c1">#重启 </span>
 sudo reboot
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="整合-">整合</h2>
+</div><h2 id="整合">整合</h2>
 <p>一､连线</p>
 <p>先提供一张树莓派GPIO图</p>
 <p><img src="tft_2.jpg" alt="img"></p>
@@ -343,7 +340,7 @@ sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>定位�
 <p>除此之外,注意一下是不是用的SPI0:</p>
 <p>如[ 10.476789] fbtft_device: flexfb spi0.0 8000kHz 8 bits mode=0x00</p>
 <p>如果显示的是spi0.1,需要把TFT的CS线从CE0改到CE1</p>
-<h2 id="测试-">测试</h2>
+<h2 id="测试">测试</h2>
 <p>如果以上的步骤都做好了,那么就来测试一下吧:-)</p>
 <p>一､字符测试</p>
 <p>用这个</p>
@@ -397,7 +394,7 @@ git clone https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git
 </code></pre></td></tr></table>
 </div>
 </div><p>一会儿之后你就可以看到桌面了!</p>
-<h2 id="技巧-">技巧</h2>
+<h2 id="技巧">技巧</h2>
 <p>卸载模块(不是移除,只是关闭而已)</p>
 <p>​</p>
 <div class="highlight"><div class="chroma">
@@ -432,7 +429,7 @@ sudo rmmod fbtft_device
 <p>例如</p>
 <p><img src="tft_5.gif" alt="img"></p>
 <p>好了,重启之后就能开机自动显示了!</p>
-<h2 id="debug过程-">DEBUG过程</h2>
+<h2 id="debug过程">DEBUG过程</h2>
 <p>如果事情像上面的这么顺利那真是太幸运了!</p>
 <p>但是多多少少会有一些错误或者漏洞导致不正常</p>
 <p>下面我会写出我遇到的问题,以及怎么解决的｡</p>
@@ -454,7 +451,7 @@ sudo rmmod fbtft_device
 <p>对于(1),我把程序看了好几遍,从接受调用到映射到SPI都是正常的,硬是没看出端倪来
 ｡</p>
 <p>对于(2),我怀疑是不是硬件坏了,所以在arduino上写了个小程序,连接树莓派的SPI,用来接收树莓派发送的SPI数据,并把数据通过串口发给电脑,这样就能测试SPI了｡</p>
-<p>向树莓派spi写入数据的方法可以这样echo &ldquo;Hello World&quot;&gt;/dev/spidev0.0,结果电脑成功接收,说明SPI是没问题的｡</p>
+<p>向树莓派spi写入数据的方法可以这样echo &ldquo;Hello World&rdquo;&gt;/dev/spidev0.0,结果电脑成功接收,说明SPI是没问题的｡</p>
 <p>对于(3),我总觉得不太可能,因为液晶屏初始化的时候SPI和RST､RS都需要用到,而且不仅要写指令寄存器,而且要写数据寄存器,接线肯定是没问题的｡</p>
 <p>对于(4),也不太可能,能够显示随机的颜色,说明显示是没问题的｡</p>
 <p>对于(5),显然不太可能,不然这个BUG应该早就被修复了</p>
@@ -774,7 +771,7 @@ sudo rmmod fbtft_device
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
 
 
 

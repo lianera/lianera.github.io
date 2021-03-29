@@ -6,11 +6,7 @@
     <description>Recent content in SDL on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 07 Jul 2013 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://lianera.github.io/tags/sdl/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 07 Jul 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/sdl/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>贪吃蛇（二）</title>
       <link>https://lianera.github.io/post/2013/snake2/</link>

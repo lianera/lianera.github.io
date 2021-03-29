@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.73.0 with theme even" />
+<meta name="generator" content="Hugo 0.82.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2016/ocean-sectional/" />
@@ -42,17 +42,14 @@
 <meta property="og:title" content="海水截面模拟" />
 <meta property="og:description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2016/ocean-sectional/" />
-<meta property="article:published_time" content="2016-01-29T00:00:00+00:00" />
-<meta property="article:modified_time" content="2016-01-29T00:00:00+00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2016/ocean-sectional/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-01-29T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2016-01-29T00:00:00&#43;00:00" />
+
 <meta itemprop="name" content="海水截面模拟">
-<meta itemprop="description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波">
-<meta itemprop="datePublished" content="2016-01-29T00:00:00&#43;00:00" />
+<meta itemprop="description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波"><meta itemprop="datePublished" content="2016-01-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2016-01-29T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="254">
-
-
-
 <meta itemprop="keywords" content="计算机图形学,Javascript," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="海水截面模拟"/>
 <meta name="twitter:description" content="介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波"/>
@@ -132,21 +129,21 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#介绍-">介绍</a></li>
-    <li><a href="#预览-">预览</a></li>
-    <li><a href="#建模-">建模</a></li>
-    <li><a href="#改进-">改进</a></li>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#预览">预览</a></li>
+    <li><a href="#建模">建模</a></li>
+    <li><a href="#改进">改进</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
       <p><img src="ocean-sectional.png" alt=""></p>
-<h2 id="介绍-">介绍</h2>
+<h2 id="介绍">介绍</h2>
 <p>一个简单的海水模型截面视图的模拟。</p>
-<h2 id="预览-">预览</h2>
+<h2 id="预览">预览</h2>
 <p><a href="/assets/wave.html">预览页面</a></p>
-<h2 id="建模-">建模</h2>
+<h2 id="建模">建模</h2>
 <p>我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成：</p>
 <p><img src="f1.svg" alt="y(t)=A*sin(2\pi ft+\phi)"></p>
 <p>其中<img src="f2.svg" alt="f">是水波的振动频率，<img src="f3.svg" alt="\phi">是相位。
@@ -155,7 +152,7 @@
 <p>这样，平面<img src="f4.svg" alt="\sigma">上的每个点的振动幅度为：</p>
 <p><img src="f8.svg" alt="f(x,y)=\sum_{i=1}^{n}A_i*sin(2\pi(ft-\frac{\sqrt{(x-x_i)^2+(y-y_i)^2}}{\lambda})+\phi_i)"></p>
 <p>通过上面的公式，我们可以得到每时每刻平面上每个点的振动幅度，从而实现水波的模拟。</p>
-<h2 id="改进-">改进</h2>
+<h2 id="改进">改进</h2>
 <p>经过一些实验后，发现水面有点奇怪。大体上模型有点像海洋，但是当观察一段时间后会发现水的振动太有规律了。为了提高视觉效果，我们将每个振动源的频率<img src="f2.svg" alt="f">同样设置成随机变量。</p>
 
     </div>
@@ -246,7 +243,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
 
 
 

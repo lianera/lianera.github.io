@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.73.0 with theme even" />
+<meta name="generator" content="Hugo 0.82.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2015/cv-mouse/" />
@@ -42,17 +42,14 @@
 <meta property="og:title" content="基于计算机视觉的虚拟鼠标" />
 <meta property="og:description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2015/cv-mouse/" />
-<meta property="article:published_time" content="2015-07-28T00:00:00+00:00" />
-<meta property="article:modified_time" content="2015-07-28T00:00:00+00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2015/cv-mouse/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-07-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2015-07-28T00:00:00&#43;00:00" />
+
 <meta itemprop="name" content="基于计算机视觉的虚拟鼠标">
-<meta itemprop="description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络">
-<meta itemprop="datePublished" content="2015-07-28T00:00:00&#43;00:00" />
+<meta itemprop="description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络"><meta itemprop="datePublished" content="2015-07-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2015-07-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="5464">
-
-
-
+<meta itemprop="wordCount" content="5463">
 <meta itemprop="keywords" content="C&#43;&#43;,计算机视觉,Linux," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="基于计算机视觉的虚拟鼠标"/>
 <meta name="twitter:description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络"/>
@@ -233,7 +230,7 @@
 <p>连接虚拟鼠标设备</p>
 <ul>
 <li>采用linux的IO操作方法</li>
-<li>打开设备：fd=open(&quot;/sys/devices/platform/cammouse/vmevent&rdquo;, O_RDWR);</li>
+<li>打开设备：fd=open(&quot;/sys/devices/platform/cammouse/vmevent&quot;, O_RDWR);</li>
 <li>写入设备：write(fd,p,strlen(p)+1);</li>
 <li>关闭设备：close(fd);</li>
 </ul>
@@ -627,7 +624,7 @@ sudo ./track
 
 
 
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
 
 
 

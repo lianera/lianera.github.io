@@ -5,10 +5,6 @@
     <link>https://lianera.github.io/categories/</link>
     <description>Recent content in Categories on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    
-	<atom:link href="https://lianera.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>zh-cn</language><atom:link href="https://lianera.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

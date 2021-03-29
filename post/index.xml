@@ -6,11 +6,7 @@
     <description>Recent content in Posts on Lianera&#39;s homepage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://lianera.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于事件驱动的逻辑电路仿真实现</title>
       <link>https://lianera.github.io/post/2020/logic-sim/</link>
