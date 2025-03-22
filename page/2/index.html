@@ -16,14 +16,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="Lianera&#39;s homepage." /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="Lianera&#39;s homepage." /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/" />
@@ -37,19 +37,24 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="Lianera&#39;s homepage" />
-<meta property="og:description" content="Lianera&#39;s homepage." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://lianera.github.io/" />
+<meta property="og:url" content="https://lianera.github.io/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="Lianera&#39;s homepage">
+  <meta property="og:description" content="Lianera&#39;s homepage.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
 
-<meta itemprop="name" content="Lianera&#39;s homepage">
-<meta itemprop="description" content="Lianera&#39;s homepage."><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Lianera&#39;s homepage"/>
-<meta name="twitter:description" content="Lianera&#39;s homepage."/>
+  <meta itemprop="name" content="Lianera&#39;s homepage">
+  <meta itemprop="description" content="Lianera&#39;s homepage.">
+  <meta itemprop="datePublished" content="2025-03-23T02:47:00+08:00">
+  <meta itemprop="dateModified" content="2025-03-23T02:47:00+08:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lianera&#39;s homepage">
+  <meta name="twitter:description" content="Lianera&#39;s homepage.">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -84,12 +89,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -104,6 +118,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -121,7 +136,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换
+      数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换也是少不了的，所以最基本的数学工具就 …
     </div>
     <div class="read-more">
       <a href="/post/2017/ltray-memo/" class="read-more-link">阅读更多</a>
@@ -140,7 +155,8 @@
   
   <div class="post-content">
     <div class="post-summary">
-      上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境
+      上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。
+我们知道，球谐光照实际上就是将周围的环境光采样成几个系数，然后渲染的时候用这几 …
     </div>
     <div class="read-more">
       <a href="/post/2017/sh-lighting-apply/" class="read-more-link">阅读更多</a>
@@ -159,7 +175,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的
+      从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的图元比如球体、平面等进行渲染，并且还具有 …
     </div>
     <div class="read-more">
       <a href="/post/2017/ltray-refactoring/" class="read-more-link">阅读更多</a>
@@ -178,7 +194,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的
+      我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的变元比较多，并且复合的层数也比较多，这样 …
     </div>
     <div class="read-more">
       <a href="/post/2017/complicated-compound-derivative/" class="read-more-link">阅读更多</a>
@@ -197,7 +213,8 @@
   
   <div class="post-content">
     <div class="post-summary">
-      摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度
+      摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。
+引言 梯度下降法是一种最优化算法，在最优化理 …
     </div>
     <div class="read-more">
       <a href="/post/2017/gradient-descent/" class="read-more-link">阅读更多</a>
@@ -216,7 +233,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我
+      简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我个人觉得如果之前对 …
     </div>
     <div class="read-more">
       <a href="/post/2016/sh-lighting-exp/" class="read-more-link">阅读更多</a>
@@ -235,7 +252,8 @@
   
   <div class="post-content">
     <div class="post-summary">
-      json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际
+      json的主页上，提供了number类型的符号识别过程，如下：
+图片引用：http://www.json.org/json-zh.html 实际上这张图片表示的是一个状态机，只是状 …
     </div>
     <div class="read-more">
       <a href="/post/2016/nfa-to-dfa/" class="read-more-link">阅读更多</a>
@@ -254,7 +272,11 @@
   
   <div class="post-content">
     <div class="post-summary">
-      介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波
+      
+介绍 一个简单的海水模型截面视图的模拟。
+预览 预览页面
+建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成：
+其中是水波的振动频率，是相位。 假设 …
     </div>
     <div class="read-more">
       <a href="/post/2016/ocean-sectional/" class="read-more-link">阅读更多</a>
@@ -273,7 +295,8 @@
   
   <div class="post-content">
     <div class="post-summary">
-      理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示
+      理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示为无噪声图像和加性噪声的组成，也即：
+
     </div>
     <div class="read-more">
       <a href="/post/2015/average-denoise/" class="read-more-link">阅读更多</a>
@@ -292,7 +315,8 @@
   
   <div class="post-content">
     <div class="post-summary">
-      概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络
+      概述 设计内容 设备驱动程序设计, 要求如下：
+设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络设备； 设备可以是虚拟的也可 …
     </div>
     <div class="read-more">
       <a href="/post/2015/cv-mouse/" class="read-more-link">阅读更多</a>
@@ -322,8 +346,10 @@
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
+    <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
@@ -341,13 +367,10 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -360,7 +383,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

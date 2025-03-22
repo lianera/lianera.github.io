@@ -16,14 +16,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2D物体的距离也就是z值进行排序。排序当然快排是首选，但是快排有个缺点是当元素相同的时候，复杂度就变成了O(n^2)，然而2D绘制中z值重复的现象太常见了。除了快排我第一想到的是用红黑树解决这个问题，这样可以一边插入一边排序，最坏情况下也是O(nlogn)。然而红黑树是比较复杂的，而我需要解决的问题只能用C语言。后面发现了一个更好的方法：三路快速排序。普通快速排序在进行划分的时候只划分成左右小于和大于的两个部分，而三路快速排序则考虑了相等元素的影响，划分的时候分成三个区间。
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2018/three-way-quicksort/" />
@@ -35,24 +36,30 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="三路快速排序" />
-<meta property="og:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2018/three-way-quicksort/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2018-08-25T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2018-08-25T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2018/three-way-quicksort/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="三路快速排序">
+  <meta property="og:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2D物体的距离也就是z值进行排序。排序当然快排是首选，但是快排有个缺点是当元素相同的时候，复杂度就变成了O(n^2)，然而2D绘制中z值重复的现象太常见了。除了快排我第一想到的是用红黑树解决这个问题，这样可以一边插入一边排序，最坏情况下也是O(nlogn)。然而红黑树是比较复杂的，而我需要解决的问题只能用C语言。后面发现了一个更好的方法：三路快速排序。普通快速排序在进行划分的时候只划分成左右小于和大于的两个部分，而三路快速排序则考虑了相等元素的影响，划分的时候分成三个区间。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2018-08-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2018-08-25T00:00:00+00:00">
+    <meta property="article:tag" content="算法">
 
-<meta itemprop="name" content="三路快速排序">
-<meta itemprop="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2"><meta itemprop="datePublished" content="2018-08-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-08-25T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="747">
-<meta itemprop="keywords" content="算法," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="三路快速排序"/>
-<meta name="twitter:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2"/>
+  <meta itemprop="name" content="三路快速排序">
+  <meta itemprop="description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2D物体的距离也就是z值进行排序。排序当然快排是首选，但是快排有个缺点是当元素相同的时候，复杂度就变成了O(n^2)，然而2D绘制中z值重复的现象太常见了。除了快排我第一想到的是用红黑树解决这个问题，这样可以一边插入一边排序，最坏情况下也是O(nlogn)。然而红黑树是比较复杂的，而我需要解决的问题只能用C语言。后面发现了一个更好的方法：三路快速排序。普通快速排序在进行划分的时候只划分成左右小于和大于的两个部分，而三路快速排序则考虑了相等元素的影响，划分的时候分成三个区间。">
+  <meta itemprop="datePublished" content="2018-08-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2018-08-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="747">
+  <meta itemprop="keywords" content="算法">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="三路快速排序">
+  <meta name="twitter:description" content="最近需要解决一个2D绘制的遮挡问题，其中画家算法是比较常用的方法，很简单，就是模仿画家从远到近绘制，远处的就被遮挡了，所以需要做的其实是对2D物体的距离也就是z值进行排序。排序当然快排是首选，但是快排有个缺点是当元素相同的时候，复杂度就变成了O(n^2)，然而2D绘制中z值重复的现象太常见了。除了快排我第一想到的是用红黑树解决这个问题，这样可以一边插入一边排序，最坏情况下也是O(nlogn)。然而红黑树是比较复杂的，而我需要解决的问题只能用C语言。后面发现了一个更好的方法：三路快速排序。普通快速排序在进行划分的时候只划分成左右小于和大于的两个部分，而三路快速排序则考虑了相等元素的影响，划分的时候分成三个区间。">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +94,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +123,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -144,7 +161,7 @@
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -188,8 +205,8 @@
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -207,13 +224,10 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -226,7 +240,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

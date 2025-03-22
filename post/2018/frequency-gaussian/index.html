@@ -16,14 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。
+离散傅里叶变换（DFT） 傅里叶变换本身的复杂度是O(n^2)，但是因为有了快速傅里叶变换，其复杂度可以达到O(nlogn)。
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2018/frequency-gaussian/" />
@@ -35,24 +37,34 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="DFT和DCT以及空间域的高斯滤波对比" />
-<meta property="og:description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2018/frequency-gaussian/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2018-07-21T15:48:41&#43;08:00" />
-<meta property="article:modified_time" content="2018-07-21T15:48:41&#43;08:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2018/frequency-gaussian/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="DFT和DCT以及空间域的高斯滤波对比">
+  <meta property="og:description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。
+离散傅里叶变换（DFT） 傅里叶变换本身的复杂度是O(n^2)，但是因为有了快速傅里叶变换，其复杂度可以达到O(nlogn)。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2018-07-21T15:48:41+08:00">
+    <meta property="article:modified_time" content="2018-07-21T15:48:41+08:00">
+    <meta property="article:tag" content="计算机视觉">
+    <meta property="article:tag" content="图像处理">
 
-<meta itemprop="name" content="DFT和DCT以及空间域的高斯滤波对比">
-<meta itemprop="description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶"><meta itemprop="datePublished" content="2018-07-21T15:48:41&#43;08:00" />
-<meta itemprop="dateModified" content="2018-07-21T15:48:41&#43;08:00" />
-<meta itemprop="wordCount" content="1857">
-<meta itemprop="keywords" content="计算机视觉,图像处理," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="DFT和DCT以及空间域的高斯滤波对比"/>
-<meta name="twitter:description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶"/>
+  <meta itemprop="name" content="DFT和DCT以及空间域的高斯滤波对比">
+  <meta itemprop="description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。
+离散傅里叶变换（DFT） 傅里叶变换本身的复杂度是O(n^2)，但是因为有了快速傅里叶变换，其复杂度可以达到O(nlogn)。">
+  <meta itemprop="datePublished" content="2018-07-21T15:48:41+08:00">
+  <meta itemprop="dateModified" content="2018-07-21T15:48:41+08:00">
+  <meta itemprop="wordCount" content="1857">
+  <meta itemprop="keywords" content="计算机视觉,图像处理">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DFT和DCT以及空间域的高斯滤波对比">
+  <meta name="twitter:description" content="最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。
+离散傅里叶变换（DFT） 傅里叶变换本身的复杂度是O(n^2)，但是因为有了快速傅里叶变换，其复杂度可以达到O(nlogn)。">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +99,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +128,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -177,25 +199,25 @@
 <h2 id="模糊质量对比">模糊质量对比</h2>
 <p>首先准备一张普通高斯滤波后的groundtruth，然后利用DFT和DCT与其进行比较，计算PSNR</p>
 <table>
-<thead>
-<tr>
-<th>groundtruth</th>
-<th>DFT</th>
-<th>DCT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="groundtruth.jpg" alt=""></td>
-<td><img src="Iout.jpg" alt=""></td>
-<td><img src="dct.jpg" alt=""></td>
-</tr>
-<tr>
-<td>PSNR=∞</td>
-<td>PSNR=29.7861</td>
-<td>PSNR=38.9494</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>groundtruth</th>
+          <th>DFT</th>
+          <th>DCT</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><img src="groundtruth.jpg" alt=""></td>
+          <td><img src="Iout.jpg" alt=""></td>
+          <td><img src="dct.jpg" alt=""></td>
+      </tr>
+      <tr>
+          <td>PSNR=∞</td>
+          <td>PSNR=29.7861</td>
+          <td>PSNR=38.9494</td>
+      </tr>
+  </tbody>
 </table>
 <p>DCT的PSNR是远大于DFT的，并且数值也非常大，和groundtruth非常接近。</p>
 <h2 id="速度对比">速度对比</h2>
@@ -213,7 +235,7 @@
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -258,8 +280,8 @@
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -277,13 +299,10 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -296,7 +315,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

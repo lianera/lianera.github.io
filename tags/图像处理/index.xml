@@ -4,35 +4,30 @@
     <title>图像处理 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</link>
     <description>Recent content in 图像处理 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 21 Jul 2018 15:48:41 +0800</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Jul 2018 15:48:41 +0800</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DFT和DCT以及空间域的高斯滤波对比</title>
       <link>https://lianera.github.io/post/2018/frequency-gaussian/</link>
       <pubDate>Sat, 21 Jul 2018 15:48:41 +0800</pubDate>
-      
       <guid>https://lianera.github.io/post/2018/frequency-gaussian/</guid>
-      <description>最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶</description>
+      <description>&lt;p&gt;最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。&lt;/p&gt;&#xA;&lt;h2 id=&#34;离散傅里叶变换dft&#34;&gt;离散傅里叶变换（DFT）&lt;/h2&gt;&#xA;&lt;p&gt;傅里叶变换本身的复杂度是O(n^2)，但是因为有了快速傅里叶变换，其复杂度可以达到O(nlogn)。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>快速高斯模糊综述</title>
       <link>https://lianera.github.io/post/2017/fast-gaussian/</link>
       <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/fast-gaussian/</guid>
-      <description>高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</description>
+      <description>&lt;p&gt;高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;f1.svg&#34; alt=&#34;g(x) = (f*h)(x)&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;其中&lt;img src=&#34;f2.svg&#34; alt=&#34;f(x)&#34;&gt;为输入信号，&lt;img src=&#34;f3.svg&#34; alt=&#34;h(x)&#34;&gt;为高斯函数，&lt;img src=&#34;f4.svg&#34; alt=&#34;g(x)&#34;&gt;为输出信号，&lt;img src=&#34;f5.svg&#34; alt=&#34;h(x)=\frac{1}{\sqrt{2\pi}\sigma }e^{-\frac{x^2}{2\sigma^2}}&#34;&gt;。&#xA;而数字图像是二维有限的离散函数，因此只能用离散的卷积进行近似，常用的方法有以下这些：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>多图片平均法降噪</title>
       <link>https://lianera.github.io/post/2015/average-denoise/</link>
       <pubDate>Wed, 09 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2015/average-denoise/</guid>
-      <description>理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示</description>
+      <description>&lt;h2 id=&#34;理论&#34;&gt;理论&lt;/h2&gt;&#xA;&lt;p&gt;在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示为无噪声图像和加性噪声的组成，也即：&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

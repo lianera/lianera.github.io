@@ -4,44 +4,37 @@
     <title>Windows on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/windows/</link>
     <description>Recent content in Windows on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 01 Dec 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Dec 2012 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>装甲之战</title>
       <link>https://lianera.github.io/post/2012/panzerwar/</link>
       <pubDate>Sat, 01 Dec 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2012/panzerwar/</guid>
-      <description>简介 坦克游戏，通过控制坦克消灭敌人获取胜利。 技术 这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Wi</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;panzerwar1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;panzerwar2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;坦克游戏，通过控制坦克消灭敌人获取胜利。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Windows编程，没有涉及MFC。游戏的架构就是典型的GameLoop实时游戏架构，采用Windows GDI进行绘图，同时在绘图上也采用了双缓存技术。这个程序由于没有采用模块化的方法，导致函数过多，后期维护混乱。不过最后还是成功做好了！&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>俄罗斯方块（一）</title>
       <link>https://lianera.github.io/post/2008/tetris/</link>
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2008/tetris/</guid>
-      <description>简介 经典的俄罗斯方块。 技术 中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用</description>
+      <description>&lt;p&gt;&lt;img src=&#34;tetris.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;经典的俄罗斯方块。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用的是MFC，结合Windows的绘图技术做成的。绘图方面使用了双缓存技术提高画面的流畅度，避免闪烁。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>贪吃蛇（一）</title>
       <link>https://lianera.github.io/post/2008/snake1/</link>
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2008/snake1/</guid>
-      <description>简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用</description>
+      <description>&lt;p&gt;&lt;img src=&#34;snake1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;经典的贪吃蛇小游戏。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用面向对象的特性。此外，界面与逻辑没有实现分离，导致程序的可重用性很低。采用Windows编程构造窗口界面，基于实时游戏的框架，利用消息处理机制处理用户输入，用定时器的方法按一定时间间隔刷新游戏内容并更新界面。游戏背景音乐采用MIDI，音效采用wav。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>按键助手</title>
       <link>https://lianera.github.io/post/2008/keyhelper/</link>
       <pubDate>Sun, 12 Oct 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2008/keyhelper/</guid>
-      <description>简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自</description>
+      <description>&lt;p&gt;&lt;img src=&#34;keyhelper.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;这个程序还是中学时期写的，那个时候对程序非常感兴趣，自学了一些C++便觉得自己可以写一些东西出来。虽然当时水平比较低，但是完全能够凭着热情去完成每一个程序。那个时候很喜欢写跟界面有关的东西，认知也停留在桌面应用上面，以为程序就是用来开发桌面应用的。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -16,14 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="概述 设计内容 设备驱动程序设计, 要求如下：
+设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络设备； 设备可以是虚拟的也可以是实际设备； 编写测试应用程序，测试对该设备的读写等操作。 功能需求 实现鼠标驱动程序，并提供接口。 通过手势控制指针的移动。 手上可用颜色块标定。 基本概念和原理 环境选择和工具 操作系统：Ubuntu(Linux) 14.04 LTS 64bit 编辑器：vim 编译器：gcc，g&#43;&#43; 调试器：gdb 开发库：opencv 其他：make 基本架构 用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2015/cv-mouse/" />
@@ -35,24 +37,35 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="基于计算机视觉的虚拟鼠标" />
-<meta property="og:description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2015/cv-mouse/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2015-07-28T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2015-07-28T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2015/cv-mouse/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="基于计算机视觉的虚拟鼠标">
+  <meta property="og:description" content="概述 设计内容 设备驱动程序设计, 要求如下：
+设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络设备； 设备可以是虚拟的也可以是实际设备； 编写测试应用程序，测试对该设备的读写等操作。 功能需求 实现鼠标驱动程序，并提供接口。 通过手势控制指针的移动。 手上可用颜色块标定。 基本概念和原理 环境选择和工具 操作系统：Ubuntu(Linux) 14.04 LTS 64bit 编辑器：vim 编译器：gcc，g&#43;&#43; 调试器：gdb 开发库：opencv 其他：make 基本架构 用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2015-07-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2015-07-28T00:00:00+00:00">
+    <meta property="article:tag" content="C&#43;&#43;">
+    <meta property="article:tag" content="计算机视觉">
+    <meta property="article:tag" content="Linux">
 
-<meta itemprop="name" content="基于计算机视觉的虚拟鼠标">
-<meta itemprop="description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络"><meta itemprop="datePublished" content="2015-07-28T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2015-07-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="5463">
-<meta itemprop="keywords" content="C&#43;&#43;,计算机视觉,Linux," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="基于计算机视觉的虚拟鼠标"/>
-<meta name="twitter:description" content="概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络"/>
+  <meta itemprop="name" content="基于计算机视觉的虚拟鼠标">
+  <meta itemprop="description" content="概述 设计内容 设备驱动程序设计, 要求如下：
+设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络设备； 设备可以是虚拟的也可以是实际设备； 编写测试应用程序，测试对该设备的读写等操作。 功能需求 实现鼠标驱动程序，并提供接口。 通过手势控制指针的移动。 手上可用颜色块标定。 基本概念和原理 环境选择和工具 操作系统：Ubuntu(Linux) 14.04 LTS 64bit 编辑器：vim 编译器：gcc，g&#43;&#43; 调试器：gdb 开发库：opencv 其他：make 基本架构 用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。">
+  <meta itemprop="datePublished" content="2015-07-28T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2015-07-28T00:00:00+00:00">
+  <meta itemprop="wordCount" content="5463">
+  <meta itemprop="keywords" content="C&#43;&#43;,计算机视觉,Linux">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="基于计算机视觉的虚拟鼠标">
+  <meta name="twitter:description" content="概述 设计内容 设备驱动程序设计, 要求如下：
+设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络设备； 设备可以是虚拟的也可以是实际设备； 编写测试应用程序，测试对该设备的读写等操作。 功能需求 实现鼠标驱动程序，并提供接口。 通过手势控制指针的移动。 手上可用颜色块标定。 基本概念和原理 环境选择和工具 操作系统：Ubuntu(Linux) 14.04 LTS 64bit 编辑器：vim 编译器：gcc，g&#43;&#43; 调试器：gdb 开发库：opencv 其他：make 基本架构 用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +100,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +129,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -242,23 +265,23 @@
 <p>采用opencv自带的视频采集方法，从摄像头设备采集。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">CvCapture</span><span class="o">*</span> <span class="n">capture</span> <span class="o">=</span> <span class="n">cvCaptureFromCAM</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">CvCapture</span><span class="o">*</span> <span class="n">capture</span> <span class="o">=</span> <span class="n">cvCaptureFromCAM</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>监测调试</p>
 <p>用opencv的GUI套件创建窗口。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">cvNamedWindow</span><span class="p">(</span><span class="s">&#34;video&#34;</span><span class="p">);</span>
-<span class="n">cvNamedWindow</span><span class="p">(</span><span class="s">&#34;thresh&#34;</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">cvNamedWindow</span><span class="p">(</span><span class="s">&#34;video&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">cvNamedWindow</span><span class="p">(</span><span class="s">&#34;thresh&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>获取图像</li>
@@ -266,11 +289,11 @@
 <p>从相机获取的一个帧即某个时刻的一副图像。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">frame</span> <span class="o">=</span> <span class="n">cvQueryFrame</span><span class="p">(</span><span class="n">capture</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">frame</span> <span class="o">=</span> <span class="n">cvQueryFrame</span><span class="p">(</span><span class="n">capture</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>获得目标中心</li>
@@ -286,8 +309,7 @@
 <li>从相机获取的图像是正向的，而要实现的操纵鼠标应该是镜面方向的，所以应该对获取的图像进行一次翻转，采用的是opencv的函数cvFlip。</li>
 <li>
 <blockquote>
-<p><code>cvFlip(frame,NULL,1);</code></p>
-</blockquote>
+<p><code>cvFlip(frame,NULL,1);</code></p></blockquote>
 </li>
 </ul>
 </li>
@@ -297,8 +319,7 @@
 <li>这个模型中颜色的参数分别是：色调（H），饱和度（S），亮度（V），相对于RGB空间，HSV空间能够非常直观的表达色彩的明暗，色调，以及鲜艳程度，方便进行颜色之间的对比，能够更好地区分颜色范围，并且可以增大S和V的范围使得亮度和饱和度对检测的影响较小。</li>
 <li>
 <blockquote>
-<p><code>cvCvtColor(img, imgHSV, CV_BGR2HSV);</code></p>
-</blockquote>
+<p><code>cvCvtColor(img, imgHSV, CV_BGR2HSV);</code></p></blockquote>
 </li>
 </ul>
 </li>
@@ -314,8 +335,7 @@
 <ul>
 <li>
 <blockquote>
-<p><code>IplImage* imgColorThresh = GetThresholdedImage(img);</code></p>
-</blockquote>
+<p><code>IplImage* imgColorThresh = GetThresholdedImage(img);</code></p></blockquote>
 </li>
 <li>中值滤波法是一种非线性平滑技术，它将每一像素点的灰度值设置为该点某邻域窗口内的所有像素点灰度值的中值。采用中值滤波的目的是去除椒盐噪声。中值滤波是基于排序统计理论的一种能有效抑制噪声的非线性信号处理技术，中值滤波的基本原理是把数字图像或数字序列中一点的值用该点的一个邻域中各点值的中值代替，让周围的像素值接近的真实值，从而消除孤立的噪声点。方法是用某种结构的二维滑动模板，将板内像素按照像素值的大小进行排序，生成单调上升（或下降）的为二维数据序列。二维中值滤波输出为g（x,y）=med{f(x-k,y-l),(k,l∈W)} ，其中，f(x,y)，g(x,y)分别为原始图像和处理后图像。W为窗口，在这里设置窗口大小为5*5且窗口形状取矩形。</li>
 </ul>
@@ -326,8 +346,7 @@
 <li>一个开操作是一个腐蚀操作再接着一个膨胀操作使用相同的结构元素。开操作需要两个输入数据一个是要开操作的像素数据，一个是开操作的结构元素，根据开操作的要求不同，结构元素可以是圆形，正方形，矩形等，这里采用正方形。</li>
 <li>
 <blockquote>
-<p><code>cvMorphologyEx(midSmooth,openOp,NULL,NULL,CV_MOP_OPEN,1);</code></p>
-</blockquote>
+<p><code>cvMorphologyEx(midSmooth,openOp,NULL,NULL,CV_MOP_OPEN,1);</code></p></blockquote>
 </li>
 </ul>
 </li>
@@ -345,23 +364,23 @@
 <p>目标在摄像头中的坐标与屏幕的坐标不相匹配，应该进行转换，转换的方法是：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">scrX</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="kt">float</span><span class="p">)</span><span class="n">posX</span><span class="o">/</span><span class="n">frame</span><span class="o">-&gt;</span><span class="n">width</span><span class="o">*</span><span class="mi">1366</span><span class="p">);</span>
-<span class="kt">int</span> <span class="n">scrY</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="kt">float</span><span class="p">)</span><span class="n">posY</span><span class="o">/</span><span class="n">frame</span><span class="o">-&gt;</span><span class="n">height</span><span class="o">*</span><span class="mi">768</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">scrX</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="kt">float</span><span class="p">)</span><span class="n">posX</span><span class="o">/</span><span class="n">frame</span><span class="o">-&gt;</span><span class="n">width</span><span class="o">*</span><span class="mi">1366</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">scrY</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="kt">float</span><span class="p">)</span><span class="n">posY</span><span class="o">/</span><span class="n">frame</span><span class="o">-&gt;</span><span class="n">height</span><span class="o">*</span><span class="mi">768</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出到虚拟鼠标</p>
 <p>得到目标的中心点之后，需要输出到虚拟鼠标驱动，以控制鼠标的位置，在这里，需要把虚拟鼠标驱动程序创建的设备文件相对应。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>窗口显示</li>
@@ -369,11 +388,11 @@
 <p>在调试的过程中，有许多方案，每个方案又有许多步骤，这些步骤可以通过实时的窗口显示出来，以观察其效果。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">cvShowImage</span><span class="p">(</span><span class="s">&#34;video&#34;</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">cvShowImage</span><span class="p">(</span><span class="s">&#34;video&#34;</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>按键检测</li>
@@ -381,15 +400,15 @@
 <p>由于该系统是实时的，需要提供一个程序的出口，而鼠标已经被控制了，所以只能通过键盘来退出，采用ESC按钮来进行退出。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cvWaitKey</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">break</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cvWaitKey</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">break</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="虚拟鼠标驱动">虚拟鼠标驱动</h3>
 <p>虚拟鼠标驱动是连接附加程序与input子系统的纽带，将附加程序发过来的消息进行翻译转换和处理，并且转发给input子系统。</p>
@@ -412,20 +431,20 @@
 <p>注册函数，通常在驱动初始化函数中调用：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">platform_driver_register</span><span class="p">(</span><span class="k">struct</span> <span class="nc">platform_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">)</span> 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">platform_driver_register</span><span class="p">(</span><span class="k">struct</span> <span class="nc">platform_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">)</span> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>释放函数，通常在驱动退出函数调用：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="n">platform_driver_unregister</span><span class="p">(</span><span class="k">struct</span> <span class="nc">platform_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">)</span> 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">platform_driver_unregister</span><span class="p">(</span><span class="k">struct</span> <span class="nc">platform_driver</span> <span class="o">*</span><span class="n">drv</span><span class="p">)</span> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>完成相关的注册以后总线、设备、驱动的大概框架就完成了。</p>
 <p>但是这只是常用的框架，还不能在应用程序中使用。 基于平台驱动的设备驱动都是基于总线架构的，基本的实现过程与之前的简单字符设备存在较大的差别，主要的区别在驱动的初始化不在是平台设备驱动的初始化函数中实现，而是在probe函数中实现。而驱动的卸载函数则是在remove函数中实现。</p>
@@ -440,7 +459,7 @@
 其实现过程为：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -457,37 +476,37 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#ifdef REL
-</span><span class="cp"></span>	<span class="cm">/*相对移动*/</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">EV_REL</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">evbit</span><span class="p">);</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">REL_X</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">relbit</span><span class="p">);</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">REL_Y</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">relbit</span><span class="p">);</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">REL_WHEEL</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">relbit</span><span class="p">);</span>
-<span class="cp">#else
-</span><span class="cp"></span>	<span class="cm">/*绝对移动*/</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">EV_ABS</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">evbit</span><span class="p">);</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">ABS_X</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">absbit</span><span class="p">);</span>
-	<span class="n">set_bit</span><span class="p">(</span><span class="n">ABS_Y</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">absbit</span><span class="p">);</span>
-	<span class="c1">//set_bit(REL_WHEEL, cammouse_input_dev-&gt;relbit);	
-</span><span class="c1"></span>	<span class="n">input_set_abs_params</span><span class="p">(</span><span class="n">cammouse_input_dev</span><span class="p">,</span> <span class="n">ABS_X</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCR_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">//设置X范围
-</span><span class="c1"></span>	<span class="n">input_set_abs_params</span><span class="p">(</span><span class="n">cammouse_input_dev</span><span class="p">,</span> <span class="n">ABS_Y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCR_HEIGHT</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">//设置Y范围
-</span><span class="c1"></span><span class="cp">#endif
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#ifdef REL
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>	<span class="cm">/*相对移动*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">EV_REL</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">evbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">REL_X</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">relbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">REL_Y</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">relbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">REL_WHEEL</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">relbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#else
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>	<span class="cm">/*绝对移动*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">EV_ABS</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">evbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">ABS_X</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">absbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">set_bit</span><span class="p">(</span><span class="n">ABS_Y</span><span class="p">,</span> <span class="n">cammouse_input_dev</span><span class="o">-&gt;</span><span class="n">absbit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//set_bit(REL_WHEEL, cammouse_input_dev-&gt;relbit);	
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">input_set_abs_params</span><span class="p">(</span><span class="n">cammouse_input_dev</span><span class="p">,</span> <span class="n">ABS_X</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCR_WIDTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">//设置X范围
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">input_set_abs_params</span><span class="p">(</span><span class="n">cammouse_input_dev</span><span class="p">,</span> <span class="n">ABS_Y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SCR_HEIGHT</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">//设置Y范围
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="事件转换">事件转换</h4>
 <p>驱动程序通过write_cammouse函数进行事件的转换以及上报，其实现的过程有数据转换、上报坐标、上报点击事件。</p>
 <p>其原型为：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">static</span> <span class="n">ssize_t</span> <span class="n">write_cammouse</span><span class="p">(</span><span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">,</span>
-		<span class="k">struct</span> <span class="nc">device_attribute</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span>
-		<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">count</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">static</span> <span class="n">ssize_t</span> <span class="n">write_cammouse</span><span class="p">(</span><span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="k">struct</span> <span class="nc">device_attribute</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">count</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="运行效果">运行效果</h2>
 <h3 id="图像处理窗口">图像处理窗口</h3>
@@ -500,7 +519,7 @@
 <h2 id="使用说明">使用说明</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -510,15 +529,15 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#转到目录</span>
-<span class="nb">cd</span> cammouse
-<span class="c1">#编译</span>
-make
-<span class="c1">#加载驱动程序</span>
-sudo insmod cammouse
-<span class="c1">#开启附加程序</span>
-sudo ./track
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1">#转到目录</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> cammouse
+</span></span><span class="line"><span class="cl"><span class="c1">#编译</span>
+</span></span><span class="line"><span class="cl">make
+</span></span><span class="line"><span class="cl"><span class="c1">#加载驱动程序</span>
+</span></span><span class="line"><span class="cl">sudo insmod cammouse
+</span></span><span class="line"><span class="cl"><span class="c1">#开启附加程序</span>
+</span></span><span class="line"><span class="cl">sudo ./track
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>出现两个调试窗口，一个是图像处理之后的效果，一个是原图像加上目标色块运动的轨迹。</p>
 <p>同时原终端里输出坐标信息。</p>
@@ -540,7 +559,7 @@ sudo ./track
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -586,8 +605,8 @@ sudo ./track
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -605,13 +624,10 @@ sudo ./track
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -624,7 +640,7 @@ sudo ./track
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

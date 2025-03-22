@@ -4,53 +4,44 @@
     <title>数学 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E6%95%B0%E5%AD%A6/</link>
     <description>Recent content in 数学 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 24 Nov 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>快速高斯模糊综述</title>
       <link>https://lianera.github.io/post/2017/fast-gaussian/</link>
       <pubDate>Fri, 24 Nov 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/fast-gaussian/</guid>
-      <description>高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即： 其中为输入信号，为高斯函数，为输出信号，。 而数字</description>
+      <description>&lt;p&gt;高斯滤波的应用是非常广泛的，其原理是用高斯函数对原信号做卷积运算，得到一个平滑的信号。也即：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;f1.svg&#34; alt=&#34;g(x) = (f*h)(x)&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;其中&lt;img src=&#34;f2.svg&#34; alt=&#34;f(x)&#34;&gt;为输入信号，&lt;img src=&#34;f3.svg&#34; alt=&#34;h(x)&#34;&gt;为高斯函数，&lt;img src=&#34;f4.svg&#34; alt=&#34;g(x)&#34;&gt;为输出信号，&lt;img src=&#34;f5.svg&#34; alt=&#34;h(x)=\frac{1}{\sqrt{2\pi}\sigma }e^{-\frac{x^2}{2\sigma^2}}&#34;&gt;。&#xA;而数字图像是二维有限的离散函数，因此只能用离散的卷积进行近似，常用的方法有以下这些：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</title>
       <link>https://lianera.github.io/post/2017/sh-lighting-apply/</link>
       <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/sh-lighting-apply/</guid>
-      <description>上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://lianera.github.io/post/2016/sh-lighting-exp&#34;&gt;上一篇&lt;/a&gt;介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。&lt;/p&gt;&#xA;&lt;p&gt;我们知道，球谐光照实际上就是将周围的环境光采样成几个系数，然后渲染的时候用这几个系数来对光照进行还原，这种过程可以看做是对周围环境光的简化，从而简化计算过程。因为如果按照采样的方法进行渲染，每次渲染的时候都得对周围环境采样，从而都会耗费大量的计算时间。所以球谐光照的实现可以分成两个部分，一是环境光贴图的采样和积分运算，生成球谐参数，二是利用球谐参数对模型进行渲染。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>复杂多元复合函数的导数和雅克比矩阵</title>
       <link>https://lianera.github.io/post/2017/complicated-compound-derivative/</link>
       <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/complicated-compound-derivative/</guid>
-      <description>我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的</description>
+      <description>&lt;p&gt;我们知道对于复合函数的导数，可以使用链式法则求得。对于多元的复合函数来说，也可以用同样的方法求得梯度或者雅克比矩阵，但是如果复合函数涉及到的变元比较多，并且复合的层数也比较多，这样复杂度就会大大增加。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>梯度下降法及其实现</title>
       <link>https://lianera.github.io/post/2017/gradient-descent/</link>
       <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/gradient-descent/</guid>
-      <description>摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度</description>
+      <description>&lt;h2 id=&#34;摘要&#34;&gt;摘要&lt;/h2&gt;&#xA;&lt;p&gt;本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。&lt;/p&gt;&#xA;&lt;h2 id=&#34;引言&#34;&gt;引言&lt;/h2&gt;&#xA;&lt;p&gt;梯度下降法是一种最优化算法，在最优化理论里面也叫最速下降法，在常用的优化算法当中算是最简单的一种算法了。一般来说求解优化问题根据具体情况有很多其他更好的办法，不过下降法思想是其他大多数优化迭代算法的基础。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</title>
       <link>https://lianera.github.io/post/2016/sh-lighting-exp/</link>
       <pubDate>Tue, 06 Dec 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2016/sh-lighting-exp/</guid>
-      <description>简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我个人觉得如果之前对实时渲染技术不是很了解的话，球谐光照还是有一定难度的。大多数的资料都是从原理上描述球谐函数及其光照过程，而没有对具体的应用做解释，我直到真正动手实现了一遍球谐光照之后，才完全理解球谐光照具体的过程以及作用。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

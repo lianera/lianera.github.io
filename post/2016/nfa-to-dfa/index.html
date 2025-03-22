@@ -16,14 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="json的主页上，提供了number类型的符号识别过程，如下：
+图片引用：http://www.json.org/json-zh.html 实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。 首先把这个NFA规范一下，写成状态与箭头的形式：
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2016/nfa-to-dfa/" />
@@ -35,24 +37,33 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="NFA转DFA-json数字识别" />
-<meta property="og:description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2016/nfa-to-dfa/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2016-10-30T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2016-10-30T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2016/nfa-to-dfa/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="NFA转DFA-json数字识别">
+  <meta property="og:description" content="json的主页上，提供了number类型的符号识别过程，如下：
+图片引用：http://www.json.org/json-zh.html 实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。 首先把这个NFA规范一下，写成状态与箭头的形式：">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2016-10-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2016-10-30T00:00:00+00:00">
+    <meta property="article:tag" content="编译原理">
 
-<meta itemprop="name" content="NFA转DFA-json数字识别">
-<meta itemprop="description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际"><meta itemprop="datePublished" content="2016-10-30T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2016-10-30T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1562">
-<meta itemprop="keywords" content="编译原理," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="NFA转DFA-json数字识别"/>
-<meta name="twitter:description" content="json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际"/>
+  <meta itemprop="name" content="NFA转DFA-json数字识别">
+  <meta itemprop="description" content="json的主页上，提供了number类型的符号识别过程，如下：
+图片引用：http://www.json.org/json-zh.html 实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。 首先把这个NFA规范一下，写成状态与箭头的形式：">
+  <meta itemprop="datePublished" content="2016-10-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2016-10-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1564">
+  <meta itemprop="keywords" content="编译原理">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="NFA转DFA-json数字识别">
+  <meta name="twitter:description" content="json的主页上，提供了number类型的符号识别过程，如下：
+图片引用：http://www.json.org/json-zh.html 实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。 首先把这个NFA规范一下，写成状态与箭头的形式：">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +98,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +127,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -133,7 +154,7 @@
     <div class="post-content">
       <p>json的主页上，提供了number类型的符号识别过程，如下：</p>
 <p><img src="json.png" alt=""></p>
-<p>图片引用：http://www.json.org/json-zh.html 
+<p>图片引用：http://www.json.org/json-zh.html
 实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。
 首先把这个NFA规范一下，写成状态与箭头的形式：</p>
 <p><img src="1.png" alt=""></p>
@@ -151,26 +172,26 @@
 对于终结符{A,C,F,G}每两个都互不等价，因此划分成四个状态{A},{C},{F},{G}
 对于非终结符{S,B,D,E,G}，E和G不等价，原因在于E对于+/-结果为G，而G不能通过+/-，并且E,G可以通过digit转换到H，而其他都不能这样转换，所以原集合可以划分成{S,B,D},{E},{G}
 {S,B}和{D}很明显是不等价的，而对于S和B，唯一的区别就是S能够通过-转换到B，而B不能通过-
-任何状态都不能合并，所以上述的状态机已经不能再简化。 
+任何状态都不能合并，所以上述的状态机已经不能再简化。
 正规式把上面的状态机写出来就是（非通常的正则表达式语法）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">A=0|-0
-C=([1-9]|-[1-9])d*
-F=(A|C).dd*
-H=(A|C|F)(e|E)(d|(+|-)d)d*
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">A=0|-0
+</span></span><span class="line"><span class="cl">C=([1-9]|-[1-9])d*
+</span></span><span class="line"><span class="cl">F=(A|C).dd*
+</span></span><span class="line"><span class="cl">H=(A|C|F)(e|E)(d|(+|-)d)d*
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>有了以上的状态机，我们就可以实现一个number识别程序了：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -266,101 +287,101 @@ H=(A|C|F)(e|E)(d|(+|-)d)d*
 </span><span class="lnt">94
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;ctype.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">enum</span> <span class="nc">STATE</span><span class="p">{</span> <span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">H</span> <span class="p">};</span>
-
-<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">RecognizeNumber</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span><span class="p">,</span> <span class="n">STATE</span><span class="o">*</span> <span class="n">last_state</span><span class="p">)</span>
-<span class="p">{</span>	
-	<span class="n">STATE</span> <span class="n">state</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span>
-	<span class="o">*</span><span class="n">last_state</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span>
-	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
-	<span class="k">for</span> <span class="p">(;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">){</span>
-		<span class="k">const</span> <span class="kt">char</span><span class="o">&amp;</span> <span class="n">ch</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-		<span class="k">switch</span> <span class="p">(</span><span class="n">state</span><span class="p">){</span>
-		<span class="k">case</span> <span class="nl">S</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span>		<span class="n">state</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">B</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">&#39;1&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">)</span><span class="n">state</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">A</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;E&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">E</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">D</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">B</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">&#39;1&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">C</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">D</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;E&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">E</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">D</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">F</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">E</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">G</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">F</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">F</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;E&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">E</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">G</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">case</span> <span class="nl">H</span><span class="p">:</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span>
-			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-			<span class="k">break</span><span class="p">;</span>
-		<span class="k">default</span><span class="o">:</span>
-			<span class="n">assert</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-		<span class="p">}</span>
-		<span class="o">*</span><span class="n">last_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
-
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">Recognize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">STATE</span> <span class="n">state</span><span class="p">;</span>
-	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">endp</span> <span class="o">=</span> <span class="n">RecognizeNumber</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
-	<span class="kt">bool</span> <span class="n">onterminal</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">A</span> <span class="o">||</span> <span class="n">state</span> <span class="o">==</span> <span class="n">C</span> <span class="o">||</span> <span class="n">state</span> <span class="o">==</span> <span class="n">F</span> <span class="o">||</span> <span class="n">state</span> <span class="o">==</span> <span class="n">H</span><span class="p">);</span>
-	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">endp</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">onterminal</span> <span class="o">?</span> <span class="s">&#34;</span><span class="se">\t</span><span class="s">Yes&#34;</span> <span class="o">:</span> <span class="s">&#34;</span><span class="se">\t</span><span class="s">No&#34;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;0&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-1&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;23&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-3.4&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;5e6&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;5.3E+7&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-0.4e&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-0.&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;3.6a&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-3.6ea&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;053ab4&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;01&#34;</span><span class="p">);</span>
-	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;00.01&#34;</span><span class="p">);</span>
-
-	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;ctype.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">STATE</span><span class="p">{</span> <span class="n">S</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">H</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">RecognizeNumber</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">str</span><span class="p">,</span> <span class="n">STATE</span><span class="o">*</span> <span class="n">last_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>	
+</span></span><span class="line"><span class="cl">	<span class="n">STATE</span> <span class="n">state</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="o">*</span><span class="n">last_state</span> <span class="o">=</span> <span class="n">S</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">const</span> <span class="kt">char</span><span class="o">&amp;</span> <span class="n">ch</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="p">(</span><span class="n">state</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">S</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span>		<span class="n">state</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">B</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">&#39;1&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">)</span><span class="n">state</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">A</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;E&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">E</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">D</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">B</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span>	<span class="n">state</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">&#39;1&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">C</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">D</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;E&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">E</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">D</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">F</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">E</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">G</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">F</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">F</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;E&#39;</span><span class="p">)</span> <span class="n">state</span> <span class="o">=</span> <span class="n">E</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">G</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nl">H</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">			<span class="n">assert</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="o">*</span><span class="n">last_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">Recognize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">STATE</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">endp</span> <span class="o">=</span> <span class="n">RecognizeNumber</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">bool</span> <span class="n">onterminal</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">A</span> <span class="o">||</span> <span class="n">state</span> <span class="o">==</span> <span class="n">C</span> <span class="o">||</span> <span class="n">state</span> <span class="o">==</span> <span class="n">F</span> <span class="o">||</span> <span class="n">state</span> <span class="o">==</span> <span class="n">H</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">endp</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">onterminal</span> <span class="o">?</span> <span class="s">&#34;</span><span class="se">\t</span><span class="s">Yes&#34;</span> <span class="o">:</span> <span class="s">&#34;</span><span class="se">\t</span><span class="s">No&#34;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-1&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;23&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-3.4&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;5e6&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;5.3E+7&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-0.4e&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-0.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;3.6a&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;-3.6ea&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;053ab4&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;01&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Recognize</span><span class="p">(</span><span class="s">&#34;00.01&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -368,7 +389,7 @@ H=(A|C|F)(e|E)(d|(+|-)d)d*
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -412,8 +433,8 @@ H=(A|C|F)(e|E)(d|(+|-)d)d*
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -431,13 +452,10 @@ H=(A|C|F)(e|E)(d|(+|-)d)d*
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -450,7 +468,7 @@ H=(A|C|F)(e|E)(d|(+|-)d)d*
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

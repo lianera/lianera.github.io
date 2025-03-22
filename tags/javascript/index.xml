@@ -4,26 +4,23 @@
     <title>Javascript on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/javascript/</link>
     <description>Recent content in Javascript on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 26 Jul 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Magic Plain v2</title>
       <link>https://lianera.github.io/post/2017/magicplainv2/</link>
       <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/magicplainv2/</guid>
-      <description>简介 一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合Phaser游戏引擎重写了一次。 游戏设计 游戏里面</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;menu.png&#34; alt=&#34;menu&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;levels.png&#34; alt=&#34;levels&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;img src=&#34;playing.png&#34; alt=&#34;playing&#34;&gt;&lt;/td&gt;&#xA;          &lt;td&gt;&lt;img src=&#34;victory.png&#34; alt=&#34;playing&#34;&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;一个类似炸弹超人的游戏，三年多前用Java写过第一版，这段时间用JavaScript结合&lt;a href=&#34;http://phaser.io/&#34;&gt;Phaser&lt;/a&gt;游戏引擎重写了一次。&lt;/p&gt;&#xA;&lt;h2 id=&#34;游戏设计&#34;&gt;游戏设计&lt;/h2&gt;&#xA;&lt;p&gt;游戏里面总共分为四幕，分别为草原、地下城、戈壁、雪地，以底色和砖块来进行区分，每一幕都有若干关卡，最终形成一个网状路径，通过最终关卡即算胜利。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>海水截面模拟</title>
       <link>https://lianera.github.io/post/2016/ocean-sectional/</link>
       <pubDate>Fri, 29 Jan 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2016/ocean-sectional/</guid>
-      <description>介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波</description>
+      <description>&lt;p&gt;&lt;img src=&#34;ocean-sectional.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&#xA;&lt;p&gt;一个简单的海水模型截面视图的模拟。&lt;/p&gt;&#xA;&lt;h2 id=&#34;预览&#34;&gt;预览&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://lianera.github.io/assets/wave.html&#34;&gt;预览页面&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;建模&#34;&gt;建模&lt;/h2&gt;&#xA;&lt;p&gt;我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;f1.svg&#34; alt=&#34;y(t)=A*sin(2\pi ft+\phi)&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;其中&lt;img src=&#34;f2.svg&#34; alt=&#34;f&#34;&gt;是水波的振动频率，&lt;img src=&#34;f3.svg&#34; alt=&#34;\phi&#34;&gt;是相位。&#xA;假设在平面&lt;img src=&#34;f4.svg&#34; alt=&#34;\sigma&#34;&gt;上有个振动源&lt;img src=&#34;f5.svg&#34; alt=&#34;{S_i(x_i,y_i)}&#34;&gt; 和一个目标点&lt;img src=&#34;f6.svg&#34; alt=&#34;T(x_0,y_0)&#34;&gt;，我们可以推导出&lt;img src=&#34;f6.svg&#34; alt=&#34;T(x_0,y_0)&#34;&gt;位置的振动幅度为：&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,44 +4,37 @@
     <title>计算机视觉 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</link>
     <description>Recent content in 计算机视觉 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 21 Jul 2018 15:48:41 +0800</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Jul 2018 15:48:41 +0800</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DFT和DCT以及空间域的高斯滤波对比</title>
       <link>https://lianera.github.io/post/2018/frequency-gaussian/</link>
       <pubDate>Sat, 21 Jul 2018 15:48:41 +0800</pubDate>
-      
       <guid>https://lianera.github.io/post/2018/frequency-gaussian/</guid>
-      <description>最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。 离散傅里叶</description>
+      <description>&lt;p&gt;最近需要用到一个sigma很大的高斯滤波操作，如果在空间域里面用很大的kernel，其效率实在太低。对于这种情况，频率域更加适合。&lt;/p&gt;&#xA;&lt;h2 id=&#34;离散傅里叶变换dft&#34;&gt;离散傅里叶变换（DFT）&lt;/h2&gt;&#xA;&lt;p&gt;傅里叶变换本身的复杂度是O(n^2)，但是因为有了快速傅里叶变换，其复杂度可以达到O(nlogn)。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>本征图像的合成</title>
       <link>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</link>
       <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2018/synthetic-intrinsic-images/</guid>
-      <description>从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需</description>
+      <description>&lt;p&gt;从现实世界直接获取照片及其本征图像基本上是不可能的事情，即使是现有最好的本征图像分解方法，分解出来的结果也很难让人满意。但是有个时候又经常需要用到比较准确的本征图像，最好的办法还是用3D软件来进行渲染。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>RGB-D数据集的合成</title>
       <link>https://lianera.github.io/post/2017/synthetic-rgbd/</link>
       <pubDate>Sun, 19 Mar 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/synthetic-rgbd/</guid>
-      <description>在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RG</description>
+      <description>&lt;p&gt;在做三维重建的时候，经常需要用到一些RGB-D数据集来进行实验。而很多时候需要比较特殊的RGB-D数据，通过Kinect等深度设备获取的RGB-D数据往往很难达到理想的要求，而使用合成数据集则能够任意的构造数据集。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>基于计算机视觉的虚拟鼠标</title>
       <link>https://lianera.github.io/post/2015/cv-mouse/</link>
       <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2015/cv-mouse/</guid>
-      <description>概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络</description>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;h3 id=&#34;设计内容&#34;&gt;设计内容&lt;/h3&gt;&#xA;&lt;p&gt;设备驱动程序设计, 要求如下：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;设计Windows XP或者Linux操作系统下的设备驱动程序；&lt;/li&gt;&#xA;&lt;li&gt;设备类型可以是字符设备、块设备或者网络设备；&lt;/li&gt;&#xA;&lt;li&gt;设备可以是虚拟的也可以是实际设备；&lt;/li&gt;&#xA;&lt;li&gt;编写测试应用程序，测试对该设备的读写等操作。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;功能需求&#34;&gt;功能需求&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;实现鼠标驱动程序，并提供接口。&lt;/li&gt;&#xA;&lt;li&gt;通过手势控制指针的移动。&lt;/li&gt;&#xA;&lt;li&gt;手上可用颜色块标定。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;基本概念和原理&#34;&gt;基本概念和原理&lt;/h2&gt;&#xA;&lt;h3 id=&#34;环境选择和工具&#34;&gt;环境选择和工具&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;操作系统：Ubuntu(Linux) 14.04 LTS 64bit&lt;/li&gt;&#xA;&lt;li&gt;编辑器：vim&lt;/li&gt;&#xA;&lt;li&gt;编译器：gcc，g++&lt;/li&gt;&#xA;&lt;li&gt;调试器：gdb&lt;/li&gt;&#xA;&lt;li&gt;开发库：opencv&lt;/li&gt;&#xA;&lt;li&gt;其他：make&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;基本架构&#34;&gt;基本架构&lt;/h3&gt;&#xA;&lt;p&gt;用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

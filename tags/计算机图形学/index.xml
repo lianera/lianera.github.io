@@ -4,62 +4,51 @@
     <title>计算机图形学 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</link>
     <description>Recent content in 计算机图形学 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 25 Jul 2018 10:48:41 +0800</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>快速三线性插值</title>
       <link>https://lianera.github.io/post/2018/fast-trilinear-interpolation/</link>
       <pubDate>Wed, 25 Jul 2018 10:48:41 +0800</pubDate>
-      
       <guid>https://lianera.github.io/post/2018/fast-trilinear-interpolation/</guid>
-      <description>最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小</description>
+      <description>&lt;p&gt;最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>LtRay 开发备忘录</title>
       <link>https://lianera.github.io/post/2017/ltray-memo/</link>
       <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/ltray-memo/</guid>
-      <description>数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</description>
+      <description>&lt;h1 id=&#34;数学工具&#34;&gt;数学工具&lt;/h1&gt;&#xA;&lt;p&gt;工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换也是少不了的，所以最基本的数学工具就是Vector、Point、Matrix。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</title>
       <link>https://lianera.github.io/post/2017/sh-lighting-apply/</link>
       <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/sh-lighting-apply/</guid>
-      <description>上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://lianera.github.io/post/2016/sh-lighting-exp&#34;&gt;上一篇&lt;/a&gt;介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。&lt;/p&gt;&#xA;&lt;p&gt;我们知道，球谐光照实际上就是将周围的环境光采样成几个系数，然后渲染的时候用这几个系数来对光照进行还原，这种过程可以看做是对周围环境光的简化，从而简化计算过程。因为如果按照采样的方法进行渲染，每次渲染的时候都得对周围环境采样，从而都会耗费大量的计算时间。所以球谐光照的实现可以分成两个部分，一是环境光贴图的采样和积分运算，生成球谐参数，二是利用球谐参数对模型进行渲染。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>LtRay的艰难重构</title>
       <link>https://lianera.github.io/post/2017/ltray-refactoring/</link>
       <pubDate>Wed, 15 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/ltray-refactoring/</guid>
-      <description>从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</description>
+      <description>&lt;p&gt;从去年九月份开始，我就在着手实现一个光线跟踪器：&lt;a href=&#34;https://github.com/lianera/LtRay&#34;&gt;LtRay&lt;/a&gt;。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的图元比如球体、平面等进行渲染，并且还具有反射、阴影效果。但是越到后面，开发的进度就越来越慢了，近两个月几乎就是做些填补工作。现在每改一个地方，几乎就得花费一两天的时间来修复相关的代码。前不久刚定下&lt;a href=&#34;https://github.com/lianera/LtRay/releases/tag/v0.1.7&#34;&gt;v0.1.7&lt;/a&gt;版本，渲染的效果如下：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;ltray.png&#34; alt=&#34;ltray&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;而这跟我两个月前的版本相比，几乎就只是把光线跟踪的核心分离出来，另外把场景文件的格式从json改成了toml。每遇到一个问题，我都在纠结到底该哪一种方式来解决，实际上，这种犹豫耗费了大量的时间。摆在我面前的方法仿佛有无数种，但就是没法确定哪一种是最好的，结果就是反复修改来修改去，比如我遇到的有这些坑：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</title>
       <link>https://lianera.github.io/post/2016/sh-lighting-exp/</link>
       <pubDate>Tue, 06 Dec 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2016/sh-lighting-exp/</guid>
-      <description>简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我个人觉得如果之前对实时渲染技术不是很了解的话，球谐光照还是有一定难度的。大多数的资料都是从原理上描述球谐函数及其光照过程，而没有对具体的应用做解释，我直到真正动手实现了一遍球谐光照之后，才完全理解球谐光照具体的过程以及作用。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>海水截面模拟</title>
       <link>https://lianera.github.io/post/2016/ocean-sectional/</link>
       <pubDate>Fri, 29 Jan 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2016/ocean-sectional/</guid>
-      <description>介绍 一个简单的海水模型截面视图的模拟。 预览 预览页面 建模 我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成： 其中是水波</description>
+      <description>&lt;p&gt;&lt;img src=&#34;ocean-sectional.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&#xA;&lt;p&gt;一个简单的海水模型截面视图的模拟。&lt;/p&gt;&#xA;&lt;h2 id=&#34;预览&#34;&gt;预览&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://lianera.github.io/assets/wave.html&#34;&gt;预览页面&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;建模&#34;&gt;建模&lt;/h2&gt;&#xA;&lt;p&gt;我们假设水的传播是一个振动模型（实际上并不是，为了简便），它的函数可以写成：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;f1.svg&#34; alt=&#34;y(t)=A*sin(2\pi ft+\phi)&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;其中&lt;img src=&#34;f2.svg&#34; alt=&#34;f&#34;&gt;是水波的振动频率，&lt;img src=&#34;f3.svg&#34; alt=&#34;\phi&#34;&gt;是相位。&#xA;假设在平面&lt;img src=&#34;f4.svg&#34; alt=&#34;\sigma&#34;&gt;上有个振动源&lt;img src=&#34;f5.svg&#34; alt=&#34;{S_i(x_i,y_i)}&#34;&gt; 和一个目标点&lt;img src=&#34;f6.svg&#34; alt=&#34;T(x_0,y_0)&#34;&gt;，我们可以推导出&lt;img src=&#34;f6.svg&#34; alt=&#34;T(x_0,y_0)&#34;&gt;位置的振动幅度为：&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,17 +4,16 @@
     <title>汇编 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E6%B1%87%E7%BC%96/</link>
     <description>Recent content in 汇编 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 24 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E6%B1%87%E7%BC%96/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E6%B1%87%E7%BC%96/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>反汇编Minecraft基岩服务端，隐藏地图种子</title>
       <link>https://lianera.github.io/post/2019/bedrock-mc-crack/</link>
       <pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2019/bedrock-mc-crack/</guid>
-      <description>应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/down</description>
+      <description>&lt;p&gt;应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：&lt;a href=&#34;https://www.minecraft.net/zh-hans/download/server/bedrock/&#34;&gt;https://www.minecraft.net/zh-hans/download/server/bedrock/&lt;/a&gt;&#xA;然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

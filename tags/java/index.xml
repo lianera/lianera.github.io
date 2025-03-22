@@ -4,44 +4,37 @@
     <title>Java on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/java/</link>
     <description>Recent content in Java on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于事件驱动的逻辑电路仿真实现</title>
       <link>https://lianera.github.io/post/2020/logic-sim/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2020/logic-sim/</guid>
-      <description>数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写</description>
+      <description>&lt;h2 id=&#34;数据结构&#34;&gt;数据结构&lt;/h2&gt;&#xA;&lt;p&gt;首先观察一个简单的电路：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;bVbHM2B.webp&#34; alt=&#34;image.png&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;不难发现，根据信号的传导方向，可以将其转换成一个有向图：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;bVbHM2L.webp&#34; alt=&#34;image.png&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;其中小写字母的顶点表示导线的结点，拥有电平状态，大写字母表示逻辑门，拥有逻辑运算的功能。&#xA;注意导线结点不能只作为边，因为可能会有多个逻辑门的端口连在一起，比如：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Sudoku</title>
       <link>https://lianera.github.io/post/2015/sudoku/</link>
       <pubDate>Sat, 10 Jan 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2015/sudoku/</guid>
-      <description>简介 数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;sudoku.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;sudoku2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;sudoku3.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;数独程序，解题的目的是根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫内的数字均含1-9，不重复。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Game2048</title>
       <link>https://lianera.github.io/post/2014/game2048/</link>
       <pubDate>Thu, 18 Sep 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2014/game2048/</guid>
-      <description>简介 这是一个用Java写的实现2048游戏的程序，加入了人工智能，能够自动运行。 技术 项目引入MVC架构的思想，将逻辑与界面分离。这个程序的难</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;game2048.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;game2048_1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是一个用Java写的实现2048游戏的程序，加入了人工智能，能够自动运行。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;项目引入MVC架构的思想，将逻辑与界面分离。这个程序的难点在于AI算法，刚开始我的想法是用Alpha-Beta剪枝算法，但是效果不是很好，后面又改用了贪婪算法，虽然贪婪算法简单，但是结果并没有明显变差，重要的是评估函数的设定。评估函数的指标设置有：总的分数、总的步数、空格数、最大的离中心的距离、相邻数之差。经过多次的实验和指标权重的调整，使得评估的结果有了提升。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Magic Plain</title>
       <link>https://lianera.github.io/post/2013/magicplain/</link>
       <pubDate>Tue, 31 Dec 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2013/magicplain/</guid>
-      <description>简介 一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;magicplain1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;magicplain2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;img src=&#34;magicplain3.png&#34; alt=&#34;&#34;&gt;&lt;/td&gt;&#xA;          &lt;td&gt;&lt;img src=&#34;magicplain4.png&#34; alt=&#34;&#34;&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;一个用Java写的2D的游戏，类似于炸弹超人，不过比炸弹超人内容更加丰富。不仅道具的种类很多，而且炸弹爆炸效果也是多种多样的。游戏设置了多个场景，十六张地图，每个场景的道具都不相同。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

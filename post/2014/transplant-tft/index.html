@@ -16,14 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路," /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:
+声明 这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2014/transplant-tft/" />
@@ -35,24 +37,34 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="TFT液晶屏Linux下的移植" />
-<meta property="og:description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路," />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2014/transplant-tft/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2014-05-14T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-05-14T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2014/transplant-tft/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="TFT液晶屏Linux下的移植">
+  <meta property="og:description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:
+声明 这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2014-05-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2014-05-14T00:00:00+00:00">
+    <meta property="article:tag" content="硬件">
+    <meta property="article:tag" content="Linux">
 
-<meta itemprop="name" content="TFT液晶屏Linux下的移植">
-<meta itemprop="description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,"><meta itemprop="datePublished" content="2014-05-14T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2014-05-14T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="6197">
-<meta itemprop="keywords" content="硬件,Linux," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="TFT液晶屏Linux下的移植"/>
-<meta name="twitter:description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,"/>
+  <meta itemprop="name" content="TFT液晶屏Linux下的移植">
+  <meta itemprop="description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:
+声明 这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡">
+  <meta itemprop="datePublished" content="2014-05-14T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2014-05-14T00:00:00+00:00">
+  <meta itemprop="wordCount" content="6197">
+  <meta itemprop="keywords" content="硬件,Linux">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TFT液晶屏Linux下的移植">
+  <meta name="twitter:description" content="预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:
+声明 这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +99,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +128,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -146,14 +168,16 @@
       <h2 id="预览">预览</h2>
 <p>手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:</p>
 <table>
-<thead>
-<tr>
-<th><img src="tft_7.jpg" alt=""></th>
-<th><img src="tft_0.jpg" alt=""></th>
-<th><img src="tft_10.jpg" alt=""></th>
-<th><img src="tft_6.jpg" alt=""></th>
-</tr>
-</thead>
+  <thead>
+      <tr>
+          <th><img src="tft_7.jpg" alt=""></th>
+          <th><img src="tft_0.jpg" alt=""></th>
+          <th><img src="tft_10.jpg" alt=""></th>
+          <th><img src="tft_6.jpg" alt=""></th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
 </table>
 <h2 id="声明">声明</h2>
 <p>这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡</p>
@@ -198,11 +222,11 @@
 <p>一､安装REPO_URI 支持</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo wget https://raw.github.com/Hexxeh/rpi-update/master/rpi-update -O /usr/bin/rpi-update <span class="o">&amp;&amp;</span> sudo chmod +x /usr/bin/rpi-update
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo wget https://raw.github.com/Hexxeh/rpi-update/master/rpi-update -O /usr/bin/rpi-update <span class="o">&amp;&amp;</span> sudo chmod +x /usr/bin/rpi-update
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>二､启用SPI (采用并行传输的这一步可以省略)</p>
 <p>打开/etc/modprobe.d/raspi-blacklist.conf,(nano或者vi､vim,su权限),把blacklist spi-bcm2708注释掉或者去掉｡就像这样:</p>
@@ -212,15 +236,15 @@
 <p>原文提供了两种安装方式,一种作为可加载卸载的模块安装,一种编译到了内核,这里建议用可加载卸载的方式安装</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo <span class="nv">REPO_URI</span><span class="o">=</span>https://github.com/notro/rpi-firmware rpi-update
-<span class="c1">#重启 </span>
-sudo reboot
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo <span class="nv">REPO_URI</span><span class="o">=</span>https://github.com/notro/rpi-firmware rpi-update
+</span></span><span class="line"><span class="cl"><span class="c1">#重启 </span>
+</span></span><span class="line"><span class="cl">sudo reboot
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="整合">整合</h2>
 <p>一､连线</p>
@@ -231,30 +255,30 @@ sudo reboot
 <p>对于串行的SPI,把SPI对应的接口连接好</p>
 <p>连接方法如下(标号不一定相同,对应功能连接)</p>
 <table>
-<thead>
-<tr>
-<th>树莓派</th>
-<th>TFT</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SCLK</td>
-<td>SCK</td>
-<td>时钟信号</td>
-</tr>
-<tr>
-<td>MOSI</td>
-<td>SDA</td>
-<td>数据线</td>
-</tr>
-<tr>
-<td>CE0</td>
-<td>CS</td>
-<td>片选线</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>树莓派</th>
+          <th>TFT</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>SCLK</td>
+          <td>SCK</td>
+          <td>时钟信号</td>
+      </tr>
+      <tr>
+          <td>MOSI</td>
+          <td>SDA</td>
+          <td>数据线</td>
+      </tr>
+      <tr>
+          <td>CE0</td>
+          <td>CS</td>
+          <td>片选线</td>
+      </tr>
+  </tbody>
 </table>
 <p>并行的根据对应型号的来,就不赘述了｡</p>
 <p>除此之外,TFT还需要一些额外的线,比如RESET(复位)､RS(或DC或A0,寄存器选择线,用来选择数据寄存器还是指令寄存器)等,这些不同的型号接线是不同的,参考对应型号的接线方法｡如果不知道怎么接线,这里有一个方法用来显示树莓派对应的GPIO所作的功能,下层楼会说｡先按照这层楼的做｡</p>
@@ -262,79 +286,79 @@ sudo reboot
 <p>(1)对于很常用的TFT主控IC(st7735r, hx8340bn, ili9225, ili9320, ili9325, ili9341, ssd1289, ssd1351),先用以下的方法注册:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo modprobe fbtft_device <span class="nv">name</span><span class="o">=</span>flexfb 加参数
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo modprobe fbtft_device <span class="nv">name</span><span class="o">=</span>flexfb 加参数
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>参数参考https://github.com/notro/fbtft/wiki/fbtft_device</p>
 <p>对于大多数而言参数可以采用默认值,但是建议把speed调低到4000000~8000000,或者更低,这样既能保证显示速度,又不会出现莫名其妙的不正常｡</p>
 <p>再用以下方法加载:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>主控IC的型号 加其他参数
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>主控IC的型号 加其他参数
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>参考https://github.com/notro/fbtft/wiki/flexfb</p>
 <p>如果你看到TFT显示屏变成黑屏了,那么祝贺你,离成功已经很快了｡</p>
 <p>(2)对于特定的屏幕(Adafruit 1.3,HY28A,HY28B,fb_hx8353d,Freetronics,ITDB02,Watterott MI0283QT-2,Watterott MI0283QT-9A,Nokia 5110/3310,ILSoft OLEDpioled,Sainsmart 1.8,Sainsmart 3.2,ssd1331,tinylcd.com,tm022hdh26)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo modprobe fbtft_device <span class="nv">name</span><span class="o">=</span>屏幕型号
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo modprobe fbtft_device <span class="nv">name</span><span class="o">=</span>屏幕型号
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>(3)没在支持列表里面,但是知道初始化方法:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo modprobe fbtft_device <span class="nv">name</span><span class="o">=</span>flexfb 加参数<span class="o">(</span>参考<span class="o">(</span>1<span class="o">))</span>
-sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>定位方法相同的芯片 <span class="nv">width</span><span class="o">=</span>宽 <span class="nv">height</span><span class="o">=</span>高 <span class="nv">buswidth</span><span class="o">=</span>数据线位数 <span class="nv">regwidth</span><span class="o">=</span>寄存器位数 <span class="nv">init</span><span class="o">=</span>初始化代码<span class="o">(</span>-1代表命令开始,-2代表延时毫秒数,-3代表末尾<span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo modprobe fbtft_device <span class="nv">name</span><span class="o">=</span>flexfb 加参数<span class="o">(</span>参考<span class="o">(</span>1<span class="o">))</span>
+</span></span><span class="line"><span class="cl">sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>定位方法相同的芯片 <span class="nv">width</span><span class="o">=</span>宽 <span class="nv">height</span><span class="o">=</span>高 <span class="nv">buswidth</span><span class="o">=</span>数据线位数 <span class="nv">regwidth</span><span class="o">=</span>寄存器位数 <span class="nv">init</span><span class="o">=</span>初始化代码<span class="o">(</span>-1代表命令开始,-2代表延时毫秒数,-3代表末尾<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里有一个漏洞,(害我调试了一整天才找到原因:-( 后面会说 ),不能用setaddrwin表示定位方法｡</p>
 <p>不知GPIO对应功能?</p>
 <p>如果不知如何接线可以先用上一楼的方法加载,然后查看日志:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">dmesg
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">dmesg
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这时会显示从开机以来的模块日志,如果想要去掉多余的信息可以这样</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">dmesg<span class="p">|</span>grep <span class="s2">&#34;fbtft|flexfb&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">dmesg<span class="p">|</span>grep <span class="s2">&#34;fbtft|flexfb&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我的显示如下:</p>
 <p><img src="tft_3.gif" alt="img"></p>
 <p>这时,所用到的GPIO就显示出来了:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">GPIOS used by ‘flexfb&#39;:
-‘reset’ = GPIO25
-‘dc’ = GPIO24
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GPIOS used by ‘flexfb&#39;:
+</span></span><span class="line"><span class="cl">‘reset’ = GPIO25
+</span></span><span class="line"><span class="cl">‘dc’ = GPIO24
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这说明GPIO25是复位线,GPIO24是寄存器选择线(Data/Command,也叫RS､A0)</p>
 <p>除此之外,注意一下是不是用的SPI0:</p>
@@ -346,11 +370,11 @@ sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>定位�
 <p>用这个</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">con2fbmap <span class="m">1</span> <span class="m">1</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">con2fbmap <span class="m">1</span> <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这时没错的话,屏幕上就显示字符界面了｡</p>
 <p>如果屏幕又变白了或者显示一段时间后变白,那么多半是加载模块的时候speed太高了,把调低点吧,就算是500000其实刷新速度也不低了｡</p>
@@ -359,26 +383,26 @@ sudo modprobe flexfb <span class="nv">chip</span><span class="o">=</span>定位�
 <p>参考https://github.com/notro/fbtft/wiki/Testing</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apt-get install libnetpbm10-dev
-git clone https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git
-<span class="nb">cd</span> fbtest
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">apt-get install libnetpbm10-dev
+</span></span><span class="line"><span class="cl">git clone https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> fbtest
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>打开 fb.c 注释或去掉 #include &lt;asm/page.h&gt;</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">make
-./fbtest –fbdev /dev/fb1
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">make
+</span></span><span class="line"><span class="cl">./fbtest –fbdev /dev/fb1
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>正常的话,你首先会看到黑白的格子,然后是圆形正方形测试,接着是颜色和图形测试,正如一楼显示的图像｡</p>
 <p>三､窗口测试</p>
@@ -387,11 +411,11 @@ git clone https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git
 <p>然后</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">FRAMEBUFFER=/dev/fb1 startx
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">FRAMEBUFFER=/dev/fb1 startx
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>一会儿之后你就可以看到桌面了!</p>
 <h2 id="技巧">技巧</h2>
@@ -399,24 +423,24 @@ git clone https://git.kernel.org/pub/scm/linux/kernel/git/geert/fbtest.git
 <p>​</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo rmmod flexfb
-sudo rmmod fbtft_device
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo rmmod flexfb
+</span></span><span class="line"><span class="cl">sudo rmmod fbtft_device
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>显示调试信息</p>
 <p>加载的时候加debug=1~7的数字,等级越高显示越详细,信息写入到日志中,用dmesg查看!</p>
 <p>或者也可用</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;5&#34;</span> &gt; /sys/class/graphics/fb1/debug
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;5&#34;</span> &gt; /sys/class/graphics/fb1/debug
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>开机自动加载</p>
 <p>既然要作为显示器,当然得开机就自动加载了!</p>
@@ -463,17 +487,17 @@ sudo rmmod fbtft_device
 <p>这下好办了,慢慢读程序吧,framebuffer映射过程都在fbtft-core.c中,从fbtft_mkdirty函数开始,没修改RS,fbtft_deferred_io也没修改,fbtft_update_display中看出了端倪!其中调用了set_addr_win函数(用来定位的函数),这个肯定是要修改指令寄存器的,但是可惜第一次忽略了,因为程序是这样写的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">if</span> <span class="p">(</span><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span><span class="p">)</span><span class="err">…</span><span class="n">set_addr_win</span><span class="p">(</span><span class="err">…</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span><span class="p">)</span><span class="err">…</span><span class="n">set_addr_win</span><span class="p">(</span><span class="err">…</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>翻到flexfb.c文件</p>
 <p>set_addr_win的定义中又有这句</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -492,30 +516,30 @@ sudo rmmod fbtft_device
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">switch</span> <span class="p">(</span><span class="n">setaddrwin</span><span class="p">)</span> <span class="p">{</span>
-<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
-<span class="cm">/* use default */</span>
-<span class="k">break</span><span class="p">;</span>
-<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">flexfb_set_addr_win_1</span><span class="p">;</span>
-<span class="k">break</span><span class="p">;</span>
-<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">flexfb_set_addr_win_2</span><span class="p">;</span>
-<span class="k">break</span><span class="p">;</span>
-<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">set_addr_win_3</span><span class="p">;</span>
-<span class="k">break</span><span class="p">;</span>
-<span class="k">default</span><span class="o">:</span>
-<span class="n">dev_err</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="s">&#34;argument ‘setaddrwin&#39;: unknown value %d.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">setaddrwin</span><span class="p">);</span>
-<span class="k">return</span> <span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">switch</span> <span class="p">(</span><span class="n">setaddrwin</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* use default */</span>
+</span></span><span class="line"><span class="cl"><span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">flexfb_set_addr_win_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">flexfb_set_addr_win_2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">set_addr_win_3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">dev_err</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="s">&#34;argument ‘setaddrwin&#39;: unknown value %d.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">setaddrwin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我想,我没有指定setaddrwin,应该就跳过了吧!</p>
 <p>然后又是各种毫无头绪的查错,最后查来查去硬是没找到原因,只好又查到了了set_addr_win,好吧,虽然我没指定setaddrwin,要是setaddrwin没初始化呢?所以又查setaddrwin的来龙去脉,最后定位到了这里(flexfb.c)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -527,23 +551,23 @@ sudo rmmod fbtft_device
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">chip</span><span class="p">,</span> <span class="s">&#34;ili9225&#34;</span><span class="p">))</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">width</span><span class="p">)</span>
-	<span class="n">width</span> <span class="o">=</span> <span class="mi">176</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">height</span><span class="p">)</span>
-	<span class="n">height</span> <span class="o">=</span> <span class="mi">220</span><span class="p">;</span>
-	<span class="n">setaddrwin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="n">regwidth</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">init_num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">initp</span> <span class="o">=</span> <span class="n">ili9225_init</span><span class="p">;</span>
-	<span class="n">initp_num</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">ili9225_init</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">chip</span><span class="p">,</span> <span class="s">&#34;ili9225&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">width</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">width</span> <span class="o">=</span> <span class="mi">176</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">height</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">height</span> <span class="o">=</span> <span class="mi">220</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">setaddrwin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">regwidth</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">init_num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">initp</span> <span class="o">=</span> <span class="n">ili9225_init</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">initp_num</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">ili9225_init</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>咋看也没错啊,setaddrwin = 0;不就跳过了?</p>
 <p>等等,看看par-&gt;fbtftops.set_addr_win是怎么初始化的(fbtft-core.c)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -551,18 +575,18 @@ sudo rmmod fbtft_device
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cm">/* default fbtft operations */</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">write</span> <span class="o">=</span> <span class="n">fbtft_write_spi</span><span class="p">;</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">read</span> <span class="o">=</span> <span class="n">fbtft_read_spi</span><span class="p">;</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">write_vmem</span> <span class="o">=</span> <span class="n">fbtft_write_vmem16_bus8</span><span class="p">;</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">write_register</span> <span class="o">=</span> <span class="n">fbtft_write_reg8_bus8</span><span class="p">;</span>
-<span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">fbtft_set_addr_win</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* default fbtft operations */</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">write</span> <span class="o">=</span> <span class="n">fbtft_write_spi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">read</span> <span class="o">=</span> <span class="n">fbtft_read_spi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">write_vmem</span> <span class="o">=</span> <span class="n">fbtft_write_vmem16_bus8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">write_register</span> <span class="o">=</span> <span class="n">fbtft_write_reg8_bus8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">par</span><span class="o">-&gt;</span><span class="n">fbtftops</span><span class="p">.</span><span class="n">set_addr_win</span> <span class="o">=</span> <span class="n">fbtft_set_addr_win</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>看到了没,我原来以为fbtftops.set_addr_win初始是NULL,所以就直接跳过,没想到它竟然是初始化为fbtft_set_addr_win函数,好吧,找到fbtft_set_addr_win函数的定义一看,吓了一跳,果然是这东西作祟!</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -577,25 +601,25 @@ sudo rmmod fbtft_device
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">fbtft_set_addr_win</span><span class="p">(</span><span class="k">struct</span> <span class="nc">fbtft_par</span> <span class="o">*</span><span class="n">par</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xs</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xe</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ye</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">fbtft_par_dbg</span><span class="p">(</span><span class="n">DEBUG_SET_ADDR_WIN</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span>
-	<span class="s">&#34;%s(xs=%d, ys=%d, xe=%d, ye=%d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__func__</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xe</span><span class="p">,</span> <span class="n">ye</span><span class="p">);</span>
-	<span class="cm">/* Column address set */</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x2A</span><span class="p">,</span>
-	<span class="p">(</span><span class="n">xs</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">xs</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="p">(</span><span class="n">xe</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">xe</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">);</span>
-	<span class="cm">/* Row adress set */</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x2B</span><span class="p">,</span>
-	<span class="p">(</span><span class="n">ys</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">ys</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="p">(</span><span class="n">ye</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">ye</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">);</span>
-	<span class="cm">/* Memory write */</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fbtft_set_addr_win</span><span class="p">(</span><span class="k">struct</span> <span class="nc">fbtft_par</span> <span class="o">*</span><span class="n">par</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xs</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xe</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ye</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fbtft_par_dbg</span><span class="p">(</span><span class="n">DEBUG_SET_ADDR_WIN</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;%s(xs=%d, ys=%d, xe=%d, ye=%d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__func__</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xe</span><span class="p">,</span> <span class="n">ye</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="cm">/* Column address set */</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x2A</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="n">xs</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">xs</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="p">(</span><span class="n">xe</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">xe</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="cm">/* Row adress set */</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x2B</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">(</span><span class="n">ys</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">ys</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="p">(</span><span class="n">ye</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">ye</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="cm">/* Memory write */</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可恶的是,不仅修改了指令寄存器,而且把功能号写成常数0x2C!哎哟,我的屏幕写GRAM的功能号可是0x22(数据手册上有详细资料),好吧我被打败了,修改程序再编译太麻烦了,先看看其他几个case对应的函数,其中case 1:的flexfb_set_addr_win_1是这样的:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -623,38 +647,38 @@ sudo rmmod fbtft_device
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cm">/* ili9320, ili9325 */</span>
-<span class="k">static</span> <span class="kt">void</span> <span class="nf">flexfb_set_addr_win_1</span><span class="p">(</span><span class="k">struct</span> <span class="nc">fbtft_par</span> <span class="o">*</span><span class="n">par</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xs</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xe</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ye</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">fbtft_par_dbg</span><span class="p">(</span><span class="n">DEBUG_SET_ADDR_WIN</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="s">&#34;%s(xs=%d, ys=%d, xe=%d, ye=%d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__func__</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xe</span><span class="p">,</span> <span class="n">ye</span><span class="p">);</span>
-	<span class="k">switch</span> <span class="p">(</span><span class="n">par</span><span class="o">-&gt;</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">var</span><span class="p">.</span><span class="n">rotate</span><span class="p">)</span> <span class="p">{</span>
-	<span class="cm">/* R20h = Horizontal GRAM Start Address */</span>
-	<span class="cm">/* R21h = Vertical GRAM Start Address */</span>
-	<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">xs</span><span class="p">);</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">ys</span><span class="p">);</span>
-	<span class="k">break</span><span class="p">;</span>
-	<span class="k">case</span> <span class="mi">180</span><span class="o">:</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span><span class="p">);</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">ys</span><span class="p">);</span>
-	<span class="k">break</span><span class="p">;</span>
-	<span class="k">case</span> <span class="mi">270</span><span class="o">:</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">ys</span><span class="p">);</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">xs</span><span class="p">);</span>
-	<span class="k">break</span><span class="p">;</span>
-	<span class="k">case</span> <span class="mi">90</span><span class="o">:</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">ys</span><span class="p">);</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span><span class="p">);</span>
-	<span class="k">break</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0022</span><span class="p">);</span> <span class="cm">/* Write Data to GRAM */</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* ili9320, ili9325 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">static</span> <span class="kt">void</span> <span class="nf">flexfb_set_addr_win_1</span><span class="p">(</span><span class="k">struct</span> <span class="nc">fbtft_par</span> <span class="o">*</span><span class="n">par</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xs</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ys</span><span class="p">,</span> <span class="kt">int</span> <span class="n">xe</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ye</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fbtft_par_dbg</span><span class="p">(</span><span class="n">DEBUG_SET_ADDR_WIN</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="s">&#34;%s(xs=%d, ys=%d, xe=%d, ye=%d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">__func__</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xe</span><span class="p">,</span> <span class="n">ye</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">switch</span> <span class="p">(</span><span class="n">par</span><span class="o">-&gt;</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">var</span><span class="p">.</span><span class="n">rotate</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="cm">/* R20h = Horizontal GRAM Start Address */</span>
+</span></span><span class="line"><span class="cl">	<span class="cm">/* R21h = Vertical GRAM Start Address */</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">xs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">ys</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="mi">180</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">ys</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="mi">270</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">ys</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">xs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="mi">90</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0020</span><span class="p">,</span> <span class="n">ys</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0021</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">write_reg</span><span class="p">(</span><span class="n">par</span><span class="p">,</span> <span class="mh">0x0022</span><span class="p">);</span> <span class="cm">/* Write Data to GRAM */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>天啊!这正是ili9225的定位方法,看,最后还贴心地把寄存器修改到了0x22,我瞬间明白了,只需要在加载flexfb的时候把setadderwin改成1就行,一试,不行,看程序:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -667,18 +691,18 @@ sudo rmmod fbtft_device
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">chip</span><span class="p">,</span> <span class="s">&#34;ili9225&#34;</span><span class="p">))</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">width</span><span class="p">)</span>
-	<span class="n">width</span> <span class="o">=</span> <span class="mi">176</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">height</span><span class="p">)</span>
-	<span class="n">height</span> <span class="o">=</span> <span class="mi">220</span><span class="p">;</span>
-	<span class="n">setaddrwin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="n">regwidth</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">init_num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-	<span class="n">initp</span> <span class="o">=</span> <span class="n">ili9225_init</span><span class="p">;</span>
-	<span class="n">initp_num</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">ili9225_init</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">chip</span><span class="p">,</span> <span class="s">&#34;ili9225&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">width</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">width</span> <span class="o">=</span> <span class="mi">176</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">height</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">height</span> <span class="o">=</span> <span class="mi">220</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">setaddrwin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">regwidth</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">init_num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">initp</span> <span class="o">=</span> <span class="n">ili9225_init</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">initp_num</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">ili9225_init</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>setaddrwin 就是一个摆设好吧,真不知道为什么没像width一样加个if｡</p>
 <p>好啦,原因终于找到了,虽然setaddrwin 是个摆设,但是还是有其他方法的,最简单的就是用setaddrwin =1的chip来初始化,只不过加载的时候需要写初始化代码和大小信息,这个简单,果然,这样一弄成功显示了｡真是汗颜了,setaddrwin = 1;写成setaddrwin = 0;一个1写错害我调试了一整天!</p>
@@ -688,7 +712,7 @@ sudo rmmod fbtft_device
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -733,8 +757,8 @@ sudo rmmod fbtft_device
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -752,13 +776,10 @@ sudo rmmod fbtft_device
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -771,7 +792,7 @@ sudo rmmod fbtft_device
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

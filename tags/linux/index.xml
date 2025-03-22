@@ -4,26 +4,23 @@
     <title>Linux on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/linux/</link>
     <description>Recent content in Linux on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 28 Jul 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Jul 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于计算机视觉的虚拟鼠标</title>
       <link>https://lianera.github.io/post/2015/cv-mouse/</link>
       <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2015/cv-mouse/</guid>
-      <description>概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络</description>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;h3 id=&#34;设计内容&#34;&gt;设计内容&lt;/h3&gt;&#xA;&lt;p&gt;设备驱动程序设计, 要求如下：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;设计Windows XP或者Linux操作系统下的设备驱动程序；&lt;/li&gt;&#xA;&lt;li&gt;设备类型可以是字符设备、块设备或者网络设备；&lt;/li&gt;&#xA;&lt;li&gt;设备可以是虚拟的也可以是实际设备；&lt;/li&gt;&#xA;&lt;li&gt;编写测试应用程序，测试对该设备的读写等操作。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;功能需求&#34;&gt;功能需求&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;实现鼠标驱动程序，并提供接口。&lt;/li&gt;&#xA;&lt;li&gt;通过手势控制指针的移动。&lt;/li&gt;&#xA;&lt;li&gt;手上可用颜色块标定。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;基本概念和原理&#34;&gt;基本概念和原理&lt;/h2&gt;&#xA;&lt;h3 id=&#34;环境选择和工具&#34;&gt;环境选择和工具&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;操作系统：Ubuntu(Linux) 14.04 LTS 64bit&lt;/li&gt;&#xA;&lt;li&gt;编辑器：vim&lt;/li&gt;&#xA;&lt;li&gt;编译器：gcc，g++&lt;/li&gt;&#xA;&lt;li&gt;调试器：gdb&lt;/li&gt;&#xA;&lt;li&gt;开发库：opencv&lt;/li&gt;&#xA;&lt;li&gt;其他：make&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;基本架构&#34;&gt;基本架构&lt;/h3&gt;&#xA;&lt;p&gt;用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>TFT液晶屏Linux下的移植</title>
       <link>https://lianera.github.io/post/2014/transplant-tft/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2014/transplant-tft/</guid>
-      <description>预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,</description>
+      <description>&lt;h2 id=&#34;预览&#34;&gt;预览&lt;/h2&gt;&#xA;&lt;p&gt;手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_7.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_0.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_10.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_6.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;声明&#34;&gt;声明&lt;/h2&gt;&#xA;&lt;p&gt;这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

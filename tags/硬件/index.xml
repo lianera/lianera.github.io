@@ -4,26 +4,23 @@
     <title>硬件 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%A1%AC%E4%BB%B6/</link>
     <description>Recent content in 硬件 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 27 Oct 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Oct 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>简单CPU设计实践</title>
       <link>https://lianera.github.io/post/2014/cpu-step-by-step/</link>
       <pubDate>Mon, 27 Oct 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2014/cpu-step-by-step/</guid>
-      <description>开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且</description>
+      <description>&lt;h2 id=&#34;开始前的话&#34;&gt;开始前的话&lt;/h2&gt;&#xA;&lt;p&gt;本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且大多数专业开设过数字电路，所以在此略过数电的知识，如果对数电有些不明白的，可以参考其他数电教程。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>TFT液晶屏Linux下的移植</title>
       <link>https://lianera.github.io/post/2014/transplant-tft/</link>
       <pubDate>Wed, 14 May 2014 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2014/transplant-tft/</guid>
-      <description>预览 手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图: 声明 这个教程只是提供一个思路,</description>
+      <description>&lt;h2 id=&#34;预览&#34;&gt;预览&lt;/h2&gt;&#xA;&lt;p&gt;手上有个TFT液晶屏,正好我的树莓派缺一个显示器,所以便萌发了这个移植的想法,以便物尽其用｡以下是效果图:&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_7.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_0.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_10.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;tft_6.jpg&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;声明&#34;&gt;声明&lt;/h2&gt;&#xA;&lt;p&gt;这个教程只是提供一个思路,不能保证所有的TFT屏幕都能成功｡移植过程涉及许多技术问题,比较繁琐复杂,如果怕麻烦建议还是购买现成的VGA/HDMI显示器｡但是,过程远远比结果更有意义,因为这能提升你的技术水平和解决问题的能力｡&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,17 +4,16 @@
     <title>编译原理 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</link>
     <description>Recent content in 编译原理 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 30 Oct 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Oct 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>NFA转DFA-json数字识别</title>
       <link>https://lianera.github.io/post/2016/nfa-to-dfa/</link>
       <pubDate>Sun, 30 Oct 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2016/nfa-to-dfa/</guid>
-      <description>json的主页上，提供了number类型的符号识别过程，如下： 图片引用：http://www.json.org/json-zh.html 实际</description>
+      <description>&lt;p&gt;json的主页上，提供了number类型的符号识别过程，如下：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;json.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;图片引用：http://www.json.org/json-zh.html&#xA;实际上这张图片表示的是一个状态机，只是状态没有标出来。因为这个状态机上存在ε转换，所以它是一个NFA（不确定有限自动机）。ε转换也即不需要输入串就能进行的转换，例如从开始状态到0之前的状态。而我们进行识别的时候，使用DFA（确定有穷自动机）会简单方便得多。所以首先应该将这个NFA转成DFA。&#xA;首先把这个NFA规范一下，写成状态与箭头的形式：&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

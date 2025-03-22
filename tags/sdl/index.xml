@@ -4,17 +4,16 @@
     <title>SDL on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/sdl/</link>
     <description>Recent content in SDL on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 07 Jul 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/sdl/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Jul 2013 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/sdl/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>贪吃蛇（二）</title>
       <link>https://lianera.github.io/post/2013/snake2/</link>
       <pubDate>Sun, 07 Jul 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2013/snake2/</guid>
-      <description>简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;snake2_menu.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;snake2_1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;snake2_2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但不能放到蛇身。每进食一次，蛇身增长一格，得分相应增加。蛇碰到边界时转到对面边界出来。当蛇头碰到自身时，蛇死亡，游戏结束。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

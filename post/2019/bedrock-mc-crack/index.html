@@ -16,14 +16,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/down" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/download/server/bedrock/ 然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2019/bedrock-mc-crack/" />
@@ -35,24 +36,30 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="反汇编Minecraft基岩服务端，隐藏地图种子" />
-<meta property="og:description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/down" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2019/bedrock-mc-crack/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-11-24T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-11-24T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2019/bedrock-mc-crack/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="反汇编Minecraft基岩服务端，隐藏地图种子">
+  <meta property="og:description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/download/server/bedrock/ 然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2019-11-24T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-11-24T00:00:00+00:00">
+    <meta property="article:tag" content="汇编">
 
-<meta itemprop="name" content="反汇编Minecraft基岩服务端，隐藏地图种子">
-<meta itemprop="description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/down"><meta itemprop="datePublished" content="2019-11-24T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-11-24T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="958">
-<meta itemprop="keywords" content="汇编," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="反汇编Minecraft基岩服务端，隐藏地图种子"/>
-<meta name="twitter:description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/down"/>
+  <meta itemprop="name" content="反汇编Minecraft基岩服务端，隐藏地图种子">
+  <meta itemprop="description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/download/server/bedrock/ 然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……">
+  <meta itemprop="datePublished" content="2019-11-24T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2019-11-24T00:00:00+00:00">
+  <meta itemprop="wordCount" content="958">
+  <meta itemprop="keywords" content="汇编">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="反汇编Minecraft基岩服务端，隐藏地图种子">
+  <meta name="twitter:description" content="应广大MC玩家的呼声，Mojang官方放出了基岩版的服务端程序：https://www.minecraft.net/zh-hans/download/server/bedrock/ 然而坑爹的是服务端竟然直接把地图种子传给客户端显示，玩过minecraft的都知道，有了种子就可以为所欲为了，对于多人服务器，这还玩啥……">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +94,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +123,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -146,8 +163,7 @@
 <p>关键的一句就在这里了，现在要做的就是在这里写入一个假的种子，从而发给客户端。</p>
 <p>通过查阅<a href="https://zh.wikipedia.org/wiki/X86%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A">微软x86-64调用约定</a>，可以知道</p>
 <blockquote>
-<p>微软x64调用约定使用RCX, RDX, R8, R9四个寄存器用于存储函数调用时的4个参数(从左到右)，使用XMM0, XMM1, XMM2, XMM3来传递浮点变量。</p>
-</blockquote>
+<p>微软x64调用约定使用RCX, RDX, R8, R9四个寄存器用于存储函数调用时的4个参数(从左到右)，使用XMM0, XMM1, XMM2, XMM3来传递浮点变量。</p></blockquote>
 <p>从这里看，很明显，函数调用的前面两条add edx, edx和move rcx, rdi分别是32位种子的值以及this指针的地址，所以这里可以修改一下add edx, edx，将其改成xor edx, edx，也即把edx的值归零，这样就行啦。需要注意的是修改代码的时候，指令长度不能变。
 patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
 <p><img src="6.png" alt="6.png"></p>
@@ -155,8 +171,7 @@ patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
 <p>对于Linux版本，步骤差不多，只是Linux的函数调用约定不同：</p>
 <blockquote>
 <p>System V AMD64 ABI
-此约定主要在Solaris，GNU/Linux，FreeBSD和其他非微软OS上使用。头六个整型参数放在寄存器RDI, RSI, RDX, RCX, R8和R9上；同时XMM0到XMM7用来放置浮点变元。</p>
-</blockquote>
+此约定主要在Solaris，GNU/Linux，FreeBSD和其他非微软OS上使用。头六个整型参数放在寄存器RDI, RSI, RDX, RCX, R8和R9上；同时XMM0到XMM7用来放置浮点变元。</p></blockquote>
 <p>Linux版本对应位置的代码是这样的：</p>
 <p><img src="7.png" alt="7.png"></p>
 <p>所以this指针应该放在rdi上，种子放在esi上，同样地把mov     esi, eax修改成xor esi, esi。启动服务器，验证成功~</p>
@@ -167,7 +182,7 @@ patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -211,8 +226,8 @@ patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -230,13 +245,10 @@ patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -249,7 +261,7 @@ patch一下exe，运行服务端，进游戏，成功隐藏种子：</p>
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

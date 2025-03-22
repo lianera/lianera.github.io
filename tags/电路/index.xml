@@ -4,17 +4,16 @@
     <title>电路 on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/%E7%94%B5%E8%B7%AF/</link>
     <description>Recent content in 电路 on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/%E7%94%B5%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/%E7%94%B5%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于事件驱动的逻辑电路仿真实现</title>
       <link>https://lianera.github.io/post/2020/logic-sim/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2020/logic-sim/</guid>
-      <description>数据结构 首先观察一个简单的电路： 不难发现，根据信号的传导方向，可以将其转换成一个有向图： 其中小写字母的顶点表示导线的结点，拥有电平状态，大写</description>
+      <description>&lt;h2 id=&#34;数据结构&#34;&gt;数据结构&lt;/h2&gt;&#xA;&lt;p&gt;首先观察一个简单的电路：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;bVbHM2B.webp&#34; alt=&#34;image.png&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;不难发现，根据信号的传导方向，可以将其转换成一个有向图：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;bVbHM2L.webp&#34; alt=&#34;image.png&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;其中小写字母的顶点表示导线的结点，拥有电平状态，大写字母表示逻辑门，拥有逻辑运算的功能。&#xA;注意导线结点不能只作为边，因为可能会有多个逻辑门的端口连在一起，比如：&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

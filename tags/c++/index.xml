@@ -4,134 +4,107 @@
     <title>C&#43;&#43; on Lianera&#39;s homepage</title>
     <link>https://lianera.github.io/tags/c&#43;&#43;/</link>
     <description>Recent content in C&#43;&#43; on Lianera&#39;s homepage</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 07 Mar 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://lianera.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://lianera.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LtRay 开发备忘录</title>
       <link>https://lianera.github.io/post/2017/ltray-memo/</link>
       <pubDate>Tue, 07 Mar 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/ltray-memo/</guid>
-      <description>数学工具 工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换</description>
+      <description>&lt;h1 id=&#34;数学工具&#34;&gt;数学工具&lt;/h1&gt;&#xA;&lt;p&gt;工欲善其事，必先利其器！作为一个光线跟踪器，数学工具自然是少不了的。需要用到哪些数学工具呢？作为3D程序，点肯定是需要的，另外做变换也是少不了的，所以最基本的数学工具就是Vector、Point、Matrix。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-应用篇</title>
       <link>https://lianera.github.io/post/2017/sh-lighting-apply/</link>
       <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/sh-lighting-apply/</guid>
-      <description>上一篇介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。 我们知道，球谐光照实际上就是将周围的环境</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://lianera.github.io/post/2016/sh-lighting-exp&#34;&gt;上一篇&lt;/a&gt;介绍了球谐函数的一些原理和性质，本篇主要介绍如何实现球谐光照，将这种光照应用到实际的场景中去。&lt;/p&gt;&#xA;&lt;p&gt;我们知道，球谐光照实际上就是将周围的环境光采样成几个系数，然后渲染的时候用这几个系数来对光照进行还原，这种过程可以看做是对周围环境光的简化，从而简化计算过程。因为如果按照采样的方法进行渲染，每次渲染的时候都得对周围环境采样，从而都会耗费大量的计算时间。所以球谐光照的实现可以分成两个部分，一是环境光贴图的采样和积分运算，生成球谐参数，二是利用球谐参数对模型进行渲染。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>LtRay的艰难重构</title>
       <link>https://lianera.github.io/post/2017/ltray-refactoring/</link>
       <pubDate>Wed, 15 Feb 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/ltray-refactoring/</guid>
-      <description>从去年九月份开始，我就在着手实现一个光线跟踪器：LtRay。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的</description>
+      <description>&lt;p&gt;从去年九月份开始，我就在着手实现一个光线跟踪器：&lt;a href=&#34;https://github.com/lianera/LtRay&#34;&gt;LtRay&lt;/a&gt;。刚开始进展很快，差不多三天的时间，光线跟踪器的雏形就已经具备了，能够对一些简单的图元比如球体、平面等进行渲染，并且还具有反射、阴影效果。但是越到后面，开发的进度就越来越慢了，近两个月几乎就是做些填补工作。现在每改一个地方，几乎就得花费一两天的时间来修复相关的代码。前不久刚定下&lt;a href=&#34;https://github.com/lianera/LtRay/releases/tag/v0.1.7&#34;&gt;v0.1.7&lt;/a&gt;版本，渲染的效果如下：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;ltray.png&#34; alt=&#34;ltray&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;而这跟我两个月前的版本相比，几乎就只是把光线跟踪的核心分离出来，另外把场景文件的格式从json改成了toml。每遇到一个问题，我都在纠结到底该哪一种方式来解决，实际上，这种犹豫耗费了大量的时间。摆在我面前的方法仿佛有无数种，但就是没法确定哪一种是最好的，结果就是反复修改来修改去，比如我遇到的有这些坑：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>梯度下降法及其实现</title>
       <link>https://lianera.github.io/post/2017/gradient-descent/</link>
       <pubDate>Wed, 04 Jan 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2017/gradient-descent/</guid>
-      <description>摘要 本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。 引言 梯度</description>
+      <description>&lt;h2 id=&#34;摘要&#34;&gt;摘要&lt;/h2&gt;&#xA;&lt;p&gt;本文主要介绍了梯度下降法的原理和方法，结合二次型的具体实例来阐述梯度下降的过程，使用三维可视化技术实现了一个梯度下降的演示程序。&lt;/p&gt;&#xA;&lt;h2 id=&#34;引言&#34;&gt;引言&lt;/h2&gt;&#xA;&lt;p&gt;梯度下降法是一种最优化算法，在最优化理论里面也叫最速下降法，在常用的优化算法当中算是最简单的一种算法了。一般来说求解优化问题根据具体情况有很多其他更好的办法，不过下降法思想是其他大多数优化迭代算法的基础。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>球谐光照（Spherical Harmonics Lighting）及其应用-实验篇</title>
       <link>https://lianera.github.io/post/2016/sh-lighting-exp/</link>
       <pubDate>Tue, 06 Dec 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2016/sh-lighting-exp/</guid>
-      <description>简介 之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;之前在一篇实时深度图优化的论文中看到球谐光照（Spherical Harmonics Lighting）的应用，在查阅了许许多多资料之后还是无法完全理解，我个人觉得如果之前对实时渲染技术不是很了解的话，球谐光照还是有一定难度的。大多数的资料都是从原理上描述球谐函数及其光照过程，而没有对具体的应用做解释，我直到真正动手实现了一遍球谐光照之后，才完全理解球谐光照具体的过程以及作用。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>多图片平均法降噪</title>
       <link>https://lianera.github.io/post/2015/average-denoise/</link>
       <pubDate>Wed, 09 Dec 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2015/average-denoise/</guid>
-      <description>理论 在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示</description>
+      <description>&lt;h2 id=&#34;理论&#34;&gt;理论&lt;/h2&gt;&#xA;&lt;p&gt;在相机采集到的图像中，往往会存在一定的噪声。这种噪声一般来说在空间域是互不相关的，并且是一种加性噪声。对于一幅相机采集到的图像，可以表示为无噪声图像和加性噪声的组成，也即：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>基于计算机视觉的虚拟鼠标</title>
       <link>https://lianera.github.io/post/2015/cv-mouse/</link>
       <pubDate>Tue, 28 Jul 2015 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2015/cv-mouse/</guid>
-      <description>概述 设计内容 设备驱动程序设计, 要求如下： 设计Windows XP或者Linux操作系统下的设备驱动程序； 设备类型可以是字符设备、块设备或者网络</description>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;h3 id=&#34;设计内容&#34;&gt;设计内容&lt;/h3&gt;&#xA;&lt;p&gt;设备驱动程序设计, 要求如下：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;设计Windows XP或者Linux操作系统下的设备驱动程序；&lt;/li&gt;&#xA;&lt;li&gt;设备类型可以是字符设备、块设备或者网络设备；&lt;/li&gt;&#xA;&lt;li&gt;设备可以是虚拟的也可以是实际设备；&lt;/li&gt;&#xA;&lt;li&gt;编写测试应用程序，测试对该设备的读写等操作。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;功能需求&#34;&gt;功能需求&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;实现鼠标驱动程序，并提供接口。&lt;/li&gt;&#xA;&lt;li&gt;通过手势控制指针的移动。&lt;/li&gt;&#xA;&lt;li&gt;手上可用颜色块标定。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;基本概念和原理&#34;&gt;基本概念和原理&lt;/h2&gt;&#xA;&lt;h3 id=&#34;环境选择和工具&#34;&gt;环境选择和工具&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;操作系统：Ubuntu(Linux) 14.04 LTS 64bit&lt;/li&gt;&#xA;&lt;li&gt;编辑器：vim&lt;/li&gt;&#xA;&lt;li&gt;编译器：gcc，g++&lt;/li&gt;&#xA;&lt;li&gt;调试器：gdb&lt;/li&gt;&#xA;&lt;li&gt;开发库：opencv&lt;/li&gt;&#xA;&lt;li&gt;其他：make&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;基本架构&#34;&gt;基本架构&lt;/h3&gt;&#xA;&lt;p&gt;用附加程序通过计算机视觉技术，获取目标的位置，并用虚拟鼠标驱动实现鼠标位置的控制。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>贪吃蛇（二）</title>
       <link>https://lianera.github.io/post/2013/snake2/</link>
       <pubDate>Sun, 07 Jul 2013 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2013/snake2/</guid>
-      <description>简介 传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;snake2_menu.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;snake2_1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;snake2_2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;传统的贪吃蛇游戏，实现蛇的移动、进食、增长以及死亡过程，并统计所得分数。游戏面板划分为许多小格，蛇移动时每次只移动一格。食物随机放置，但不能放到蛇身。每进食一次，蛇身增长一格，得分相应增加。蛇碰到边界时转到对面边界出来。当蛇头碰到自身时，蛇死亡，游戏结束。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>贴吧用户ID挖掘机</title>
       <link>https://lianera.github.io/post/2012/tiebadigger/</link>
       <pubDate>Sun, 23 Dec 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2012/tiebadigger/</guid>
-      <description>简介 这是一个用来挖掘贴吧用户ID的程序，能够将某个贴吧的所有用户名都按格式记录下来，可用于@大量用户。 技术 程序用C语言写成的，使用Windo</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;TiebaDigger.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;TiebaDigger2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是一个用来挖掘贴吧用户ID的程序，能够将某个贴吧的所有用户名都按格式记录下来，可用于@大量用户。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;程序用C语言写成的，使用Windows网络编程。采用socket通信发出get请求，返回含有贴吧ID的页面，得到页面源码后，程序对其进行解析，提取ID信息并格式化保存。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>装甲之战</title>
       <link>https://lianera.github.io/post/2012/panzerwar/</link>
       <pubDate>Sat, 01 Dec 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2012/panzerwar/</guid>
-      <description>简介 坦克游戏，通过控制坦克消灭敌人获取胜利。 技术 这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Wi</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;panzerwar1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;panzerwar2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;坦克游戏，通过控制坦克消灭敌人获取胜利。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;这个程序也是刚学C的时候做的，一边学C一边参考Windows API写程序。程序采用的是纯Windows编程，没有涉及MFC。游戏的架构就是典型的GameLoop实时游戏架构，采用Windows GDI进行绘图，同时在绘图上也采用了双缓存技术。这个程序由于没有采用模块化的方法，导致函数过多，后期维护混乱。不过最后还是成功做好了！&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>俄罗斯方块（二）</title>
       <link>https://lianera.github.io/post/2012/blockgame/</link>
       <pubDate>Tue, 20 Nov 2012 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2012/blockgame/</guid>
-      <description>简介 俄罗斯方块游戏。 技术 纯控制台程序，画面全部由字符组成，具有存档功能。 在刚刚学C语言的时候写的。那个时候分模块的概念不是很强，所有函数写在</description>
+      <description>&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;blockgame1.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;blockgame2.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;img src=&#34;blockgame3.png&#34; alt=&#34;&#34;&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;俄罗斯方块游戏。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;纯控制台程序，画面全部由字符组成，具有存档功能。&lt;/p&gt;&#xA;&lt;p&gt;在刚刚学C语言的时候写的。那个时候分模块的概念不是很强，所有函数写在一个文件里面，使得代码有些乱。怀着完美主义的精神写的，做得很细致，就连界面的那几个英文字母都是用字符一个个堆起来的。虽然花了几天时间才做成，不过那时候觉得能做出一点东西挺高兴的。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>俄罗斯方块（一）</title>
       <link>https://lianera.github.io/post/2008/tetris/</link>
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2008/tetris/</guid>
-      <description>简介 经典的俄罗斯方块。 技术 中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用</description>
+      <description>&lt;p&gt;&lt;img src=&#34;tetris.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;经典的俄罗斯方块。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;中学时期作品，使用了双缓存技术。那时觉得程序无所不能，虽然对程序的认识比较肤浅，但总想做一些东西出来，这个程序采用的是MFC，结合Windows的绘图技术做成的。绘图方面使用了双缓存技术提高画面的流畅度，避免闪烁。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>贪吃蛇（一）</title>
       <link>https://lianera.github.io/post/2008/snake1/</link>
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2008/snake1/</guid>
-      <description>简介 经典的贪吃蛇小游戏。 技术 程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用</description>
+      <description>&lt;p&gt;&lt;img src=&#34;snake1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;经典的贪吃蛇小游戏。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;程序采用了OOP和模块化的思想，使得逻辑比较清晰，不过虽然是面向对象设计的，但也只是简单地建立类，并没有充分利用面向对象的特性。此外，界面与逻辑没有实现分离，导致程序的可重用性很低。采用Windows编程构造窗口界面，基于实时游戏的框架，利用消息处理机制处理用户输入，用定时器的方法按一定时间间隔刷新游戏内容并更新界面。游戏背景音乐采用MIDI，音效采用wav。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>按键助手</title>
       <link>https://lianera.github.io/post/2008/keyhelper/</link>
       <pubDate>Sun, 12 Oct 2008 00:00:00 +0000</pubDate>
-      
       <guid>https://lianera.github.io/post/2008/keyhelper/</guid>
-      <description>简介 一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。 技术 这个程序还是中学时期写的，那个时候对程序非常感兴趣，自</description>
+      <description>&lt;p&gt;&lt;img src=&#34;keyhelper.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;一个类似于按键精灵的程序，能够录制鼠标和键盘的动作，定义和编辑动作，播放动作。&lt;/p&gt;&#xA;&lt;h2 id=&#34;技术&#34;&gt;技术&lt;/h2&gt;&#xA;&lt;p&gt;这个程序还是中学时期写的，那个时候对程序非常感兴趣，自学了一些C++便觉得自己可以写一些东西出来。虽然当时水平比较低，但是完全能够凭着热情去完成每一个程序。那个时候很喜欢写跟界面有关的东西，认知也停留在桌面应用上面，以为程序就是用来开发桌面应用的。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

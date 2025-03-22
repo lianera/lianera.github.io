@@ -16,14 +16,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且大多数专业开设过数字电路，所以在此略过数电的知识，如果对数电有些不明白的，可以参考其他数电教程。
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2014/cpu-step-by-step/" />
@@ -35,24 +36,30 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="简单CPU设计实践" />
-<meta property="og:description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2014/cpu-step-by-step/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2014-10-27T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2014-10-27T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2014/cpu-step-by-step/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="简单CPU设计实践">
+  <meta property="og:description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且大多数专业开设过数字电路，所以在此略过数电的知识，如果对数电有些不明白的，可以参考其他数电教程。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2014-10-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2014-10-27T00:00:00+00:00">
+    <meta property="article:tag" content="硬件">
 
-<meta itemprop="name" content="简单CPU设计实践">
-<meta itemprop="description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且"><meta itemprop="datePublished" content="2014-10-27T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2014-10-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="8478">
-<meta itemprop="keywords" content="硬件," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="简单CPU设计实践"/>
-<meta name="twitter:description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且"/>
+  <meta itemprop="name" content="简单CPU设计实践">
+  <meta itemprop="description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且大多数专业开设过数字电路，所以在此略过数电的知识，如果对数电有些不明白的，可以参考其他数电教程。">
+  <meta itemprop="datePublished" content="2014-10-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2014-10-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="8478">
+  <meta itemprop="keywords" content="硬件">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="简单CPU设计实践">
+  <meta name="twitter:description" content="开始前的话 本文将从零开始介绍处理器的基本原理和架构，并且用简单的电路搭建方式实现一个非常简单的8 bit CPU。由于数字电路内容参考资料众多，并且大多数专业开设过数字电路，所以在此略过数电的知识，如果对数电有些不明白的，可以参考其他数电教程。">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +94,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +123,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -202,7 +219,7 @@
 <p>然后做加法运算</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -210,13 +227,13 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 00000101
-+11111101
-----------
-100000010
-↑
-舍弃，得00000010，也即2
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 00000101
+</span></span><span class="line"><span class="cl">+11111101
+</span></span><span class="line"><span class="cl">----------
+</span></span><span class="line"><span class="cl">100000010
+</span></span><span class="line"><span class="cl">↑
+</span></span><span class="line"><span class="cl">舍弃，得00000010，也即2
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果第一个是负数呢？情况也一样的，因为加法满足交换律，加法器的两个输入端也是对称的。</p>
 <p>如果小数减大数呢？例如<img src="f7.svg" alt="15-35">（八位字长）：</p>
@@ -232,73 +249,73 @@
 <p>其中的A和B是8路数据输入，S1、S0和Cin进行功能选择，右侧输出结果。</p>
 <p>上述算数单元实现的功能表很容易写出来：</p>
 <table>
-<thead>
-<tr>
-<th>S1</th>
-<th>S0</th>
-<th>Cin</th>
-<th>D</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>B</td>
-<td>A+B</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>B</td>
-<td>A+B+1</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>~B</td>
-<td>A+~B</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>~B</td>
-<td>A-B</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>全0</td>
-<td>A</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>全0</td>
-<td>A+1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>全1</td>
-<td>A-1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>全1</td>
-<td>A</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>S1</th>
+          <th>S0</th>
+          <th>Cin</th>
+          <th>D</th>
+          <th>功能</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>B</td>
+          <td>A+B</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>B</td>
+          <td>A+B+1</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>~B</td>
+          <td>A+~B</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>~B</td>
+          <td>A-B</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>全0</td>
+          <td>A</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>全0</td>
+          <td>A+1</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>全1</td>
+          <td>A-1</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>全1</td>
+          <td>A</td>
+      </tr>
+  </tbody>
 </table>
 <h3 id="逻辑单元">逻辑单元</h3>
 <p>那么接下来就是逻辑单元（LU - logic unit）了</p>
@@ -308,35 +325,35 @@
 <p><img src="lu.png" alt="lu"></p>
 <p>上述逻辑单元对应的功能表如下：</p>
 <table>
-<thead>
-<tr>
-<th>S1</th>
-<th>S0</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>A and B</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>A or B</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>~A</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>A xor B</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>S1</th>
+          <th>S0</th>
+          <th>功能</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>A and B</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>A or B</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>~A</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>A xor B</td>
+      </tr>
+  </tbody>
 </table>
 <h3 id="算术逻辑单元">算术逻辑单元</h3>
 <p>接下来就是最重要的ALU即算术逻辑单元（algorithm logic unit）了</p>
@@ -346,114 +363,114 @@
 <p><img src="alu.png" alt="alu"></p>
 <p>对应的功能表如下</p>
 <table>
-<thead>
-<tr>
-<th>S2</th>
-<th>S1</th>
-<th>S0</th>
-<th>Cin</th>
-<th>功能</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>A+B</td>
-<td>ADD</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>A+B+1</td>
-<td>加并加1</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>A+~B</td>
-<td>减并减1</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>A-B</td>
-<td>减法</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>A</td>
-<td>MOV</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>A+1</td>
-<td>INC</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>A-1</td>
-<td>DEC</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>A</td>
-<td>MOV</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>x</td>
-<td>A and B</td>
-<td>AND</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>x</td>
-<td>A or B</td>
-<td>OR</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>x</td>
-<td>~A</td>
-<td>NOT</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>x</td>
-<td>A xor B</td>
-<td>XOR</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>S2</th>
+          <th>S1</th>
+          <th>S0</th>
+          <th>Cin</th>
+          <th>功能</th>
+          <th>解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>A+B</td>
+          <td>ADD</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>A+B+1</td>
+          <td>加并加1</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>A+~B</td>
+          <td>减并减1</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>A-B</td>
+          <td>减法</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>A</td>
+          <td>MOV</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>A+1</td>
+          <td>INC</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>A-1</td>
+          <td>DEC</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>A</td>
+          <td>MOV</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>x</td>
+          <td>A and B</td>
+          <td>AND</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>x</td>
+          <td>A or B</td>
+          <td>OR</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>x</td>
+          <td>~A</td>
+          <td>NOT</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>x</td>
+          <td>A xor B</td>
+          <td>XOR</td>
+      </tr>
+  </tbody>
 </table>
 <h3 id="移位器">移位器</h3>
 <p>除了算术和逻辑运算，我们通常还需要一种移位运算，在这里，因为速度要求很高，不涉及到时序，也不需要暂存，所以不采用移位寄存器，而是用组合逻辑电路的移位器（shifter）。</p>
@@ -489,190 +506,190 @@
 <p><img src="FunctionUnitWithState.png" alt="overflow"></p>
 <p>功能表：</p>
 <table>
-<thead>
-<tr>
-<th>S3</th>
-<th>S2</th>
-<th>S1</th>
-<th>S0</th>
-<th>Cin</th>
-<th>功能</th>
-<th>解释</th>
-<th>有效标志</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>选择算术逻辑/~移位</td>
-<td>选择逻辑/~算术</td>
-<td>选择功能</td>
-<td>进位输入</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0</td>
-<td>x</td>
-<td>0</td>
-<td>0</td>
-<td>x</td>
-<td>B</td>
-<td>MOV B</td>
-<td>CA</td>
-</tr>
-<tr>
-<td>0</td>
-<td>x</td>
-<td>0</td>
-<td>1</td>
-<td>x</td>
-<td>&lt;-B</td>
-<td>SHL/SAL（逻辑/算术左移）</td>
-<td>CA</td>
-</tr>
-<tr>
-<td>0</td>
-<td>x</td>
-<td>1</td>
-<td>0</td>
-<td>x</td>
-<td>B-&gt;</td>
-<td>SHR（逻辑右移）</td>
-<td>CA</td>
-</tr>
-<tr>
-<td>0</td>
-<td>x</td>
-<td>1</td>
-<td>1</td>
-<td>x</td>
-<td>#B-&gt;</td>
-<td>SAR（算术右移）</td>
-<td>CA</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>A+B</td>
-<td>ADD</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>A+B+1</td>
-<td>加并加1</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>A+~B</td>
-<td>减并减1</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>A-B</td>
-<td>SUB</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>A</td>
-<td>MOV</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>A+1</td>
-<td>INC</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>A-1</td>
-<td>DEC</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>A</td>
-<td>MOV</td>
-<td>OV、SG、CA、ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>x</td>
-<td>A and B</td>
-<td>AND</td>
-<td>ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>x</td>
-<td>A or B</td>
-<td>OR</td>
-<td>ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>x</td>
-<td>~A</td>
-<td>NOT</td>
-<td>ZO</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>x</td>
-<td>A xor B</td>
-<td>XOR</td>
-<td>ZO</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>S3</th>
+          <th>S2</th>
+          <th>S1</th>
+          <th>S0</th>
+          <th>Cin</th>
+          <th>功能</th>
+          <th>解释</th>
+          <th>有效标志</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>选择算术逻辑/~移位</td>
+          <td>选择逻辑/~算术</td>
+          <td>选择功能</td>
+          <td>进位输入</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>x</td>
+          <td>0</td>
+          <td>0</td>
+          <td>x</td>
+          <td>B</td>
+          <td>MOV B</td>
+          <td>CA</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>x</td>
+          <td>0</td>
+          <td>1</td>
+          <td>x</td>
+          <td>&lt;-B</td>
+          <td>SHL/SAL（逻辑/算术左移）</td>
+          <td>CA</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>x</td>
+          <td>1</td>
+          <td>0</td>
+          <td>x</td>
+          <td>B-&gt;</td>
+          <td>SHR（逻辑右移）</td>
+          <td>CA</td>
+      </tr>
+      <tr>
+          <td>0</td>
+          <td>x</td>
+          <td>1</td>
+          <td>1</td>
+          <td>x</td>
+          <td>#B-&gt;</td>
+          <td>SAR（算术右移）</td>
+          <td>CA</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>A+B</td>
+          <td>ADD</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>A+B+1</td>
+          <td>加并加1</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>A+~B</td>
+          <td>减并减1</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>A-B</td>
+          <td>SUB</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>A</td>
+          <td>MOV</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>A+1</td>
+          <td>INC</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>A-1</td>
+          <td>DEC</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>A</td>
+          <td>MOV</td>
+          <td>OV、SG、CA、ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>x</td>
+          <td>A and B</td>
+          <td>AND</td>
+          <td>ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>x</td>
+          <td>A or B</td>
+          <td>OR</td>
+          <td>ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>x</td>
+          <td>~A</td>
+          <td>NOT</td>
+          <td>ZO</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>x</td>
+          <td>A xor B</td>
+          <td>XOR</td>
+          <td>ZO</td>
+      </tr>
+  </tbody>
 </table>
 <p>至此，一个完整的运算器已经完成好了！</p>
 <h3 id="运算器设计的总结和补充">运算器设计的总结和补充</h3>
@@ -750,7 +767,7 @@
 <p>对于ADD R3，R2，R1，（即R3=R2+R1）这一条指令，实际CPU做的事情就是：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -761,16 +778,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">在A通道选择R2输出，在B通道选择R1输出
-不选择立即数
-存储器不写入
-运算器选择加法运算
-选择运算器输出的结果
-选择R3作为待写入寄存器
-寄存器组写入信号激活
-时钟信号上升沿到来！
-R3的值成功变为R2+R1！
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">在A通道选择R2输出，在B通道选择R1输出
+</span></span><span class="line"><span class="cl">不选择立即数
+</span></span><span class="line"><span class="cl">存储器不写入
+</span></span><span class="line"><span class="cl">运算器选择加法运算
+</span></span><span class="line"><span class="cl">选择运算器输出的结果
+</span></span><span class="line"><span class="cl">选择R3作为待写入寄存器
+</span></span><span class="line"><span class="cl">寄存器组写入信号激活
+</span></span><span class="line"><span class="cl">时钟信号上升沿到来！
+</span></span><span class="line"><span class="cl">R3的值成功变为R2+R1！
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里是主要的控制字（其中标志位和跳转后面会讲）</p>
 <p><img src="cpu_21.png" alt="控制字"></p>
@@ -779,114 +796,114 @@ R3的值成功变为R2+R1！
 <p>办法就是采用指令译码器！</p>
 <p>首先我们可以对控制字的根据通路分类，比如运算功能的通路基本一致，都是通过运算器运算，只是选择的运算功能不同，跳转通路一样，只是根据不同的标志位跳转，这里分析可以得到以下分类（当然不是最佳的，需要在压缩率和灵活性直接权衡）</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>S3~Cin(5bit)</th>
-<th>W</th>
-<th>CI</th>
-<th>RM</th>
-<th>WM</th>
-<th>SF</th>
-<th>JP</th>
-<th>JW(3bit)</th>
-<th>IM</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>两个寄存器运算</td>
-<td>V</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>寄存器+常量运算</td>
-<td>V</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>X</td>
-<td>V</td>
-</tr>
-<tr>
-<td>写主存</td>
-<td>X</td>
-<td>0</td>
-<td>0</td>
-<td>X</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>读主存</td>
-<td>X</td>
-<td>1</td>
-<td>X</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>跳转</td>
-<td>X</td>
-<td>0</td>
-<td>X</td>
-<td>X</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>V</td>
-<td>V</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th>S3~Cin(5bit)</th>
+          <th>W</th>
+          <th>CI</th>
+          <th>RM</th>
+          <th>WM</th>
+          <th>SF</th>
+          <th>JP</th>
+          <th>JW(3bit)</th>
+          <th>IM</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>两个寄存器运算</td>
+          <td>V</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>X</td>
+          <td>X</td>
+      </tr>
+      <tr>
+          <td>寄存器+常量运算</td>
+          <td>V</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>X</td>
+          <td>V</td>
+      </tr>
+      <tr>
+          <td>写主存</td>
+          <td>X</td>
+          <td>0</td>
+          <td>0</td>
+          <td>X</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>X</td>
+          <td>X</td>
+      </tr>
+      <tr>
+          <td>读主存</td>
+          <td>X</td>
+          <td>1</td>
+          <td>X</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>X</td>
+          <td>X</td>
+      </tr>
+      <tr>
+          <td>跳转</td>
+          <td>X</td>
+          <td>0</td>
+          <td>X</td>
+          <td>X</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>V</td>
+          <td>V</td>
+      </tr>
+  </tbody>
 </table>
 <p>其中V的意思是有效，X的意思是无效（无关），IM指的是立即数。</p>
 <p>在上图中，可以对W/CI/RM/WM/SF/JP/JW进行编码，编码成000,001,010,011,100，这样只需要三个信号就能确定六个控制信号了，也就是这样：</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>两个寄存器运算</td>
-<td>000</td>
-</tr>
-<tr>
-<td>寄存器+常量运算</td>
-<td>001</td>
-</tr>
-<tr>
-<td>写主存</td>
-<td>010</td>
-</tr>
-<tr>
-<td>读主存</td>
-<td>011</td>
-</tr>
-<tr>
-<td>跳转</td>
-<td>100</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>两个寄存器运算</td>
+          <td>000</td>
+      </tr>
+      <tr>
+          <td>寄存器+常量运算</td>
+          <td>001</td>
+      </tr>
+      <tr>
+          <td>写主存</td>
+          <td>010</td>
+      </tr>
+      <tr>
+          <td>读主存</td>
+          <td>011</td>
+      </tr>
+      <tr>
+          <td>跳转</td>
+          <td>100</td>
+      </tr>
+  </tbody>
 </table>
 <p>加上其他的信号，比如运算选择信号、寄存器选择信号、立即数，就是一个完整的指令格式了！</p>
 <p><img src="it.png" alt="ip"></p>
@@ -944,7 +961,7 @@ R3的值成功变为R2+R1！
 <p>再举个例子，从1加到10</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -956,17 +973,17 @@ R3的值成功变为R2+R1！
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">MOV R0,0        // R0 = 0
-MOV R1,0        // R1 = 0
-INC R0,R0       // R0 ++
-ADD R1,R1,R0    // R1 += R0
-SUB R3,R0,10    // R3 = R0 - 10
-JZ 3            // if(R3 == 0) 往下跳3个地址 
-JMP -4          // 往上跳4个地址
-MOV R3,0        // R3 = 0
-STORE R3,R1     // 往R3地址存R1
-JMP 0           // 停机
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">MOV R0,0        // R0 = 0
+</span></span><span class="line"><span class="cl">MOV R1,0        // R1 = 0
+</span></span><span class="line"><span class="cl">INC R0,R0       // R0 ++
+</span></span><span class="line"><span class="cl">ADD R1,R1,R0    // R1 += R0
+</span></span><span class="line"><span class="cl">SUB R3,R0,10    // R3 = R0 - 10
+</span></span><span class="line"><span class="cl">JZ 3            // if(R3 == 0) 往下跳3个地址 
+</span></span><span class="line"><span class="cl">JMP -4          // 往上跳4个地址
+</span></span><span class="line"><span class="cl">MOV R3,0        // R3 = 0
+</span></span><span class="line"><span class="cl">STORE R3,R1     // 往R3地址存R1
+</span></span><span class="line"><span class="cl">JMP 0           // 停机
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>结果为0x37，也就是10进制的55：
 <img src="add10.png" alt="add10"></p>
@@ -997,7 +1014,7 @@ JMP 0           // 停机
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -1041,8 +1058,8 @@ JMP 0           // 停机
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -1060,13 +1077,10 @@ JMP 0           // 停机
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -1079,7 +1093,7 @@ JMP 0           // 停机
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 

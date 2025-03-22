@@ -16,14 +16,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Lianera" /><meta name="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
+<meta name="author" content="" /><meta name="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。
+" /><meta name="keywords" content="Computer Graphics, C&#43;&#43;, Computer Vision, Game Development" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.82.0 with theme even" />
+<meta name="generator" content="Hugo 0.145.0 with theme even" />
 
 
 <link rel="canonical" href="https://lianera.github.io/post/2018/fast-trilinear-interpolation/" />
@@ -35,24 +36,30 @@
 
 
 
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
-<meta property="og:title" content="快速三线性插值" />
-<meta property="og:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://lianera.github.io/post/2018/fast-trilinear-interpolation/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2018-07-25T10:48:41&#43;08:00" />
-<meta property="article:modified_time" content="2018-07-25T10:48:41&#43;08:00" />
+<meta property="og:url" content="https://lianera.github.io/post/2018/fast-trilinear-interpolation/">
+  <meta property="og:site_name" content="Lianera&#39;s homepage">
+  <meta property="og:title" content="快速三线性插值">
+  <meta property="og:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2018-07-25T10:48:41+08:00">
+    <meta property="article:modified_time" content="2018-07-25T10:48:41+08:00">
+    <meta property="article:tag" content="计算机图形学">
 
-<meta itemprop="name" content="快速三线性插值">
-<meta itemprop="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小"><meta itemprop="datePublished" content="2018-07-25T10:48:41&#43;08:00" />
-<meta itemprop="dateModified" content="2018-07-25T10:48:41&#43;08:00" />
-<meta itemprop="wordCount" content="2199">
-<meta itemprop="keywords" content="计算机图形学," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="快速三线性插值"/>
-<meta name="twitter:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小"/>
+  <meta itemprop="name" content="快速三线性插值">
+  <meta itemprop="description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。">
+  <meta itemprop="datePublished" content="2018-07-25T10:48:41+08:00">
+  <meta itemprop="dateModified" content="2018-07-25T10:48:41+08:00">
+  <meta itemprop="wordCount" content="2196">
+  <meta itemprop="keywords" content="计算机图形学">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="快速三线性插值">
+  <meta name="twitter:description" content="最近需要对一个体素进行插值，并且应用到一张大图像上。这个本来用三线性插值很容易就实现了，但是体素的尺寸很小，长宽高大概20x15x10的大小，图像的尺寸非常大，差不多是4000x3000，等我实现完普通的三线性插值后，发现算法速度实在太慢，单是这一项三线性插值耗费的时间就占了总程序的一半多。其实如果能够用GPU，利用OpenGL里面的3d texture是最方便，也最快的，但是图像从内存传送到GPU需要耗费一定时间，并且很多情况下没法用GPU。所以只能推导一下，在体素上事先就进行预计算，然后再用参数应用到大图像上。">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -87,12 +94,21 @@
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">Lianera</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,6 +123,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -171,14 +188,14 @@
 <p>当z1=z0时，则令z1=1,z0=0。</p>
 <p>上式计算出来的f7即为三线性插值的结果。注意上面的h1~h8在插值前都是已知的，我们可以在插值前，首先计算好每个体素的h值，然后最后再应用f7的计算公式，直接求出f7即可。对于常数项的计算，因为有许多项公用分母，所以可以把分子和分母分开计算。</p>
 <p><img src="f7result.svg" alt=""></p>
-<p>因此插值的时候总共需要进行的运算为7次乘法和7次加法，并且h1~h8是包含在小体素内的，对应于插值之后的大块区域，因此插值后的一块区域是公用h1~h8的，在插值的时候可以按区域插值，从而提高cache的效率。</p>
+<p>因此插值的时候总共需要进行的运算为7次乘法和7次加法，并且h1<del>h8是包含在小体素内的，对应于插值之后的大块区域，因此插值后的一块区域是公用h1</del>h8的，在插值的时候可以按区域插值，从而提高cache的效率。</p>
 <p>当然f7也可以写成这样：</p>
 <p><img src="f7alter.svg" alt=""></p>
 <h2 id="实现">实现</h2>
 <p>预计算参数的实现直接按照上面的常数参数计算即可，因为预计算是在小的体素上面实现的，所以不用太担心速度。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -227,67 +244,65 @@
 </span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cm">/* precompute trilinear coefficients
-</span><span class="cm">* v: f(x0,y0,z0), f(x1,y0,z0), f(x0,y1,z0), f(x1,y1,z0)
-</span><span class="cm">*    f(x0,y0,z1), f(x1,y0,z1), f(x0,y1,z1), f(x1,y1,z1)
-</span><span class="cm">*/</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-<span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="mi">8</span><span class="o">&gt;</span> <span class="n">PreComp</span><span class="p">(</span><span class="kt">float</span> <span class="n">x0</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y0</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z0</span><span class="p">,</span> 
-	<span class="kt">float</span> <span class="n">x1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z1</span><span class="p">,</span> <span class="k">const</span> <span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="mi">8</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="k">const</span> <span class="kt">float</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">10e-6</span><span class="n">f</span><span class="p">;</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="n">x1</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span> <span class="n">x0</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span> <span class="p">}</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="n">y1</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span> <span class="n">y0</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span> <span class="p">}</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">z1</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="n">z1</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span> <span class="n">z0</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span> <span class="p">}</span>
-
-	<span class="kt">float</span> <span class="n">deno</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">z1</span> <span class="o">-</span> <span class="n">z0</span><span class="p">);</span>
-	<span class="kt">float</span> <span class="n">nume</span> <span class="o">=</span> <span class="mf">1.f</span> <span class="o">/</span> <span class="n">deno</span><span class="p">;</span>
-
-	<span class="n">T</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">a4</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
-	<span class="n">T</span> <span class="n">b4</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
-	
-	<span class="n">T</span> <span class="n">c5</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">a1</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">a2</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">c6</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">a3</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">a4</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">d5</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">-</span> <span class="n">a1</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">d6</span> <span class="o">=</span> <span class="n">a4</span> <span class="o">-</span> <span class="n">a3</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">e5</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">b1</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">b2</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">e6</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">b3</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">b4</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">f5</span> <span class="o">=</span> <span class="n">b2</span> <span class="o">-</span> <span class="n">b1</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">f6</span> <span class="o">=</span> <span class="n">b4</span> <span class="o">-</span> <span class="n">b3</span><span class="p">;</span>
-	
-	<span class="n">T</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">c5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">c6</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">d5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">d6</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h3</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">e5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">e6</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h4</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">f5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">f6</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h5</span> <span class="o">=</span> <span class="n">c6</span> <span class="o">-</span> <span class="n">c5</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h6</span> <span class="o">=</span> <span class="n">d6</span> <span class="o">-</span> <span class="n">d5</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h7</span> <span class="o">=</span> <span class="n">e6</span> <span class="o">-</span> <span class="n">e5</span><span class="p">;</span>
-	<span class="n">T</span> <span class="n">h8</span> <span class="o">=</span> <span class="n">f6</span> <span class="o">-</span> <span class="n">f5</span><span class="p">;</span>
-
-	<span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span> <span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="n">h1</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h2</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h3</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h4</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> 
-		<span class="n">h5</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h6</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h7</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h8</span><span class="o">*</span><span class="n">nume</span><span class="p">};</span>
-	<span class="k">return</span> <span class="n">h</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* precompute trilinear coefficients
+</span></span></span><span class="line"><span class="cl"><span class="cm">* v: f(x0,y0,z0), f(x1,y0,z0), f(x0,y1,z0), f(x1,y1,z0)
+</span></span></span><span class="line"><span class="cl"><span class="cm">*    f(x0,y0,z1), f(x1,y0,z1), f(x0,y1,z1), f(x1,y1,z1)
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="mi">8</span><span class="o">&gt;</span> <span class="n">PreComp</span><span class="p">(</span><span class="kt">float</span> <span class="n">x0</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y0</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z0</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">x1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z1</span><span class="p">,</span> <span class="k">const</span> <span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="mi">8</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">float</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">10e-6</span><span class="n">f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="n">x1</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span> <span class="n">x0</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="n">y1</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span> <span class="n">y0</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">z1</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="n">z1</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span> <span class="n">z0</span> <span class="o">=</span> <span class="mf">0.f</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">deno</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">z1</span> <span class="o">-</span> <span class="n">z0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">nume</span> <span class="o">=</span> <span class="mf">1.f</span> <span class="o">/</span> <span class="n">deno</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">a4</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">b4</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">c5</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">a1</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">a2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">c6</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">a3</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">a4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">d5</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">-</span> <span class="n">a1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">d6</span> <span class="o">=</span> <span class="n">a4</span> <span class="o">-</span> <span class="n">a3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">e5</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">b1</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">b2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">e6</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">*</span> <span class="n">b3</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">b4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">f5</span> <span class="o">=</span> <span class="n">b2</span> <span class="o">-</span> <span class="n">b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">f6</span> <span class="o">=</span> <span class="n">b4</span> <span class="o">-</span> <span class="n">b3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">c5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">c6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">d5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">d6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h3</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">e5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">e6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h4</span> <span class="o">=</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">f5</span> <span class="o">-</span> <span class="n">z0</span> <span class="o">*</span> <span class="n">f6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h5</span> <span class="o">=</span> <span class="n">c6</span> <span class="o">-</span> <span class="n">c5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h6</span> <span class="o">=</span> <span class="n">d6</span> <span class="o">-</span> <span class="n">d5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h7</span> <span class="o">=</span> <span class="n">e6</span> <span class="o">-</span> <span class="n">e5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T</span> <span class="n">h8</span> <span class="o">=</span> <span class="n">f6</span> <span class="o">-</span> <span class="n">f5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="mi">8</span><span class="o">&gt;</span> <span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="n">h1</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h2</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h3</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h4</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">		<span class="n">h5</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h6</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h7</span><span class="o">*</span><span class="n">nume</span><span class="p">,</span> <span class="n">h8</span><span class="o">*</span><span class="n">nume</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">h</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>而插值的时候，速度就是比较重要的了，因为大体素与小体素对应的时候，block是共享参数的，并且即使是变量x,y,z也可以预先计算一部分，不用每个cell都计算。具体来说，插值的时候直接应用f7的计算公式即可：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">T</span> <span class="n">val</span> <span class="o">=</span> <span class="n">zf</span> <span class="o">*</span> <span class="p">(</span><span class="n">yf</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-      <span class="o">+</span> <span class="n">yf</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">T</span> <span class="n">val</span> <span class="o">=</span> <span class="n">zf</span> <span class="o">*</span> <span class="p">(</span><span class="n">yf</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">      <span class="o">+</span> <span class="n">yf</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">xf</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="结果">结果</h2>
 <p>对一个20x20x20的小体素进行预计算，然后用上述的三线性插值放大5倍，形成一个100x100x100大小的体素。</p>
@@ -302,7 +317,7 @@
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Lianera</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
@@ -346,8 +361,8 @@
       <div class="social-links">
       <a href="https://github.com/lianera" class="iconfont icon-github" title="github"></a>
       <a href="https://www.zhihu.com/people/lianera/" class="iconfont icon-zhihu" title="zhihu"></a>
-      <a href="https://www.douban.com/people/160254053/" class="iconfont icon-douban" title="douban"></a>
-  <a href="https://lianera.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+      <a href="https://space.bilibili.com/115700108" class="iconfont icon-bilibili" title="bilibili"></a>
+  
 </div>
 
 <div class="copyright">
@@ -365,13 +380,10 @@
   <span class="copyright-year">
     &copy; 
     2014 - 
-    2021
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Lianera</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -384,7 +396,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.2517c0eb67172a0bae917de4af59b10ca2531411a009d4c0b82f5685259e5771.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 
